@@ -48,6 +48,10 @@
   text-wrap: balance;
 }
 
+.hero-content .eyebrow {
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .hero-content .lead {
   color: rgba(255, 255, 255, 0.82);
 }
