@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Builds Verdura demo pages + shared inner pages from content definitions.
+ * Builds Verdura professional website + optional 10-demo gallery.
  * Run: node scripts/build-pages.js
  */
 const fs = require("fs");
@@ -9,8 +9,8 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 
 const IMG = {
-  market:
-    "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=2000&q=80",
+  hero:
+    "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=2200&q=80",
   trade:
     "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=80",
   organic:
@@ -29,6 +29,8 @@ const IMG = {
     "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=2000&q=80",
   season:
     "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=2000&q=80",
+  market:
+    "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=2000&q=80",
   tomatoes:
     "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=900&q=80",
   leafy:
@@ -65,8 +67,14 @@ function fixLogoHref(relDepth) {
   return "index.html";
 }
 
-function navFixed(relDepth, { onDark = true, cta = "Request quote" } = {}) {
+function navFixed(relDepth, { onDark = true, cta = "Request a quote" } = {}) {
   const dark = onDark ? " header-on-dark" : "";
+  const demosHref =
+    relDepth === 0
+      ? "demos.html"
+      : relDepth === 1
+        ? "../demos.html"
+        : "../../demos.html";
   return `
   <header class="site-header${dark}">
     <div class="container nav">
@@ -77,9 +85,10 @@ function navFixed(relDepth, { onDark = true, cta = "Request quote" } = {}) {
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
       <nav class="nav-links" aria-label="Primary">
         <a href="${page(relDepth, "products.html")}">Produce</a>
-        <a href="${page(relDepth, "services.html")}">Trade services</a>
+        <a href="${page(relDepth, "services.html")}">Services</a>
         <a href="${page(relDepth, "import-export.html")}">Import &amp; export</a>
         <a href="${page(relDepth, "about.html")}">About</a>
+        <a href="${demosHref}">Demos</a>
         <a class="btn btn-ghost nav-cta" href="${page(relDepth, "contact.html")}">${cta}</a>
       </nav>
     </div>
@@ -87,12 +96,18 @@ function navFixed(relDepth, { onDark = true, cta = "Request quote" } = {}) {
 }
 
 function footer(relDepth) {
+  const demosHref =
+    relDepth === 0
+      ? "demos.html"
+      : relDepth === 1
+        ? "../demos.html"
+        : "../../demos.html";
   return `
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
         <div class="logo"><span class="logo-mark logo-mark-theme" aria-hidden="true"></span> Verdura</div>
-        <p class="footer-blurb">Vegetable selling, wholesale supply, and global import/export — from harvest to harbor.</p>
+        <p class="footer-blurb">Professional vegetable selling, wholesale supply, and global import/export — from harvest to harbor.</p>
       </div>
       <div class="footer-col">
         <h4>Explore</h4>
@@ -104,7 +119,7 @@ function footer(relDepth) {
         <h4>Company</h4>
         <a href="${page(relDepth, "about.html")}">About Verdura</a>
         <a href="${page(relDepth, "contact.html")}">Contact</a>
-        <a href="${fixLogoHref(relDepth)}">All demos</a>
+        <a href="${demosHref}">Homepage demos</a>
       </div>
       <div class="footer-col">
         <h4>Trade desk</h4>
@@ -114,16 +129,26 @@ function footer(relDepth) {
       </div>
     </div>
     <div class="container footer-bottom">
-      <span>© ${new Date().getFullYear()} Verdura Template. Demo content only.</span>
-      <span>Vegetable selling · Import · Export</span>
+      <span>© ${new Date().getFullYear()} Verdura. Vegetable selling · Import · Export</span>
+      <span>Demo content for template use</span>
     </div>
   </footer>`;
 }
 
-function shell({ title, theme, relDepth, body, onDark = true, cta }) {
+function shell({
+  title,
+  theme = "market",
+  relDepth,
+  body,
+  onDark = true,
+  cta,
+  bodyClass = "",
+  extraCss = "",
+}) {
   const cssBase = asset(relDepth, "css/base.css");
   const cssComp = asset(relDepth, "css/components.css");
   const cssDemo = asset(relDepth, "css/demos.css");
+  const cssPro = asset(relDepth, "css/professional.css");
   const js = asset(relDepth, "js/main.js");
   return `<!DOCTYPE html>
 <html lang="en">
@@ -131,15 +156,17 @@ function shell({ title, theme, relDepth, body, onDark = true, cta }) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${title} · Verdura</title>
-  <meta name="description" content="Verdura — vegetable selling and import/export website template demo." />
+  <meta name="description" content="Verdura — professional vegetable selling, wholesale, and import/export." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,500;9..144,560;9..144,650&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${cssBase}" />
   <link rel="stylesheet" href="${cssComp}" />
   <link rel="stylesheet" href="${cssDemo}" />
+  <link rel="stylesheet" href="${cssPro}" />
+  ${extraCss}
 </head>
-<body data-theme="${theme}">
+<body class="${bodyClass}" data-theme="${theme}">
 ${navFixed(relDepth, { onDark, cta })}
 ${body}
 ${footer(relDepth)}
@@ -175,6 +202,202 @@ const produceItems = `
           <div class="produce-meta"><strong>Alliums</strong><span>Bulk &amp; retail packs</span></div>
         </div>`;
 
+/* ——— Professional company homepage ——— */
+function buildHome() {
+  const body = `
+  <section class="hero">
+    <div class="hero-media">
+      <img src="${IMG.hero}" alt="Fresh vegetables at Verdura market and packing" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="container hero-content">
+      <p class="eyebrow reveal">Vegetable selling · Import · Export</p>
+      <h1 class="display reveal reveal-delay-1">Verdura</h1>
+      <p class="lead reveal reveal-delay-2">A professional vegetable house for retailers, wholesalers, and cross-border buyers — fresh supply, documented quality, and cold-chain discipline.</p>
+      <div class="btn-group reveal reveal-delay-3">
+        <a class="btn btn-light" href="pages/contact.html">Request a quote</a>
+        <a class="btn btn-ghost" href="pages/import-export.html">View trade lanes</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="trust-strip reveal">
+      <div class="trust-item"><strong>48</strong><span>Export destinations</span></div>
+      <div class="trust-item"><strong>120+</strong><span>Grower partners</span></div>
+      <div class="trust-item"><strong>99.1%</strong><span>On-spec arrivals</span></div>
+      <div class="trust-item"><strong>24/7</strong><span>Trade desk coverage</span></div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">What we do</p>
+        <h2 class="display">Sell locally. Source globally. Ship with care.</h2>
+        <p class="lead">Verdura connects farm supply to market demand — whether you need retail packs tomorrow or a seasonal import program.</p>
+      </div>
+      <div class="pillar-grid">
+        <article class="pillar reveal">
+          <p class="eyebrow">01</p>
+          <h3>Vegetable selling</h3>
+          <p>Retail merchandising, wholesale docks, and foodservice cuts with clear pack formats and daily availability.</p>
+          <a href="pages/products.html">Browse produce →</a>
+        </article>
+        <article class="pillar reveal reveal-delay-1">
+          <p class="eyebrow">02</p>
+          <h3>Import programs</h3>
+          <p>Bridging seasonal gaps with certified origins, entry coordination, and cold storage handoffs.</p>
+          <a href="pages/import-export.html">Import overview →</a>
+        </article>
+        <article class="pillar reveal reveal-delay-2">
+          <p class="eyebrow">03</p>
+          <h3>Export execution</h3>
+          <p>Phytosanitary files, reefer bookings, and destination QC so cargo arrives market-ready.</p>
+          <a href="pages/services.html">Export services →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-muted">
+    <div class="container split">
+      <div class="reveal">
+        <p class="eyebrow">Produce</p>
+        <h2 class="display">Catalog built for buyers who move volume</h2>
+        <p class="lead" style="margin-top:1rem">From greenhouse tomatoes to storage onions — graded, packed, and priced for retail, wholesale, and export programs.</p>
+        <div class="btn-group">
+          <a class="btn btn-primary" href="pages/products.html">Full catalog</a>
+          <a class="btn btn-ghost" href="pages/contact.html" style="border-color:var(--brand);color:var(--brand-deep)">Ask for a cut list</a>
+        </div>
+      </div>
+      <div class="media-frame reveal reveal-delay-1">
+        <img src="${IMG.crates}" alt="Vegetable crates ready for distribution" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Featured lines</p>
+        <h2 class="display">This week’s highlight crops</h2>
+      </div>
+      <div class="produce-grid">${produceItems}</div>
+    </div>
+  </section>
+
+  <section class="band band-ink">
+    <div class="container">
+      <div class="pro-quote">
+        <div class="reveal">
+          <blockquote>“Verdura treats temperature and paperwork with the same seriousness as the produce itself. That is rare — and it shows on arrival.”</blockquote>
+          <cite><strong>Elena Marquez</strong>Procurement Director, North Atlantic Retail</cite>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="stat-row" style="border:none;padding:0;grid-template-columns:1fr 1fr;gap:1.5rem">
+            <div class="stat"><strong>14</strong><span>Years in trade</span></div>
+            <div class="stat"><strong>6</strong><span>Packing hubs</span></div>
+            <div class="stat"><strong>3</strong><span>Port partnerships</span></div>
+            <div class="stat"><strong>1</strong><span>Promise: on-spec</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div class="media-frame reveal">
+        <img src="${IMG.export}" alt="Port containers for vegetable export" loading="lazy" />
+      </div>
+      <div class="reveal reveal-delay-1">
+        <p class="eyebrow">Import &amp; export</p>
+        <h2 class="display">Lanes that clear customs cleanly</h2>
+        <p class="lead" style="margin-top:1rem">We plan plantings against calendars, book capacity early, and keep lot traceability from field block to destination dock.</p>
+        <div class="lanes" style="margin-top:1.5rem">
+          <div class="lane"><strong>Med → N. Europe</strong><span>Tomato &amp; pepper</span><span>Reefer</span><span class="tag">Export</span></div>
+          <div class="lane"><strong>Andes → US East</strong><span>Asparagus</span><span>Air</span><span class="tag">Import</span></div>
+          <div class="lane"><strong>Domestic hubs</strong><span>Mixed SKUs</span><span>Overnight</span><span class="tag">Wholesale</span></div>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-primary" href="pages/import-export.html">All corridors</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-muted">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Process</p>
+        <h2 class="display">How a Verdura shipment works</h2>
+      </div>
+      <div class="process">
+        <div class="process-item reveal"><h3>Spec &amp; source</h3><p>Agree grade, pack, and origin. Match growers to your volume and calendar.</p></div>
+        <div class="process-item reveal reveal-delay-1"><h3>Pack &amp; pre-cool</h3><p>Harvest windows, QC photos, and continuous temperature logs from the shed.</p></div>
+        <div class="process-item reveal reveal-delay-2"><h3>Ship &amp; settle</h3><p>Docs travel with the cargo. Arrival QC and fair claims if nature intervenes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">FAQ</p>
+        <h2 class="display">Common buyer questions</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>Do you sell retail packs and bulk pallets?</summary>
+          <p>Yes. We support retail-ready packs, foodservice cuts, and pallet-scale wholesale for distributors and multi-store retailers.</p>
+        </details>
+        <details>
+          <summary>Can you handle both import and export?</summary>
+          <p>Yes. Verdura runs inbound bridging programs and outbound export bookings with phytosanitary documentation and cold-chain monitoring.</p>
+        </details>
+        <details>
+          <summary>How fast do you respond to RFQs?</summary>
+          <p>Our trade desk aims to respond within one business day with availability, pack options, and indicative pricing.</p>
+        </details>
+        <details>
+          <summary>Do you offer organic lines?</summary>
+          <p>We maintain certified organic programs with lot-level traceability and audit-ready documentation for retail buyers.</p>
+        </details>
+      </div>
+
+      <div class="cta-strip reveal" style="margin-top:3rem">
+        <div>
+          <h2 class="display" style="font-size:clamp(1.8rem,3vw,2.5rem)">Ready to stock or ship?</h2>
+          <p class="lead">Tell us volumes, origins, and delivery windows — we’ll build a clear quote.</p>
+        </div>
+        <a class="btn btn-light" href="pages/contact.html">Contact the desk</a>
+      </div>
+
+      <div class="demos-bar reveal">
+        <div>
+          <strong>Looking for alternate homepage layouts?</strong>
+          <p>Explore 10 design demos for market, trade, export, and more.</p>
+        </div>
+        <a class="btn btn-primary" href="demos.html">View demos</a>
+      </div>
+    </div>
+  </section>`;
+
+  const html = shell({
+    title: "Vegetable Selling & Import/Export",
+    theme: "market",
+    relDepth: 0,
+    body,
+    onDark: true,
+    cta: "Request a quote",
+    bodyClass: "pro-body",
+  });
+  fs.writeFileSync(path.join(ROOT, "index.html"), html);
+  console.log("Wrote index.html (professional site)");
+}
+
+/* ——— Demo gallery ——— */
 const demoDefs = [
   {
     folder: "01-market",
@@ -207,7 +430,7 @@ const demoDefs = [
     title: "Trade",
     cta: "Open RFQ",
     heroImg: IMG.trade,
-    heroAlt: "Global shipping containers",
+    heroAlt: "Warehouse distribution for trade",
     brand: "Verdura Trade",
     headline: "Verdura",
     lead: "Cross-border vegetable trading with documented quality, cold-chain discipline, and lanes that move on schedule.",
@@ -535,24 +758,11 @@ function buildDemo(def) {
     </div>
   </section>`;
 
-  // Corporate ticker should appear after header/before or after hero - put after hero via extra already at top
-  // For corporate, extra is ticker - place after hero by restructuring
-  let finalBody = body;
-  if (def.folder === "09-corporate") {
-    finalBody = body.replace(
-      `  ${def.extra || ""}\n  <section class="section">`,
-      `  ${def.extra}\n  <section class="section">`
-    );
-  }
-  if (def.folder === "04-export") {
-    // stats band already in extra at top - move after produce? Fine at top after hero
-  }
-
   const html = shell({
-    title: def.title,
+    title: def.title + " Demo",
     theme: def.theme,
     relDepth: rel,
-    body: finalBody,
+    body,
     onDark: true,
     cta: def.cta,
   });
@@ -563,6 +773,76 @@ function buildDemo(def) {
   console.log("Wrote", def.folder);
 }
 
+function buildDemosGallery() {
+  const tiles = demoDefs
+    .map((d, i) => {
+      const num = String(i + 1).padStart(2, "0");
+      return `
+      <a class="demo-tile reveal${i % 3 === 1 ? " reveal-delay-1" : i % 3 === 2 ? " reveal-delay-2" : ""}" href="demos/${d.folder}/index.html">
+        <img src="${d.heroImg}" alt="${d.title} demo preview" loading="lazy" />
+        <div class="demo-tile-body">
+          <div class="demo-num">Demo ${num}</div>
+          <h2>${d.title}</h2>
+          <p>${d.lead.slice(0, 110)}…</p>
+          <span class="open">Open demo →</span>
+        </div>
+      </a>`;
+    })
+    .join("");
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Homepage Demos · Verdura</title>
+  <meta name="description" content="10 homepage demos for the Verdura vegetable trade website template." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,560;9..144,650&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/demos.css" />
+  <link rel="stylesheet" href="assets/css/professional.css" />
+</head>
+<body class="showcase-body">
+  <header class="site-header is-solid">
+    <div class="container nav">
+      <a class="logo" href="index.html"><span class="logo-mark logo-mark-theme" aria-hidden="true"></span> Verdura</a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="pages/products.html">Produce</a>
+        <a href="pages/services.html">Services</a>
+        <a href="pages/import-export.html">Import &amp; export</a>
+        <a href="index.html">Main site</a>
+        <a class="btn btn-ghost nav-cta" href="pages/contact.html" style="border-color:var(--brand);color:var(--brand-deep)">Request a quote</a>
+      </nav>
+    </div>
+  </header>
+  <header class="showcase-hero" style="padding-top:2.5rem">
+    <div class="container">
+      <p class="eyebrow reveal">Template gallery · 10 demos</p>
+      <p class="brand-name reveal reveal-delay-1" style="font-size:clamp(2.5rem,7vw,4.5rem)">Homepage demos</p>
+      <p class="lead reveal reveal-delay-2">Alternate visual directions for the Verdura vegetable selling and import/export template. The main professional site is <a href="index.html" style="color:var(--brand);font-weight:600">index.html</a>.</p>
+    </div>
+  </header>
+  <main class="container">
+    <div class="demo-grid">${tiles}</div>
+  </main>
+  <footer class="container showcase-footer">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem">
+      <span>Verdura demos · Vegetable selling &amp; import/export</span>
+      <a href="index.html" style="font-weight:600;color:var(--brand)">← Back to main site</a>
+    </div>
+  </footer>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
+`;
+  fs.writeFileSync(path.join(ROOT, "demos.html"), html);
+  console.log("Wrote demos.html");
+}
+
 function buildInnerPages() {
   const rel = 1;
   const pages = [
@@ -570,22 +850,21 @@ function buildInnerPages() {
       file: "about.html",
       theme: "market",
       title: "About",
-      onDark: false,
       body: `
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">Company</p>
       <h1 class="display">Grown for trade. Built for trust.</h1>
-      <p class="lead">Verdura connects vegetable growers, sellers, importers, and exporters — so produce moves with the care it deserves.</p>
+      <p class="lead">Verdura is a professional vegetable house — selling fresh produce, managing wholesale programs, and executing import/export with cold-chain discipline.</p>
     </div>
   </section>
   <section class="section">
     <div class="container split">
       <div class="reveal">
         <p class="eyebrow">Who we are</p>
-        <h2 class="display">A vegetable house with global reach</h2>
-        <p class="lead" style="margin-top:1rem">We started as a regional market seller and grew into a full import/export partner — still obsessed with freshness, now fluent in freight.</p>
-        <p style="margin-top:1rem;color:var(--muted)">Today Verdura operates retail programs, wholesale docks, and cross-border lanes across dozens of destinations.</p>
+        <h2 class="display">From regional market to global lanes</h2>
+        <p class="lead" style="margin-top:1rem">We started as a regional seller and grew into a full trade partner — still obsessed with freshness, now fluent in freight, documentation, and multi-origin sourcing.</p>
+        <p style="margin-top:1rem;color:var(--muted)">Today Verdura serves retailers, distributors, foodservice operators, and international buyers across dozens of destinations.</p>
       </div>
       <div class="media-frame reveal reveal-delay-1"><img src="${IMG.farm}" alt="Verdura farm partnership" loading="lazy" /></div>
     </div>
@@ -599,19 +878,29 @@ function buildInnerPages() {
         <div class="process-item reveal reveal-delay-2"><h3>Clear paperwork</h3><p>Phytosanitary, origin, and organic docs prepared with the cargo — not after it.</p></div>
       </div>
     </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal"><p class="eyebrow">Origins</p><h2 class="display">Where we source</h2></div>
+      <div class="origin-grid">
+        <div class="origin-item reveal"><span class="origin-dot"></span><div><h3>Domestic fields</h3><p>Seasonal peaks for leafy greens, roots, and alliums with overnight dock delivery.</p></div></div>
+        <div class="origin-item reveal"><span class="origin-dot"></span><div><h3>Mediterranean greenhouses</h3><p>Tomato, cucumber, and pepper programs for European and Middle East retail.</p></div></div>
+        <div class="origin-item reveal"><span class="origin-dot"></span><div><h3>Andean highlands</h3><p>Asparagus and specialty lines for North American import windows.</p></div></div>
+        <div class="origin-item reveal"><span class="origin-dot"></span><div><h3>Controlled environment</h3><p>Year-round herbs and baby leaf with consistent pack and label standards.</p></div></div>
+      </div>
+    </div>
   </section>`,
     },
     {
       file: "products.html",
       theme: "wholesale",
       title: "Produce",
-      onDark: false,
       body: `
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">Catalog</p>
       <h1 class="display">Vegetables for sale &amp; shipment</h1>
-      <p class="lead">Retail packs, foodservice cuts, and export grades — sample lines for the Verdura template.</p>
+      <p class="lead">Retail packs, foodservice cuts, and export grades — professional lines for buyers who need clarity on pack, origin, and mode.</p>
     </div>
   </section>
   <section class="section">
@@ -640,30 +929,36 @@ function buildInnerPages() {
       <div style="margin-top:2.5rem" class="reveal">
         <div class="produce-grid">${produceItems}</div>
       </div>
+      <div class="cta-strip reveal" style="margin-top:3rem">
+        <div>
+          <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.2rem)">Need a custom cut list?</h2>
+          <p class="lead">Send volumes and delivery windows — we’ll confirm packs and pricing.</p>
+        </div>
+        <a class="btn btn-light" href="contact.html">Request pricing</a>
+      </div>
     </div>
   </section>`,
     },
     {
       file: "services.html",
       theme: "export",
-      title: "Trade services",
-      onDark: false,
+      title: "Services",
       body: `
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">Services</p>
-      <h1 class="display">Sell locally. Ship globally.</h1>
-      <p class="lead">End-to-end vegetable trading services — from farm gate sales to international delivery.</p>
+      <h1 class="display">Professional trade services</h1>
+      <p class="lead">End-to-end vegetable trading — from farm-gate sales to international delivery and claims support.</p>
     </div>
   </section>
   <section class="section">
-    <div class="container process">
-      <div class="process-item reveal"><h3>Vegetable selling</h3><p>Retail merchandising, wholesale sales desks, and private-label pack programs.</p></div>
-      <div class="process-item reveal reveal-delay-1"><h3>Sourcing &amp; packing</h3><p>Grower networks, packing house oversight, and buyer-aligned specs.</p></div>
-      <div class="process-item reveal reveal-delay-2"><h3>Import coordination</h3><p>Entry filings, cold storage, and inland distribution handoffs.</p></div>
-      <div class="process-item reveal"><h3>Export execution</h3><p>Booking, documentation, and destination QC for outbound cargo.</p></div>
-      <div class="process-item reveal reveal-delay-1"><h3>Quality claims</h3><p>Photo protocols, surveyors, and fair resolution when nature intervenes.</p></div>
-      <div class="process-item reveal reveal-delay-2"><h3>Program planning</h3><p>Seasonal calendars that blend local peaks with import bridges.</p></div>
+    <div class="container pillar-grid">
+      <article class="pillar reveal"><p class="eyebrow">Sell</p><h3>Vegetable selling</h3><p>Retail merchandising, wholesale sales desks, and private-label pack programs.</p></article>
+      <article class="pillar reveal reveal-delay-1"><p class="eyebrow">Source</p><h3>Sourcing &amp; packing</h3><p>Grower networks, packing house oversight, and buyer-aligned specs.</p></article>
+      <article class="pillar reveal reveal-delay-2"><p class="eyebrow">Import</p><h3>Import coordination</h3><p>Entry filings, cold storage, and inland distribution handoffs.</p></article>
+      <article class="pillar reveal"><p class="eyebrow">Export</p><h3>Export execution</h3><p>Booking, documentation, and destination QC for outbound cargo.</p></article>
+      <article class="pillar reveal reveal-delay-1"><p class="eyebrow">Quality</p><h3>Quality claims</h3><p>Photo protocols, surveyors, and fair resolution when nature intervenes.</p></article>
+      <article class="pillar reveal reveal-delay-2"><p class="eyebrow">Plan</p><h3>Program planning</h3><p>Seasonal calendars that blend local peaks with import bridges.</p></article>
     </div>
   </section>
   <section class="band band-muted">
@@ -682,25 +977,23 @@ function buildInnerPages() {
       file: "import-export.html",
       theme: "trade",
       title: "Import & Export",
-      onDark: false,
       body: `
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">Cross-border</p>
-      <h1 class="display">Import &amp; export lanes for vegetables</h1>
+      <h1 class="display">Import &amp; export for vegetables</h1>
       <p class="lead">Documented, temperature-controlled movement of fresh vegetables between origins and markets.</p>
     </div>
   </section>
   <section class="section">
     <div class="container">
-      <div class="section-head reveal"><p class="eyebrow">Lanes</p><h2 class="display">Sample corridors</h2></div>
+      <div class="section-head reveal"><p class="eyebrow">Lanes</p><h2 class="display">Active corridors</h2></div>
       <div class="lanes">
         <div class="lane reveal"><strong>EU greenhouse → UK retail</strong><span>Tomato &amp; cucumber</span><span>Road reefer</span><span class="tag">Export</span></div>
-        <div class="lane reveal"><strong>LatAm → North America</strong><span>Asparagus &amp; berries*</span><span>Air</span><span class="tag">Import</span></div>
+        <div class="lane reveal"><strong>LatAm → North America</strong><span>Asparagus programs</span><span>Air</span><span class="tag">Import</span></div>
         <div class="lane reveal"><strong>N. Africa → GCC</strong><span>Peppers &amp; beans</span><span>Sea reefer</span><span class="tag">Export</span></div>
         <div class="lane reveal"><strong>Asia herbs → EU</strong><span>Basil &amp; specialty leaves</span><span>Air</span><span class="tag">Import</span></div>
       </div>
-      <p style="margin-top:1rem;font-size:.85rem;color:var(--muted)">*Demo content — berry line shown for mixed produce programs.</p>
     </div>
   </section>
   <section class="band band-ink">
@@ -725,6 +1018,7 @@ function buildInnerPages() {
           <li>— Origin &amp; lot traceability</li>
           <li>— Buyer spec confirmation</li>
         </ul>
+        <div class="btn-group"><a class="btn btn-primary" href="contact.html">Start an RFQ</a></div>
       </div>
       <div class="media-frame reveal reveal-delay-1"><img src="${IMG.export}" alt="Export containers" loading="lazy" /></div>
     </div>
@@ -734,13 +1028,12 @@ function buildInnerPages() {
       file: "contact.html",
       theme: "harbor",
       title: "Contact",
-      onDark: false,
       body: `
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">Trade desk</p>
       <h1 class="display">Request a quote</h1>
-      <p class="lead">Tell us what you need to sell, import, or export — we’ll respond within one business day.</p>
+      <p class="lead">Tell us what you need to sell, import, or export — we respond within one business day.</p>
     </div>
   </section>
   <section class="section">
@@ -753,6 +1046,10 @@ function buildInnerPages() {
         <div>
           <h3>Harbor ops</h3>
           <p>Pier 12 Cold Complex<br />Weekdays 04:00–18:00</p>
+        </div>
+        <div>
+          <h3>Office</h3>
+          <p>Verdura Trade Floor<br />120 Harbor Avenue</p>
         </div>
         <div class="map-placeholder">Verdura hub · Demo map</div>
       </div>
@@ -791,10 +1088,10 @@ function buildInnerPages() {
       theme: p.theme,
       relDepth: rel,
       body: p.body,
-      onDark: p.onDark,
-      cta: "Request quote",
+      onDark: false,
+      cta: "Request a quote",
+      bodyClass: "pro-body",
     });
-    // Inner pages use solid header
     const withSolid = html
       .replace('class="site-header"', 'class="site-header is-solid"')
       .replace(" header-on-dark", "");
@@ -803,68 +1100,8 @@ function buildInnerPages() {
   }
 }
 
-// Showcase index
-function buildIndex() {
-  const tiles = demoDefs
-    .map((d, i) => {
-      const num = String(i + 1).padStart(2, "0");
-      return `
-      <a class="demo-tile reveal${i % 3 === 1 ? " reveal-delay-1" : i % 3 === 2 ? " reveal-delay-2" : ""}" href="demos/${d.folder}/index.html">
-        <img src="${d.heroImg}" alt="${d.title} demo preview" loading="lazy" />
-        <div class="demo-tile-body">
-          <div class="demo-num">Demo ${num}</div>
-          <h2>${d.title}</h2>
-          <p>${d.lead.slice(0, 110)}…</p>
-          <span class="open">Open demo →</span>
-        </div>
-      </a>`;
-    })
-    .join("");
-
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Verdura — 10 Demo Vegetable Trade Template</title>
-  <meta name="description" content="10-demo website template for vegetable selling and import/export. Verdura multi-concept HTML template." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,560;9..144,650&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/base.css" />
-  <link rel="stylesheet" href="assets/css/components.css" />
-  <link rel="stylesheet" href="assets/css/demos.css" />
-</head>
-<body class="showcase-body">
-  <header class="showcase-hero">
-    <div class="container">
-      <p class="eyebrow reveal">HTML website template · 10 demos</p>
-      <p class="brand-name reveal reveal-delay-1">Verdura</p>
-      <p class="lead reveal reveal-delay-2">A multi-demo template for vegetable selling, wholesale, and import/export — ten homepage directions, one shared trade system.</p>
-      <div class="btn-group reveal reveal-delay-3">
-        <a class="btn btn-primary" href="demos/01-market/index.html">View first demo</a>
-        <a class="btn btn-ghost" href="pages/contact.html">Contact page</a>
-      </div>
-    </div>
-  </header>
-  <main class="container">
-    <div class="demo-grid">${tiles}</div>
-  </main>
-  <footer class="container showcase-footer">
-    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem">
-      <span>Verdura template · Vegetable selling &amp; import/export</span>
-      <span>Shared pages: About · Produce · Services · Import/Export · Contact</span>
-    </div>
-  </footer>
-  <script src="assets/js/main.js"></script>
-</body>
-</html>
-`;
-  fs.writeFileSync(path.join(ROOT, "index.html"), html);
-  console.log("Wrote index.html");
-}
-
+buildHome();
 demoDefs.forEach(buildDemo);
+buildDemosGallery();
 buildInnerPages();
-buildIndex();
 console.log("Done.");
