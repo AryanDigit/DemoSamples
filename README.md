@@ -4,11 +4,11 @@ A multi-demo HTML website template for **vegetable selling**, wholesale supply, 
 
 ## Quick start (local system — no server)
 
-1. Download or clone this branch.
-2. Open **`index.html`** in your browser (double-click or File → Open).
+1. Download **`dist/verdura-html-template.zip`** (or clone this branch).
+2. Unzip, then open **`index.html`** in your browser (double-click or File → Open).
 3. Click any demo tile to open that homepage.
 
-All pages are plain HTML/CSS/JS with relative paths, so they work offline from disk. Demo photos load from Unsplash (internet needed for images).
+All pages are plain HTML/CSS/JS with relative paths, so they work from disk. Demo photos load from Unsplash (internet needed for images).
 
 ### Optional local server
 
