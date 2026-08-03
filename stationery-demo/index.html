@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quillmark — Fine Stationery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #132820;
+      --ink-soft: #2a4638;
+      --paper: #e6ebe7;
+      --mist: #c9d6ce;
+      --leaf: #3d6b52;
+      --accent: #b85a2f;
+      --white: #f7faf8;
+      --line: rgba(19, 40, 32, 0.12);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "Figtree", sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ——— Nav ——— */
+    .nav {
+      position: absolute;
+      inset: 0 0 auto;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 6vw;
+      color: var(--white);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a {
+      opacity: 0.88;
+      transition: opacity 0.25s var(--ease);
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+    }
+
+    .nav-cta {
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(247, 250, 248, 0.55);
+      padding-bottom: 0.15rem;
+      transition: border-color 0.25s var(--ease);
+    }
+
+    .nav-cta:hover {
+      border-color: var(--white);
+    }
+
+    /* ——— Hero ——— */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      align-items: end;
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.06);
+      animation: heroZoom 12s var(--ease) forwards;
+    }
+
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(19, 40, 32, 0.35) 0%, rgba(19, 40, 32, 0.15) 35%, rgba(19, 40, 32, 0.72) 100%),
+        radial-gradient(ellipse at 20% 80%, rgba(61, 107, 82, 0.35), transparent 55%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 0 6vw 12vh;
+      max-width: 42rem;
+      animation: riseIn 1s var(--ease) 0.15s both;
+    }
+
+    .brand {
+      font-family: var(--font-display);
+      font-size: clamp(3.4rem, 10vw, 7.5rem);
+      font-weight: 600;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+      font-weight: 400;
+      font-optical-sizing: auto;
+      line-height: 1.25;
+      max-width: 18ch;
+      margin-bottom: 0.85rem;
+      opacity: 0.95;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      max-width: 34ch;
+      opacity: 0.85;
+      margin-bottom: 1.75rem;
+    }
+
+    .cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem 1.25rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.9rem 1.45rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s var(--ease), background 0.3s var(--ease), color 0.3s var(--ease);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .btn-primary:hover {
+      background: var(--mist);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(247, 250, 248, 0.45);
+      padding: 0.85rem 1.4rem;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--white);
+      background: rgba(247, 250, 248, 0.08);
+    }
+
+    /* ——— Sections shared ——— */
+    section {
+      padding: 6.5rem 6vw;
+    }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 0.85rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      max-width: 14ch;
+      margin-bottom: 0.9rem;
+    }
+
+    .section-copy {
+      font-size: 1.08rem;
+      color: var(--ink-soft);
+      max-width: 38ch;
+    }
+
+    /* ——— Collections ——— */
+    .collections {
+      background:
+        linear-gradient(165deg, #dfe8e2 0%, var(--paper) 45%, #d4e0d8 100%);
+      position: relative;
+    }
+
+    .collections::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23132820' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .collections-intro {
+      position: relative;
+      margin-bottom: 3.5rem;
+      animation: fadeUp 0.8s var(--ease) both;
+    }
+
+    .collection-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .collection-feature {
+      position: relative;
+      min-height: 28rem;
+      overflow: hidden;
+    }
+
+    .collection-feature img,
+    .collection-side img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease);
+    }
+
+    .collection-feature:hover img,
+    .collection-side a:hover img {
+      transform: scale(1.04);
+    }
+
+    .collection-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 1.5rem 1.35rem;
+      background: linear-gradient(transparent, rgba(19, 40, 32, 0.78));
+      color: var(--white);
+    }
+
+    .collection-caption h3 {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .collection-caption span {
+      font-size: 0.92rem;
+      opacity: 0.85;
+    }
+
+    .collection-side {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .collection-side a {
+      position: relative;
+      overflow: hidden;
+      min-height: 13rem;
+      display: block;
+    }
+
+    /* ——— Craft ——— */
+    .craft {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      background: var(--ink);
+      color: var(--white);
+      padding-block: 0;
+      min-height: 70vh;
+    }
+
+    .craft-visual {
+      height: 100%;
+      min-height: 70vh;
+      overflow: hidden;
+    }
+
+    .craft-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .craft-text {
+      padding: 5rem 6vw 5rem 0;
+    }
+
+    .craft .section-label {
+      color: var(--mist);
+    }
+
+    .craft .section-copy {
+      color: rgba(247, 250, 248, 0.78);
+      margin-bottom: 2rem;
+    }
+
+    .craft-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .craft-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+      padding-top: 1.1rem;
+      border-top: 1px solid rgba(247, 250, 248, 0.15);
+    }
+
+    .craft-list strong {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .craft-list p {
+      font-size: 0.95rem;
+      color: rgba(247, 250, 248, 0.7);
+    }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: var(--mist);
+      padding-top: 0.2rem;
+    }
+
+    /* ——— Visit ——— */
+    .visit {
+      background:
+        radial-gradient(ellipse at 85% 20%, rgba(61, 107, 82, 0.18), transparent 50%),
+        linear-gradient(180deg, var(--paper), #dce5df);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .visit .section-title {
+      max-width: 16ch;
+    }
+
+    .visit .section-copy {
+      margin-bottom: 2rem;
+    }
+
+    .visit-form {
+      display: flex;
+      width: min(100%, 28rem);
+      gap: 0;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .visit-form input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 1rem 1.1rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .visit-form input::placeholder {
+      color: rgba(19, 40, 32, 0.45);
+    }
+
+    .visit-form button {
+      border: none;
+      background: var(--ink);
+      color: var(--white);
+      padding: 0 1.35rem;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.25s var(--ease);
+    }
+
+    .visit-form button:hover {
+      background: var(--leaf);
+    }
+
+    .form-note {
+      margin-top: 0.85rem;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      opacity: 0.8;
+      min-height: 1.2em;
+    }
+
+    /* ——— Footer ——— */
+    footer {
+      background: var(--ink);
+      color: rgba(247, 250, 248, 0.7);
+      padding: 2.5rem 6vw;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    footer .brand-mark {
+      font-family: var(--font-display);
+      color: var(--white);
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    /* ——— Motion ——— */
+    @keyframes heroZoom {
+      from { transform: scale(1.06); }
+      to { transform: scale(1); }
+    }
+
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ——— Responsive ——— */
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .collection-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .collection-feature {
+        min-height: 22rem;
+      }
+
+      .craft {
+        grid-template-columns: 1fr;
+      }
+
+      .craft-visual {
+        min-height: 40vh;
+      }
+
+      .craft-text {
+        padding: 3.5rem 6vw 5rem;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero-content {
+        padding-bottom: 8vh;
+      }
+
+      .cta-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .visit-form {
+        flex-direction: column;
+      }
+
+      .visit-form button {
+        padding: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <span aria-hidden="true"></span>
+    <ul class="nav-links">
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#craft">Craft</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+    <a class="nav-cta" href="#visit">Shop the desk</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Hero">
+      <div class="hero-media">
+        <img
+          src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&amp;fit=crop&amp;w=2000&amp;q=80"
+          alt="Open notebook with fountain pen on a writing desk"
+          width="2000"
+          height="1333"
+        />
+      </div>
+      <div class="hero-content">
+        <p class="brand">Quillmark</p>
+        <h1>Stationery made for the letters you still mean.</h1>
+        <p>Paper, ink, and tools for writing that feels personal again.</p>
+        <div class="cta-group">
+          <a class="btn btn-primary" href="#collections">Explore collections</a>
+          <a class="btn btn-ghost" href="#craft">How we make it</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="collections" id="collections">
+      <div class="collections-intro reveal">
+        <p class="section-label">Collections</p>
+        <h2 class="section-title">Paper that invites the next line.</h2>
+        <p class="section-copy">Three deskside essentials, printed and finished in small batches.</p>
+      </div>
+
+      <div class="collection-grid reveal">
+        <a class="collection-feature" href="#visit">
+          <img
+            src="https://images.unsplash.com/photo-1516414447565-b14be0adf13e?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"
+            alt="Stack of lined notebooks with soft covers"
+            width="1400"
+            height="900"
+          />
+          <div class="collection-caption">
+            <h3>Field Notes</h3>
+            <span>Soft-cover journals for daily thought</span>
+          </div>
+        </a>
+        <div class="collection-side">
+          <a href="#visit">
+            <img
+              src="https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+              alt="Assorted stationery papers and envelopes"
+              width="1000"
+              height="700"
+            />
+            <div class="collection-caption">
+              <h3>Correspondence</h3>
+              <span>Letter sets &amp; envelopes</span>
+            </div>
+          </a>
+          <a href="#visit">
+            <img
+              src="https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+              alt="Fountain pens and ink beside blank paper"
+              width="1000"
+              height="700"
+            />
+            <div class="collection-caption">
+              <h3>Ink Desk</h3>
+              <span>Pens, ink, and blotters</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="craft" id="craft">
+      <div class="craft-visual reveal">
+        <img
+          src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"
+          alt="Hands arranging paper sheets on a studio table"
+          width="1400"
+          height="1000"
+        />
+      </div>
+      <div class="craft-text reveal">
+        <p class="section-label">The craft</p>
+        <h2 class="section-title">From mill to mark.</h2>
+        <p class="section-copy">Every Quillmark piece is made to hold ink cleanly and age with use — not sit unused in a drawer.</p>
+        <ol class="craft-list">
+          <li>
+            <span class="step-num">01</span>
+            <div>
+              <strong>Cotton-rich stock</strong>
+              <p>Sheets chosen for tooth, weight, and how they take a wet nib.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">02</span>
+            <div>
+              <strong>Quiet printing</strong>
+              <p>Letterpress and offset runs kept small so color stays true.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">03</span>
+            <div>
+              <strong>Hand finishing</strong>
+              <p>Edges trimmed, sets bundled, and checked before shipping.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="visit" id="visit">
+      <p class="section-label reveal">Visit the desk</p>
+      <h2 class="section-title reveal">Get first look at new papers.</h2>
+      <p class="section-copy reveal">Join the list for seasonal drops, studio notes, and early access.</p>
+      <form class="visit-form reveal" id="signup-form" action="#" method="post">
+        <label class="visually-hidden" for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Email</label>
+        <input id="email" name="email" type="email" placeholder="Your email" required autocomplete="email" />
+        <button type="submit">Join</button>
+      </form>
+      <p class="form-note" id="form-note" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer>
+    <span class="brand-mark">Quillmark</span>
+    <span>Fine stationery · Est. 2019</span>
+    <span>demo@quillmark.studio</span>
+  </footer>
+
+  <script>
+    const revealEls = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18, rootMargin: "0px 0px -40px 0px" }
+    );
+    revealEls.forEach((el) => observer.observe(el));
+
+    document.getElementById("signup-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const note = document.getElementById("form-note");
+      const email = document.getElementById("email");
+      note.textContent = "You're on the list — we'll write soon.";
+      email.value = "";
+    });
+  </script>
+</body>
+</html>
