@@ -4,10 +4,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quillmark — Fine Stationery</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
+    @font-face {
+      font-family: "Figtree";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("assets/figtree-400.ttf") format("truetype");
+    }
+    @font-face {
+      font-family: "Figtree";
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url("assets/figtree-500.ttf") format("truetype");
+    }
+    @font-face {
+      font-family: "Figtree";
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url("assets/figtree-600.ttf") format("truetype");
+    }
+    @font-face {
+      font-family: "Fraunces";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("assets/fraunces-400.ttf") format("truetype");
+    }
+    @font-face {
+      font-family: "Fraunces";
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url("assets/fraunces-600.ttf") format("truetype");
+    }
+    @font-face {
+      font-family: "Fraunces";
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url("assets/fraunces-700.ttf") format("truetype");
+    }
+
     :root {
       --ink: #132820;
       --ink-soft: #2a4638;
@@ -587,7 +627,7 @@
     <section class="hero" aria-label="Hero">
       <div class="hero-media">
         <img
-          src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&amp;fit=crop&amp;w=2000&amp;q=80"
+          src="assets/hero.jpg"
           alt="Open notebook with fountain pen on a writing desk"
           width="2000"
           height="1333"
@@ -614,7 +654,7 @@
       <div class="collection-grid reveal">
         <a class="collection-feature" href="#visit">
           <img
-            src="https://images.unsplash.com/photo-1516414447565-b14be0adf13e?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"
+            src="assets/notebooks.jpg"
             alt="Stack of lined notebooks with soft covers"
             width="1400"
             height="900"
@@ -627,7 +667,7 @@
         <div class="collection-side">
           <a href="#visit">
             <img
-              src="https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+              src="assets/papers.jpg"
               alt="Assorted stationery papers and envelopes"
               width="1000"
               height="700"
@@ -639,7 +679,7 @@
           </a>
           <a href="#visit">
             <img
-              src="https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+              src="assets/pens.jpg"
               alt="Fountain pens and ink beside blank paper"
               width="1000"
               height="700"
@@ -656,7 +696,7 @@
     <section class="craft" id="craft">
       <div class="craft-visual reveal">
         <img
-          src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"
+          src="assets/craft.jpg"
           alt="Hands arranging paper sheets on a studio table"
           width="1400"
           height="1000"
