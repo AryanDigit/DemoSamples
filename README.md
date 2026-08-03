@@ -2,15 +2,21 @@
 
 A multi-demo HTML website template for **vegetable selling**, wholesale supply, and **import/export**.
 
-## Quick start
+## Quick start (local system — no server)
+
+1. Download or clone this branch.
+2. Open **`index.html`** in your browser (double-click or File → Open).
+3. Click any demo tile to open that homepage.
+
+All pages are plain HTML/CSS/JS with relative paths, so they work offline from disk. Demo photos load from Unsplash (internet needed for images).
+
+### Optional local server
 
 ```bash
 npm start
 ```
 
 Then open [http://localhost:5173](http://localhost:5173).
-
-Or open `index.html` directly in a browser (demo images load from Unsplash).
 
 ## What’s included
 
