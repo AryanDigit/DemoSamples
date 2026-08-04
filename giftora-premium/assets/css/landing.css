@@ -27,7 +27,7 @@ a { color: inherit; text-decoration: none; }
   position: relative; overflow: hidden; color: #fff; padding: 6rem 0 5rem;
   background:
     linear-gradient(135deg, rgba(11,16,32,.92), rgba(31,138,122,.75)),
-    url('https://picsum.photos/seed/giftora-hero-bg/1920/1100') center/cover;
+    url('../images/themes/gifts-hero.jpg') center/cover;
 }
 .hero-glow {
   position: absolute; width: 480px; height: 480px; border-radius: 50%;
@@ -76,7 +76,7 @@ a { color: inherit; text-decoration: none; }
 .purchase-section {
   background:
     linear-gradient(135deg, rgba(31,138,122,.95), rgba(11,16,32,.92)),
-    url('https://picsum.photos/seed/giftora-cta/1600/700') center/cover;
+    url('../images/themes/celebration.jpg') center/cover;
   color: #fff;
 }
 .purchase-section code { background: rgba(255,255,255,.15); padding: .15rem .4rem; border-radius: .3rem; }

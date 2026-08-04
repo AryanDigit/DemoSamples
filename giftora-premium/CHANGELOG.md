@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1 — Content Images
+
+- Replaced random placeholder photos with content-matched gift imagery
+- Bundled product, lifestyle, and theme image libraries under `assets/images/`
+- Heroes, categories, and product cards now map to relevant visuals per demo
+
 ## 1.0.0 — Giftora Premium
 
 - Initial release of Giftora Premium HTML Template

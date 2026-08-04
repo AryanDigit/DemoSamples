@@ -361,12 +361,195 @@ DEMOS = [
 
 PAGES = ["index", "shop", "product", "about", "gallery", "blog", "faq", "contact"]
 
+# Content-matched local images (relative to each demo HTML page)
+IMG = "../assets/images"
 
-def img(seed, w=800, h=600):
-    return f"https://picsum.photos/seed/{seed}/{w}/{h}"
+PRODUCT_IMAGE_RULES = [
+    (["jewelry", "ring", "cufflink", "necklace", "gold"],
+     ["products/jewelry-1.jpg", "products/jewelry-2.jpg", "themes/jewelry.jpg"]),
+    (["perfume", "fragrance", "scent"],
+     ["products/perfume-1.jpg", "products/perfume-2.jpg", "themes/perfume.jpg", "themes/bottle.jpg"]),
+    (["watch", "timepiece"],
+     ["products/watch-1.jpg", "products/watch-2.jpg", "themes/watch.jpg"]),
+    (["mug", "cup", "coffee"],
+     ["products/mug-1.jpg", "products/mug-2.jpg", "themes/mug.jpg"]),
+    (["frame", "photo", "collage", "album", "puzzle", "poster", "star map"],
+     ["products/frame-1.jpg", "products/frame-2.jpg", "lifestyle/personalize.jpg"]),
+    (["candle", "soy"],
+     ["products/candle-1.jpg", "products/candle-2.jpg"]),
+    (["choc", "cocoa", "truffle", "bonbon", "praline", "caramel", "sweet"],
+     ["products/choc-1.jpg", "products/choc-2.jpg", "themes/chocolate-box.jpg", "themes/truffles.jpg", "themes/macaron.jpg", "themes/dessert.jpg"]),
+    (["hamper", "champagne", "wine", "tea", "gourmet"],
+     ["products/hamper-1.jpg", "products/hamper-2.jpg", "products/tea-1.jpg", "products/tea-2.jpg", "products/box-1.jpg", "products/box-2.jpg"]),
+    (["box", "gift card", "ribbon", "assortment", "collection"],
+     ["products/box-1.jpg", "products/box-2.jpg", "themes/gifts-hero.jpg", "themes/wrapped-gifts.jpg"]),
+    (["plant", "succulent", "orchid", "garden", "seed"],
+     ["products/plant-1.jpg", "products/plant-2.jpg", "themes/plant.jpg", "themes/potted.jpg", "themes/succulent.jpg", "themes/garden.jpg"]),
+    (["bouquet", "rose", "flower", "peony", "lily", "lavender", "sunflower", "bloom", "dried", "wildflower"],
+     ["themes/flower-hero.jpg", "themes/roses.jpg", "themes/bouquet.jpg", "themes/peony.jpg", "themes/garden.jpg"]),
+    (["toy", "plush", "unicorn", "kids", "balloon", "party", "confetti", "cake", "candle"],
+     ["products/toy-1.jpg", "products/toy-2.jpg", "themes/balloons.jpg", "themes/birthday-hero.jpg", "themes/cake.jpg"]),
+    (["notebook", "journal", "pen", "desk", "portfolio", "organizer", "executive", "usb", "charger", "award", "trophy", "branded"],
+     ["products/notebook-1.jpg", "products/notebook-2.jpg", "themes/office.jpg", "themes/corporate.jpg", "lifestyle/corporate.jpg"]),
+    (["lamp", "led", "tech", "earbud", "wireless", "diffuser", "bottle", "blanket", "print"],
+     ["themes/lamp.jpg", "themes/headphones.jpg", "themes/camera.jpg", "themes/interior.jpg", "themes/bottle.jpg"]),
+    (["wedding", "couple", "flute", "keepsake", "favor", "honeymoon", "vow", "mr & mrs"],
+     ["themes/wedding-hero.jpg", "themes/wedding-rings.jpg", "themes/wedding-couple.jpg", "themes/celebration.jpg"]),
+    (["diwali", "christmas", "eid", "rakhi", "festive", "holiday", "seasonal", "holi", "new year", "sparkle", "lights"],
+     ["themes/christmas.jpg", "themes/festive-tree.jpg", "themes/celebration.jpg", "themes/gifts-hero.jpg"]),
+    (["wood", "carved", "ceramic", "linen", "woven", "macramé", "macrame", "basket", "craft", "eco", "handmade"],
+     ["themes/pottery.jpg", "themes/pottery-close.jpg", "themes/wood-decor.jpg", "themes/interior.jpg", "products/candle-1.jpg"]),
+    (["scarf", "silk", "crystal", "marble", "leather", "velvet", "decanter"],
+     ["themes/cosmetics.jpg", "themes/jewelry.jpg", "themes/perfume.jpg", "products/box-1.jpg", "products/perfume-1.jpg"]),
+]
+
+DEMO_IMAGE_POOLS = {
+    "demo-01-luxury": {
+        "hero": ["themes/gifts-hero.jpg", "themes/wrapped-gifts.jpg", "themes/jewelry.jpg", "themes/perfume.jpg", "themes/watch.jpg"],
+        "category": ["themes/jewelry.jpg", "themes/perfume.jpg", "themes/cosmetics.jpg", "themes/watch.jpg", "products/hamper-1.jpg", "products/box-1.jpg"],
+        "gallery": ["themes/gifts-hero.jpg", "themes/jewelry.jpg", "themes/perfume.jpg", "themes/watch.jpg", "products/box-1.jpg", "products/box-2.jpg", "products/hamper-1.jpg", "themes/wrapped-gifts.jpg", "products/jewelry-1.jpg", "products/perfume-1.jpg", "products/watch-1.jpg", "lifestyle/hero.jpg"],
+        "blog": ["themes/wrapped-gifts.jpg", "themes/gifts-hero.jpg", "themes/jewelry.jpg", "themes/perfume.jpg", "products/hamper-1.jpg", "lifestyle/about.jpg"],
+        "about": ["lifestyle/about.jpg", "themes/gifts-hero.jpg"],
+        "default": ["themes/gifts-hero.jpg", "products/box-1.jpg", "themes/jewelry.jpg", "themes/perfume.jpg"],
+    },
+    "demo-02-flower": {
+        "hero": ["themes/flower-hero.jpg", "themes/bouquet.jpg", "themes/roses.jpg", "themes/peony.jpg"],
+        "category": ["themes/bouquet.jpg", "themes/roses.jpg", "themes/peony.jpg", "themes/garden.jpg", "themes/plant.jpg", "themes/potted.jpg"],
+        "gallery": ["themes/flower-hero.jpg", "themes/roses.jpg", "themes/bouquet.jpg", "themes/peony.jpg", "themes/garden.jpg", "themes/plant.jpg", "themes/potted.jpg", "themes/succulent.jpg", "products/plant-1.jpg", "products/plant-2.jpg", "themes/peony.jpg", "themes/roses.jpg"],
+        "blog": ["themes/bouquet.jpg", "themes/roses.jpg", "themes/garden.jpg", "themes/flower-hero.jpg", "themes/peony.jpg", "themes/plant.jpg"],
+        "about": ["themes/flower-hero.jpg", "themes/garden.jpg"],
+        "default": ["themes/bouquet.jpg", "themes/roses.jpg", "themes/peony.jpg", "themes/plant.jpg"],
+    },
+    "demo-03-personalized": {
+        "hero": ["lifestyle/personalize.jpg", "themes/mug.jpg", "products/frame-1.jpg", "themes/lamp.jpg"],
+        "category": ["products/mug-1.jpg", "products/frame-1.jpg", "themes/lamp.jpg", "themes/jewelry.jpg", "products/mug-2.jpg", "products/notebook-1.jpg"],
+        "gallery": ["products/mug-1.jpg", "products/mug-2.jpg", "products/frame-1.jpg", "products/frame-2.jpg", "themes/lamp.jpg", "themes/mug.jpg", "lifestyle/personalize.jpg", "products/notebook-1.jpg", "themes/jewelry.jpg", "products/candle-1.jpg", "themes/interior.jpg", "themes/bottle.jpg"],
+        "blog": ["lifestyle/personalize.jpg", "products/mug-1.jpg", "products/frame-1.jpg", "themes/lamp.jpg", "themes/mug.jpg", "products/notebook-1.jpg"],
+        "about": ["lifestyle/personalize.jpg", "products/mug-1.jpg"],
+        "default": ["products/mug-1.jpg", "products/frame-1.jpg", "themes/lamp.jpg", "themes/mug.jpg"],
+    },
+    "demo-04-corporate": {
+        "hero": ["themes/corporate.jpg", "themes/office.jpg", "lifestyle/corporate.jpg", "products/notebook-1.jpg"],
+        "category": ["products/notebook-1.jpg", "themes/office.jpg", "themes/headphones.jpg", "products/watch-1.jpg", "products/hamper-1.jpg", "themes/corporate.jpg"],
+        "gallery": ["themes/corporate.jpg", "themes/office.jpg", "products/notebook-1.jpg", "products/notebook-2.jpg", "products/watch-1.jpg", "products/hamper-1.jpg", "themes/headphones.jpg", "lifestyle/corporate.jpg", "products/tea-1.jpg", "products/box-1.jpg", "themes/bag.jpg", "themes/camera.jpg"],
+        "blog": ["themes/corporate.jpg", "themes/office.jpg", "products/notebook-1.jpg", "products/hamper-1.jpg", "lifestyle/corporate.jpg", "themes/headphones.jpg"],
+        "about": ["lifestyle/corporate.jpg", "themes/office.jpg"],
+        "default": ["themes/corporate.jpg", "products/notebook-1.jpg", "themes/office.jpg", "products/hamper-1.jpg"],
+    },
+    "demo-05-chocolate": {
+        "hero": ["themes/chocolate-hero.jpg", "themes/chocolate-box.jpg", "themes/truffles.jpg", "themes/dessert.jpg"],
+        "category": ["products/choc-1.jpg", "themes/chocolate-box.jpg", "products/choc-2.jpg", "themes/macaron.jpg", "themes/truffles.jpg", "themes/dessert.jpg"],
+        "gallery": ["themes/chocolate-hero.jpg", "products/choc-1.jpg", "products/choc-2.jpg", "themes/chocolate-box.jpg", "themes/truffles.jpg", "themes/macaron.jpg", "themes/dessert.jpg", "themes/cake.jpg", "products/box-1.jpg", "products/box-2.jpg", "themes/truffles.jpg", "themes/chocolate-box.jpg"],
+        "blog": ["themes/chocolate-hero.jpg", "themes/truffles.jpg", "themes/macaron.jpg", "products/choc-1.jpg", "themes/dessert.jpg", "themes/chocolate-box.jpg"],
+        "about": ["themes/chocolate-hero.jpg", "themes/truffles.jpg"],
+        "default": ["products/choc-1.jpg", "themes/chocolate-box.jpg", "themes/truffles.jpg", "products/choc-2.jpg"],
+    },
+    "demo-06-wedding": {
+        "hero": ["themes/wedding-hero.jpg", "themes/wedding-couple.jpg", "themes/wedding-rings.jpg", "themes/celebration.jpg"],
+        "category": ["themes/wedding-rings.jpg", "themes/wedding-couple.jpg", "themes/celebration.jpg", "themes/jewelry.jpg", "products/hamper-1.jpg", "products/box-1.jpg"],
+        "gallery": ["themes/wedding-hero.jpg", "themes/wedding-rings.jpg", "themes/wedding-couple.jpg", "themes/celebration.jpg", "themes/roses.jpg", "themes/jewelry.jpg", "products/hamper-1.jpg", "products/box-1.jpg", "themes/bouquet.jpg", "themes/perfume.jpg", "themes/gifts-hero.jpg", "themes/wrapped-gifts.jpg"],
+        "blog": ["themes/wedding-hero.jpg", "themes/wedding-rings.jpg", "themes/celebration.jpg", "themes/roses.jpg", "themes/bouquet.jpg", "themes/wedding-couple.jpg"],
+        "about": ["themes/wedding-hero.jpg", "themes/wedding-couple.jpg"],
+        "default": ["themes/wedding-rings.jpg", "themes/celebration.jpg", "themes/roses.jpg", "products/box-1.jpg"],
+    },
+    "demo-07-birthday": {
+        "hero": ["themes/birthday-hero.jpg", "themes/balloons.jpg", "themes/cake.jpg", "themes/celebration.jpg"],
+        "category": ["themes/balloons.jpg", "products/toy-1.jpg", "themes/celebration.jpg", "themes/cake.jpg", "products/box-1.jpg", "products/toy-2.jpg"],
+        "gallery": ["themes/birthday-hero.jpg", "themes/balloons.jpg", "themes/cake.jpg", "products/toy-1.jpg", "products/toy-2.jpg", "themes/celebration.jpg", "products/box-1.jpg", "products/box-2.jpg", "themes/gifts-hero.jpg", "themes/wrapped-gifts.jpg", "products/mug-1.jpg", "themes/dessert.jpg"],
+        "blog": ["themes/birthday-hero.jpg", "themes/balloons.jpg", "themes/cake.jpg", "products/toy-1.jpg", "themes/celebration.jpg", "themes/gifts-hero.jpg"],
+        "about": ["themes/birthday-hero.jpg", "themes/balloons.jpg"],
+        "default": ["themes/balloons.jpg", "themes/cake.jpg", "products/toy-1.jpg", "products/box-1.jpg"],
+    },
+    "demo-08-festival": {
+        "hero": ["themes/christmas.jpg", "themes/festive-tree.jpg", "themes/celebration.jpg", "themes/gifts-hero.jpg"],
+        "category": ["themes/festive-tree.jpg", "themes/christmas.jpg", "themes/celebration.jpg", "themes/gifts-hero.jpg", "products/box-1.jpg", "themes/wrapped-gifts.jpg"],
+        "gallery": ["themes/christmas.jpg", "themes/festive-tree.jpg", "themes/celebration.jpg", "themes/gifts-hero.jpg", "themes/wrapped-gifts.jpg", "products/box-1.jpg", "products/box-2.jpg", "products/hamper-1.jpg", "products/candle-1.jpg", "themes/dessert.jpg", "products/choc-1.jpg", "themes/roses.jpg"],
+        "blog": ["themes/christmas.jpg", "themes/celebration.jpg", "themes/festive-tree.jpg", "themes/gifts-hero.jpg", "products/hamper-1.jpg", "products/candle-1.jpg"],
+        "about": ["themes/christmas.jpg", "themes/celebration.jpg"],
+        "default": ["themes/christmas.jpg", "themes/festive-tree.jpg", "themes/celebration.jpg", "products/box-1.jpg"],
+    },
+    "demo-09-handmade": {
+        "hero": ["themes/pottery.jpg", "themes/wood-decor.jpg", "themes/pottery-close.jpg", "themes/interior.jpg"],
+        "category": ["themes/wood-decor.jpg", "themes/pottery.jpg", "themes/interior.jpg", "products/candle-1.jpg", "products/notebook-1.jpg", "themes/plant.jpg"],
+        "gallery": ["themes/pottery.jpg", "themes/pottery-close.jpg", "themes/wood-decor.jpg", "themes/interior.jpg", "products/candle-1.jpg", "products/candle-2.jpg", "products/notebook-1.jpg", "themes/plant.jpg", "themes/potted.jpg", "products/mug-1.jpg", "themes/bag.jpg", "lifestyle/about.jpg"],
+        "blog": ["themes/pottery.jpg", "themes/wood-decor.jpg", "themes/interior.jpg", "products/candle-1.jpg", "themes/pottery-close.jpg", "themes/plant.jpg"],
+        "about": ["themes/pottery.jpg", "themes/wood-decor.jpg"],
+        "default": ["themes/pottery.jpg", "themes/wood-decor.jpg", "products/candle-1.jpg", "themes/interior.jpg"],
+    },
+    "demo-10-modern": {
+        "hero": ["themes/headphones.jpg", "themes/camera.jpg", "themes/interior.jpg", "themes/lamp.jpg", "themes/watch.jpg"],
+        "category": ["themes/headphones.jpg", "themes/gifts-hero.jpg", "themes/watch.jpg", "themes/cosmetics.jpg", "themes/interior.jpg", "themes/camera.jpg", "products/toy-1.jpg", "themes/celebration.jpg"],
+        "gallery": ["themes/headphones.jpg", "themes/camera.jpg", "themes/lamp.jpg", "themes/watch.jpg", "themes/interior.jpg", "themes/bottle.jpg", "themes/bag.jpg", "products/candle-1.jpg", "themes/mug.jpg", "products/notebook-1.jpg", "themes/cosmetics.jpg", "themes/gifts-hero.jpg"],
+        "blog": ["themes/headphones.jpg", "themes/interior.jpg", "themes/camera.jpg", "themes/lamp.jpg", "themes/watch.jpg", "themes/gifts-hero.jpg"],
+        "about": ["themes/interior.jpg", "themes/headphones.jpg"],
+        "default": ["themes/headphones.jpg", "themes/camera.jpg", "themes/lamp.jpg", "themes/watch.jpg"],
+    },
+}
+
+
+def _stable_index(seed: str, size: int) -> int:
+    return sum(ord(ch) for ch in seed) % max(size, 1)
+
+
+def asset(path: str, root: str = IMG) -> str:
+    return f"{root}/{path}"
+
+
+def pick_product_image(name: str, seed: str = "", root: str = IMG) -> str:
+    low = name.lower()
+    for keys, files in PRODUCT_IMAGE_RULES:
+        if any(k in low for k in keys):
+            return asset(files[_stable_index(seed or name, len(files))], root)
+    # fallback by seed into wrapped gifts
+    fallback = ["themes/gifts-hero.jpg", "themes/wrapped-gifts.jpg", "products/box-1.jpg", "products/box-2.jpg", "products/hamper-1.jpg"]
+    return asset(fallback[_stable_index(seed or name, len(fallback))], root)
+
+
+def pick_demo_image(demo_id: str, kind: str, seed: str = "", root: str = IMG) -> str:
+    pool = DEMO_IMAGE_POOLS.get(demo_id, {}).get(kind) or DEMO_IMAGE_POOLS.get(demo_id, {}).get("default") or ["themes/gifts-hero.jpg"]
+    return asset(pool[_stable_index(seed or kind, len(pool))], root)
+
+
+def img(seed, w=800, h=600, demo_id=None, kind="default", name=None, root=IMG):
+    """Resolve a content-matched local image from seed / demo / product name."""
+    seed = str(seed)
+    if name:
+        return pick_product_image(name, seed, root)
+    # Infer demo id from seed prefixes like demo-01-luxury-hero0
+    if demo_id is None:
+        for did in DEMO_IMAGE_POOLS:
+            if seed.startswith(did):
+                demo_id = did
+                break
+    if demo_id is None:
+        demo_id = "demo-01-luxury"
+
+    low = seed.lower()
+    if kind == "default":
+        if "hero" in low:
+            kind = "hero"
+        elif "cat" in low:
+            kind = "category"
+        elif "blog" in low:
+            kind = "blog"
+        elif "about" in low or "bulk" in low:
+            kind = "about"
+        elif any(x in low for x in ("gallery", "-g", "ig", "lb", "look", "col", "fest", "age", "maker", "pair", "sea", "deal", "t1", "t2", "s1", "s2", "s3", "s4", "detail", "th")):
+            kind = "gallery"
+        elif "-p" in low or "product" in low:
+            # product seed without name — use demo defaults
+            kind = "default"
+
+    # Product seeds: demo-xx-pN
+    if name is None and "-p" in seed:
+        # try to leave as demo default product-ish pool
+        kind = "default"
+
+    return pick_demo_image(demo_id, kind, seed, root)
 
 
 def ph(text, w=800, h=600, bg="333", fg="fff"):
+    """Brand/logo placeholders stay as generated SVG-like placehold.co text badges."""
     t = text.replace(" ", "+")
     return f"https://placehold.co/{w}x{h}/{bg}/{fg}?text={t}"
 
@@ -629,12 +812,13 @@ def product_cards(demo, start=0, count=8, cols="col-6 col-md-4 col-lg-3"):
         seed = f"{demo['id']}-p{start + i}"
         badge_html = f'<span class="product-badge badge-{badge}">{badge}</span>' if badge else ""
         old_html = f'<span class="old-price">${old}</span>' if old else ""
+        src = pick_product_image(name, seed)
         cards.append(f"""
         <div class="{cols}" data-aos="fade-up" data-aos-delay="{(i % 4) * 80}">
           <article class="product-card" data-product-id="{seed}" data-name="{name}" data-price="{price}">
             <div class="product-media">
               {badge_html}
-              <img src="{img(seed, 600, 700)}" alt="{name}" loading="lazy" width="600" height="700">
+              <img src="{src}" alt="{name}" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
@@ -653,10 +837,14 @@ def product_cards(demo, start=0, count=8, cols="col-6 col-md-4 col-lg-3"):
 def category_grid(demo):
     items = []
     for i, cat in enumerate(demo["categories"]):
+        # Prefer category-name match, else demo category pool
+        src = pick_product_image(cat, f"{demo['id']}-cat{i}")
+        if "gifts-hero" in src or "wrapped-gifts" in src:
+            src = pick_demo_image(demo["id"], "category", f"{demo['id']}-cat{i}")
         items.append(f"""
         <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="{i * 50}">
           <a class="category-card" href="shop.html">
-            <img src="{img(demo['id'] + '-cat' + str(i), 400, 400)}" alt="{cat}" loading="lazy">
+            <img src="{src}" alt="{cat}" loading="lazy">
             <span>{cat}</span>
           </a>
         </div>""")
@@ -728,10 +916,10 @@ def hero_html(demo):
         </div>
         <div class="col-lg-6" data-aos="zoom-in">
           <div class="showcase-grid">
-            <img src="{img(demo['id']+'-s1', 500, 500)}" alt="Custom mug" loading="lazy">
-            <img src="{img(demo['id']+'-s2', 500, 500)}" alt="Photo frame" loading="lazy">
-            <img src="{img(demo['id']+'-s3', 500, 500)}" alt="LED lamp" loading="lazy">
-            <img src="{img(demo['id']+'-s4', 500, 500)}" alt="Name gift" loading="lazy">
+            <img src="{pick_product_image('Custom Mug', demo['id']+'-s1')}" alt="Custom mug" loading="lazy">
+            <img src="{pick_product_image('Photo Frame', demo['id']+'-s2')}" alt="Photo frame" loading="lazy">
+            <img src="{pick_product_image('LED Lamp', demo['id']+'-s3')}" alt="LED lamp" loading="lazy">
+            <img src="{pick_product_image('Name Necklace', demo['id']+'-s4')}" alt="Name gift" loading="lazy">
           </div>
         </div>
       </div>
@@ -1016,9 +1204,9 @@ def extra_sections_html(demo):
     <div class="container">
       <div class="section-head text-center" data-aos="fade-up"><h2>Perfect Pairings</h2><p>Chocolate meets coffee, wine & more</p></div>
       <div class="row g-4">
-        <div class="col-md-4" data-aos="fade-up"><div class="pair-card"><img src="{img(demo['id']+'-pair1', 600, 400)}" alt="Wine pairing" loading="lazy"><h3>Wine Night Box</h3></div></div>
-        <div class="col-md-4" data-aos="fade-up" data-aos-delay="80"><div class="pair-card"><img src="{img(demo['id']+'-pair2', 600, 400)}" alt="Coffee pairing" loading="lazy"><h3>Coffee Ritual</h3></div></div>
-        <div class="col-md-4" data-aos="fade-up" data-aos-delay="160"><div class="pair-card"><img src="{img(demo['id']+'-pair3', 600, 400)}" alt="Tea pairing" loading="lazy"><h3>Afternoon Tea</h3></div></div>
+        <div class="col-md-4" data-aos="fade-up"><div class="pair-card"><img src="{pick_product_image('Wine Champagne Hamper', demo['id']+'-pair1')}" alt="Wine pairing" loading="lazy"><h3>Wine Night Box</h3></div></div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="80"><div class="pair-card"><img src="{pick_product_image('Coffee Mug Ritual', demo['id']+'-pair2')}" alt="Coffee pairing" loading="lazy"><h3>Coffee Ritual</h3></div></div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="160"><div class="pair-card"><img src="{pick_product_image('Gourmet Tea Box', demo['id']+'-pair3')}" alt="Tea pairing" loading="lazy"><h3>Afternoon Tea</h3></div></div>
       </div>
     </div>
   </section>""")
@@ -1039,7 +1227,7 @@ def extra_sections_html(demo):
     <div class="container">
       <div class="section-head text-center" data-aos="fade-up"><h2>Wedding Collections</h2></div>
       <div class="row g-4">
-        {"".join(f'<div class="col-md-4"><a class="collection-card" href="shop.html"><img src="{img(demo["id"]+"-col"+str(i), 700, 800)}" alt="{name}" loading="lazy"><span>{name}</span></a></div>' for i, name in enumerate(["Something Gold", "Couple Keepsakes", "Guest Favors"]))}
+        {"".join(f'<div class="col-md-4"><a class="collection-card" href="shop.html"><img src="{pick_product_image(name, demo["id"]+"-col"+str(i))}" alt="{name}" loading="lazy"><span>{name}</span></a></div>' for i, name in enumerate(["Something Gold Jewelry", "Couple Wedding Keepsakes", "Guest Favor Minis"]))}
       </div>
     </div>
   </section>""")
@@ -1058,7 +1246,7 @@ def extra_sections_html(demo):
     <div class="container">
       <div class="section-head text-center" data-aos="fade-up"><h2>Shop By Age</h2></div>
       <div class="row g-3">
-        {"".join(f'<div class="col-6 col-md-3"><a class="age-card" href="shop.html"><img src="{img(demo["id"]+"-age"+str(i), 400, 400)}" alt="{a}" loading="lazy"><span>{a}</span></a></div>' for i, a in enumerate(["Kids 3–7", "Kids 8–12", "Teens", "Adults"]))}
+        {"".join(f'<div class="col-6 col-md-3"><a class="age-card" href="shop.html"><img src="{pick_product_image(a if "Kids" in a or a=="Teens" else "Party Adult Gift", demo["id"]+"-age"+str(i))}" alt="{a}" loading="lazy"><span>{a}</span></a></div>' for i, a in enumerate(["Kids 3–7", "Kids 8–12", "Teens", "Adults"]))}
       </div>
     </div>
   </section>""")
@@ -1082,7 +1270,7 @@ def extra_sections_html(demo):
     <div class="container">
       <div class="section-head text-center" data-aos="fade-up"><h2>Festival Collections</h2></div>
       <div class="row g-3">
-        {"".join(f'<div class="col-6 col-md-4 col-lg-2"><a class="fest-card" href="shop.html"><img src="{img(demo["id"]+"-fest"+str(i), 300, 300)}" alt="{c}" loading="lazy"><span>{c}</span></a></div>' for i, c in enumerate(demo["categories"]))}
+        {"".join(f'<div class="col-6 col-md-4 col-lg-2"><a class="fest-card" href="shop.html"><img src="{pick_product_image(c + " festive gift", demo["id"]+"-fest"+str(i))}" alt="{c}" loading="lazy"><span>{c}</span></a></div>' for i, c in enumerate(demo["categories"]))}
       </div>
     </div>
   </section>""")
@@ -1342,6 +1530,11 @@ def shop_page(demo):
 
 def product_page(demo):
     p = demo["products"][0]
+    main_src = pick_product_image(p[0], demo["id"] + "-detail")
+    thumbs = "".join(
+        f'<button type="button" data-thumb="{pick_product_image(p[0], demo["id"] + "-th" + str(i))}"><img src="{pick_product_image(p[0], demo["id"] + "-th" + str(i))}" alt="Thumb {i+1}"></button>'
+        for i in range(4)
+    )
     return "\n".join([
         head_html(demo, p[0], "product"),
         header_html(demo, "product"),
@@ -1352,9 +1545,9 @@ def product_page(demo):
       <div class="row g-5">
         <div class="col-lg-6" data-aos="fade-right">
           <div class="product-gallery">
-            <img class="main-img" src="{img(demo['id']+'-detail', 900, 1000)}" alt="{p[0]}" id="mainProductImg">
+            <img class="main-img" src="{main_src}" alt="{p[0]}" id="mainProductImg">
             <div class="thumbs">
-              {"".join(f'<button type="button" data-thumb="{img(demo["id"]+"-th"+str(i), 200, 200)}"><img src="{img(demo["id"]+"-th"+str(i), 200, 200)}" alt="Thumb {i+1}"></button>' for i in range(4))}
+              {thumbs}
             </div>
           </div>
         </div>
@@ -1488,7 +1681,7 @@ def faq_page(demo):
         ("What payment methods are supported?", "Demo cart only. Integrate Stripe, PayPal or your gateway."),
         ("How do bulk orders work?", "Use the corporate contact form pattern for quote requests."),
         ("Is the template responsive?", "Fully responsive across mobile, tablet and desktop."),
-        ("Are images included?", "Placeholders from picsum.photos / placehold.co — replace with your assets."),
+        ("Are images included?", "Yes — content-matched gift images are bundled under assets/images (products, lifestyle, themes). Swap them for your own photos anytime."),
     ]
     items = "".join(
         f"""<div class="accordion-item">
@@ -2126,7 +2319,7 @@ def root_landing():
         cards += f"""
         <div class="col-md-6 col-xl-4" data-aos="fade-up" data-aos-delay="{(i % 3) * 80}">
           <article class="demo-card">
-            <div class="demo-preview" style="background-image:url('{img(d["id"]+"-preview", 900, 700)}')">
+            <div class="demo-preview" style="background-image:url('{pick_demo_image(d["id"], "hero", d["id"]+"-preview", root="assets/images")}')">
               <span class="demo-num">0{i if i < 10 else i}</span>
               <div class="demo-overlay">
                 <a class="btn btn-light" href="{d['id']}/index.html" target="_blank" rel="noopener">Live Preview</a>
@@ -2209,9 +2402,9 @@ def root_landing():
         </div>
         <div class="col-lg-6" data-aos="fade-left">
           <div class="hero-mosaic">
-            <img src="{img('giftora-land-1', 700, 500)}" alt="Giftora preview" loading="eager">
-            <img src="{img('giftora-land-2', 500, 400)}" alt="Giftora preview 2" loading="lazy">
-            <img src="{img('giftora-land-3', 500, 400)}" alt="Giftora preview 3" loading="lazy">
+            <img src="assets/images/themes/gifts-hero.jpg" alt="Giftora luxury gifts" loading="eager">
+            <img src="assets/images/themes/flower-hero.jpg" alt="Giftora floral gifts" loading="lazy">
+            <img src="assets/images/themes/chocolate-hero.jpg" alt="Giftora chocolate gifts" loading="lazy">
           </div>
         </div>
       </div>
@@ -2303,7 +2496,7 @@ a { color: inherit; text-decoration: none; }
   position: relative; overflow: hidden; color: #fff; padding: 6rem 0 5rem;
   background:
     linear-gradient(135deg, rgba(11,16,32,.92), rgba(31,138,122,.75)),
-    url('https://picsum.photos/seed/giftora-hero-bg/1920/1100') center/cover;
+    url('../images/themes/gifts-hero.jpg') center/cover;
 }
 .hero-glow {
   position: absolute; width: 480px; height: 480px; border-radius: 50%;
@@ -2352,7 +2545,7 @@ a { color: inherit; text-decoration: none; }
 .purchase-section {
   background:
     linear-gradient(135deg, rgba(31,138,122,.95), rgba(11,16,32,.92)),
-    url('https://picsum.photos/seed/giftora-cta/1600/700') center/cover;
+    url('../images/themes/celebration.jpg') center/cover;
   color: #fff;
 }
 .purchase-section code { background: rgba(255,255,255,.15); padding: .15rem .4rem; border-radius: .3rem; }
@@ -2428,7 +2621,7 @@ python3 -m http.server 8080</pre>
         <li>Vanilla JavaScript (ES6)</li>
         <li>Font Awesome 6 · Swiper.js 11 · AOS 2.3</li>
         <li>Google Fonts (unique per demo)</li>
-        <li>Placeholder images: picsum.photos / placehold.co</li>
+        <li>Content-matched images under <code>assets/images/</code> (products, lifestyle, themes)</li>
       </ul>
     </div>
 
@@ -2467,7 +2660,7 @@ python3 -m http.server 8080</pre>
       <h2>7. Credits</h2>
       <ul>
         <li>Bootstrap, Font Awesome, Swiper, AOS (CDN)</li>
-        <li>Images: <a href="https://picsum.photos" target="_blank" rel="noopener">picsum.photos</a>, <a href="https://placehold.co" target="_blank" rel="noopener">placehold.co</a></li>
+        <li>Images: bundled gift photography in <code>assets/images/</code> (Unsplash-licensed theme shots + product photos). Brand badges use placehold.co.</li>
         <li>Fonts: Google Fonts</li>
       </ul>
       <p class="mb-0">&copy; 2026 Giftora Premium HTML Template</p>
@@ -2531,6 +2724,16 @@ Each demo includes: Home, Shop, Product, About, Gallery, Blog, FAQ, Contact.
 HTML5 · CSS3 · Bootstrap 5 · Vanilla JS · Font Awesome · Swiper.js · AOS
 
 See `documentation/index.html` for full docs.
+
+## Images
+
+Content-matched photography lives in `assets/images/`:
+
+- `products/` — mugs, frames, chocolate, jewelry, hampers, toys, etc.
+- `lifestyle/` — about / corporate / personalize scenes
+- `themes/` — demo heroes (flowers, wedding, birthday, festival, handmade, modern)
+
+Product cards, categories, and heroes pick images by demo theme and product name.
 """)
     print("Done.")
 
