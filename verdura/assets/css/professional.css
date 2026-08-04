@@ -1,0 +1,248 @@
+/* Professional site extras */
+
+.pro-body {
+  --brand: #1a4d32;
+  --brand-deep: #0a1f14;
+  --accent: #c4782b;
+  --surface: #f7f9f6;
+}
+
+/* Sticky solid header on scroll helper */
+.site-header.pro-header {
+  position: absolute;
+}
+
+.site-header.pro-header.is-scrolled {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 31, 20, 0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Trust strip under hero */
+.trust-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+}
+
+.trust-item {
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.trust-item strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  letter-spacing: -0.03em;
+  color: var(--brand-deep);
+  line-height: 1.1;
+}
+
+.trust-item span {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Service pillars */
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.pillar {
+  padding: 1.75rem 0 0;
+  border-top: 2px solid var(--brand);
+}
+
+.pillar h3 {
+  margin: 0.85rem 0 0.55rem;
+}
+
+.pillar p {
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.pillar a {
+  display: inline-flex;
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--brand);
+  gap: 0.35rem;
+}
+
+.pillar a:hover {
+  color: var(--brand-deep);
+}
+
+/* Origin map style list */
+.origin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+}
+
+.origin-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.85rem;
+  align-items: start;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.origin-dot {
+  width: 10px;
+  height: 10px;
+  margin-top: 0.45rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.origin-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.origin-item p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* Testimonial professional */
+.pro-quote {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.pro-quote blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.8vw, 2.1rem);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.pro-quote cite {
+  display: block;
+  margin-top: 1.25rem;
+  font-style: normal;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.pro-quote cite strong {
+  display: block;
+  color: var(--ink);
+  margin-bottom: 0.15rem;
+}
+
+/* Logos / clients row */
+.client-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0.55;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+/* FAQ */
+.faq {
+  display: grid;
+  gap: 0;
+  max-width: 720px;
+}
+
+.faq details {
+  border-bottom: 1px solid var(--line);
+  padding: 1.15rem 0;
+}
+
+.faq summary {
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::after {
+  content: "+";
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--brand);
+  line-height: 1;
+}
+
+.faq details[open] summary::after {
+  content: "–";
+}
+
+.faq details p {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  max-width: 38rem;
+}
+
+/* Demo gallery link bar */
+.demos-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius);
+  background: var(--green-50);
+  border: 1px solid var(--line);
+  margin-top: 2rem;
+}
+
+.demos-bar p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 960px) {
+  .trust-strip,
+  .pillar-grid,
+  .pro-quote,
+  .origin-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .trust-strip,
+  .pillar-grid,
+  .pro-quote,
+  .origin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .client-row {
+    justify-content: center;
+    text-align: center;
+  }
+}
