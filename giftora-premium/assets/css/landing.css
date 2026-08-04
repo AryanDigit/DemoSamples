@@ -1,0 +1,87 @@
+:root {
+  --ink: #0b1020;
+  --paper: #f6f3ee;
+  --gold: #c6a75e;
+  --teal: #1f8a7a;
+  --card: #ffffff;
+  --font-d: 'Syne', sans-serif;
+  --font-b: 'Manrope', sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font-b); background: var(--paper); color: var(--ink); }
+h1,h2,h3,.logo { font-family: var(--font-d); }
+a { color: inherit; text-decoration: none; }
+.section { padding: 5rem 0; }
+.eyebrow { text-transform: uppercase; letter-spacing: .2em; font-size: .75rem; color: var(--teal); font-weight: 700; }
+.preloader { position: fixed; inset: 0; background: var(--ink); color: #fff; display: grid; place-items: center; z-index: 9999; transition: .4s; }
+.preloader.hide { opacity: 0; visibility: hidden; }
+.preloader span { width: 64px; height: 64px; border: 2px solid var(--gold); border-radius: 50%; display: grid; place-items: center; margin: 0 auto .75rem; font-family: var(--font-d); font-size: 1.5rem; }
+.landing-header { background: rgba(246,243,238,.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); }
+.logo { font-size: 1.35rem; font-weight: 800; }
+.logo em { font-style: normal; color: var(--teal); }
+.landing-header nav a { font-weight: 600; opacity: .75; }
+.landing-header nav a:hover { opacity: 1; color: var(--teal); }
+.btn-buy, .purchase-section .btn, .docs-band .btn { background: var(--ink); color: #fff; border-radius: 999px; padding: .65rem 1.25rem; font-weight: 700; }
+.btn-buy:hover { background: var(--teal); color: #fff; }
+.landing-hero {
+  position: relative; overflow: hidden; color: #fff; padding: 6rem 0 5rem;
+  background:
+    linear-gradient(135deg, rgba(11,16,32,.92), rgba(31,138,122,.75)),
+    url('https://picsum.photos/seed/giftora-hero-bg/1920/1100') center/cover;
+}
+.hero-glow {
+  position: absolute; width: 480px; height: 480px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(198,167,94,.35), transparent 70%);
+  top: -80px; right: -60px; pointer-events: none;
+}
+.landing-hero h1 { font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1; margin: .5rem 0 1rem; }
+.landing-hero .lead { font-size: 1.1rem; opacity: .9; max-width: 34rem; }
+.hero-meta { list-style: none; padding: 0; margin: 2rem 0 0; display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; }
+.hero-meta i { color: var(--gold); margin-right: .35rem; }
+.hero-mosaic { display: grid; grid-template-columns: 1.4fr 1fr; gap: .75rem; }
+.hero-mosaic img { border-radius: 1rem; width: 100%; object-fit: cover; box-shadow: 0 30px 60px rgba(0,0,0,.35); }
+.hero-mosaic img:first-child { grid-row: span 2; height: 100%; min-height: 360px; }
+.feature-tile {
+  background: var(--card); border-radius: 1.25rem; padding: 1.75rem; height: 100%;
+  border: 1px solid rgba(0,0,0,.05); box-shadow: 0 10px 30px rgba(11,16,32,.04);
+}
+.feature-tile h3 { font-size: 1.2rem; margin-bottom: .5rem; }
+.demos-section { background: #efeae2; }
+.demo-card {
+  background: var(--card); border-radius: 1.25rem; overflow: hidden; height: 100%;
+  border: 1px solid rgba(0,0,0,.05); transition: transform .3s ease, box-shadow .3s ease;
+}
+.demo-card:hover { transform: translateY(-8px); box-shadow: 0 24px 50px rgba(11,16,32,.12); }
+.demo-preview {
+  aspect-ratio: 4/3; background-size: cover; background-position: center; position: relative;
+}
+.demo-num {
+  position: absolute; top: 1rem; left: 1rem; background: rgba(11,16,32,.8); color: #fff;
+  font-family: var(--font-d); font-weight: 700; padding: .35rem .65rem; border-radius: .5rem;
+}
+.demo-overlay {
+  position: absolute; inset: 0; background: rgba(11,16,32,.45); display: grid; place-items: center;
+  opacity: 0; transition: .3s;
+}
+.demo-card:hover .demo-overlay { opacity: 1; }
+.demo-meta { padding: 1.25rem 1.35rem 1.5rem; }
+.demo-meta h3 { font-size: 1.2rem; margin-bottom: .25rem; }
+.demo-meta p { color: #667; margin-bottom: .75rem; }
+.swatches { display: flex; gap: .4rem; }
+.swatches i { width: 16px; height: 16px; border-radius: 50%; display: inline-block; }
+.docs-band {
+  background: var(--ink); color: #fff; border-radius: 1.5rem; padding: 2.5rem;
+  display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+}
+.purchase-section {
+  background:
+    linear-gradient(135deg, rgba(31,138,122,.95), rgba(11,16,32,.92)),
+    url('https://picsum.photos/seed/giftora-cta/1600/700') center/cover;
+  color: #fff;
+}
+.purchase-section code { background: rgba(255,255,255,.15); padding: .15rem .4rem; border-radius: .3rem; }
+.landing-footer { background: var(--ink); color: rgba(255,255,255,.7); }
+@media (max-width: 767.98px) {
+  .hero-mosaic { grid-template-columns: 1fr 1fr; }
+  .hero-mosaic img:first-child { grid-row: auto; min-height: 200px; }
+}
