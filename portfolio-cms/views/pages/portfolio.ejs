@@ -1,0 +1,34 @@
+<section class="page-hero">
+  <div class="container-wide">
+    <div class="eyebrow">Portfolio</div>
+    <h1><%= page?.title || 'Selected Work' %></h1>
+    <p>Projects across branding, product, photography, architecture, and digital experiences.</p>
+  </div>
+</section>
+<section style="padding-top:0">
+  <div class="container-wide">
+    <div class="filters" data-aos="fade-up">
+      <a class="filter-btn <%= !activeCategory ? 'active' : '' %>" href="/portfolio">All</a>
+      <% categories.forEach(function(c) { %>
+      <a class="filter-btn <%= activeCategory === c.slug ? 'active' : '' %>" href="/portfolio?category=<%= c.slug %>"><%= c.name %></a>
+      <% }) %>
+    </div>
+    <div class="portfolio-grid">
+      <% if (!projects.length) { %>
+      <p>No projects in this category yet.</p>
+      <% } %>
+      <% projects.forEach(function(p, i) { %>
+      <a class="project-card" href="/portfolio/<%= p.slug %>" data-aos="fade-up" data-aos-delay="<%= (i % 2) * 80 %>">
+        <div class="project-media">
+          <img src="<%= p.cover_image %>" alt="<%= p.title %>" loading="lazy">
+          <div class="project-meta">
+            <div class="project-cat"><%= p.category_name || 'Project' %></div>
+            <h3><%= p.title %></h3>
+            <p><%= p.short_description %></p>
+          </div>
+        </div>
+      </a>
+      <% }) %>
+    </div>
+  </div>
+</section>

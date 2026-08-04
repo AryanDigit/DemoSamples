@@ -1,0 +1,20 @@
+<% const isHome = currentPath === '/'; %>
+<header class="site-header <%= isHome ? 'is-dark' : '' %>" id="siteHeader">
+  <div class="nav-inner">
+    <a class="brand" href="/" aria-label="<%= settings.logo_text || siteName %> home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <%= settings.logo_text || siteName %>
+    </a>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">Home</a></li>
+      <li><a href="/about" class="<%= currentPath.startsWith('/about') ? 'active' : '' %>">About</a></li>
+      <li><a href="/services" class="<%= currentPath.startsWith('/services') ? 'active' : '' %>">Services</a></li>
+      <li><a href="/portfolio" class="<%= currentPath.startsWith('/portfolio') ? 'active' : '' %>">Work</a></li>
+      <li><a href="/blog" class="<%= currentPath.startsWith('/blog') ? 'active' : '' %>">Insights</a></li>
+      <li><a class="nav-cta" href="/contact">Start a Project</a></li>
+    </ul>
+  </div>
+</header>

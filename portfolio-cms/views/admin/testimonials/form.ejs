@@ -1,0 +1,17 @@
+<form method="POST" action="<%= item ? '/admin/testimonials/' + item.id : '/admin/testimonials' %>" class="panel">
+  <div class="form-grid">
+    <div class="form-group"><label>Name</label><input name="name" required value="<%= item?.name || '' %>"></div>
+    <div class="form-group"><label>Role</label><input name="role" value="<%= item?.role || '' %>"></div>
+    <div class="form-group"><label>Company</label><input name="company" value="<%= item?.company || '' %>"></div>
+    <div class="form-group"><label>Avatar URL</label><input name="avatar" value="<%= item?.avatar || '' %>"></div>
+    <div class="form-group full"><label>Quote</label><textarea name="content" required style="min-height:120px"><%= item?.content || '' %></textarea></div>
+    <div class="form-group"><label>Rating (1-5)</label><input type="number" min="1" max="5" name="rating" value="<%= item?.rating || 5 %>"></div>
+    <div class="form-group"><label>Sort order</label><input type="number" name="sort_order" value="<%= item?.sort_order || 0 %>"></div>
+    <div class="form-group full check-row">
+      <label><input type="checkbox" name="is_featured" value="1" <%= item && item.is_featured ? 'checked' : '' %>> Featured</label>
+      <label><input type="checkbox" name="is_published" value="1" <%= !item || item.is_published ? 'checked' : '' %>> Published</label>
+    </div>
+  </div>
+  <button class="btn btn-teal" type="submit">Save</button>
+  <a class="btn btn-outline" href="/admin/testimonials">Cancel</a>
+</form>

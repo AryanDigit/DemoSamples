@@ -1,0 +1,85 @@
+<div class="two-col">
+  <div class="panel">
+    <div class="panel-head"><h2>Skills</h2></div>
+    <form method="POST" action="/admin/skills" class="form-grid" style="margin-bottom:1rem">
+      <div class="form-group"><label>Name</label><input name="name" required></div>
+      <div class="form-group"><label>%</label><input type="number" name="percentage" value="80" min="0" max="100"></div>
+      <div class="form-group"><label>Category</label><input name="category" value="Design"></div>
+      <div class="form-group" style="display:flex;align-items:end"><button class="btn btn-teal btn-sm" type="submit">Add</button></div>
+    </form>
+    <table>
+      <thead><tr><th>Skill</th><th>%</th><th></th></tr></thead>
+      <tbody>
+        <% skills.forEach(function(s) { %>
+        <tr>
+          <td><%= s.name %> <span class="help"><%= s.category %></span></td>
+          <td><%= s.percentage %>%</td>
+          <td>
+            <form method="POST" action="/admin/skills/<%= s.id %>/delete" data-confirm="Delete skill?">
+              <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel">
+    <div class="panel-head"><h2>Stats counters</h2></div>
+    <form method="POST" action="/admin/stats" class="form-grid" style="margin-bottom:1rem">
+      <div class="form-group"><label>Label</label><input name="label" required></div>
+      <div class="form-group"><label>Value</label><input name="value" required></div>
+      <div class="form-group"><label>Suffix</label><input name="suffix" placeholder="+"></div>
+      <div class="form-group" style="display:flex;align-items:end"><button class="btn btn-teal btn-sm" type="submit">Add</button></div>
+    </form>
+    <table>
+      <thead><tr><th>Label</th><th>Value</th><th></th></tr></thead>
+      <tbody>
+        <% stats.forEach(function(s) { %>
+        <tr>
+          <td><%= s.label %></td>
+          <td><%= s.value %><%= s.suffix || '' %></td>
+          <td>
+            <form method="POST" action="/admin/stats/<%= s.id %>/delete" data-confirm="Delete?">
+              <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="panel">
+  <div class="panel-head"><h2>Experience / Education</h2></div>
+  <form method="POST" action="/admin/experience" class="form-grid">
+    <div class="form-group"><label>Title</label><input name="title" required></div>
+    <div class="form-group"><label>Company / School</label><input name="company"></div>
+    <div class="form-group"><label>Location</label><input name="location"></div>
+    <div class="form-group"><label>Type</label>
+      <select name="type"><option value="work">Work</option><option value="education">Education</option></select>
+    </div>
+    <div class="form-group"><label>Start</label><input name="start_date" placeholder="2021"></div>
+    <div class="form-group"><label>End</label><input name="end_date" placeholder="2024"></div>
+    <div class="form-group full"><label>Description</label><textarea name="description"></textarea></div>
+    <div class="form-group full check-row"><label><input type="checkbox" name="is_current" value="1"> Current role</label></div>
+    <div class="form-group full"><button class="btn btn-teal btn-sm" type="submit">Add experience</button></div>
+  </form>
+  <table style="margin-top:1rem">
+    <thead><tr><th>Title</th><th>Org</th><th>Dates</th><th></th></tr></thead>
+    <tbody>
+      <% experience.forEach(function(e) { %>
+      <tr>
+        <td><%= e.title %></td>
+        <td><%= e.company %></td>
+        <td><%= e.start_date %><% if (e.is_current) { %> — Present<% } else if (e.end_date) { %> — <%= e.end_date %><% } %></td>
+        <td>
+          <form method="POST" action="/admin/experience/<%= e.id %>/delete" data-confirm="Delete?">
+            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

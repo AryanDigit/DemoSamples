@@ -1,0 +1,26 @@
+<div class="panel">
+  <div class="panel-head"><h2>Inbox</h2></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>From</th><th>Subject</th><th>Date</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <% messages.forEach(function(m) { %>
+      <tr>
+        <td><strong><%= m.name %></strong><div class="help"><%= m.email %></div></td>
+        <td><%= m.subject || '—' %></td>
+        <td><%= m.created_at %></td>
+        <td>
+          <span class="pill <%= m.is_read ? 'pill-gray' : 'pill-amber' %>"><%= m.is_read ? 'Read' : 'New' %></span>
+          <% if (m.is_replied) { %><span class="pill pill-green">Replied</span><% } %>
+        </td>
+        <td class="actions">
+          <a class="btn btn-outline btn-sm" href="/admin/messages/<%= m.id %>">Open</a>
+          <form method="POST" action="/admin/messages/<%= m.id %>/delete" style="display:inline" data-confirm="Delete message?">
+            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+      <% if (!messages.length) { %><tr><td colspan="5">No messages yet.</td></tr><% } %>
+    </tbody>
+  </table></div>
+</div>

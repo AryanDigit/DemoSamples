@@ -1,0 +1,32 @@
+<form method="POST" action="<%= project ? '/admin/projects/' + project.id : '/admin/projects' %>" enctype="multipart/form-data" class="panel">
+  <div class="form-grid">
+    <div class="form-group"><label>Title</label><input name="title" required value="<%= project?.title || '' %>"></div>
+    <div class="form-group"><label>Slug</label><input name="slug" value="<%= project?.slug || '' %>"></div>
+    <div class="form-group full"><label>Short description</label><input name="short_description" value="<%= project?.short_description || '' %>"></div>
+    <div class="form-group full"><label>Full description</label><textarea name="description" style="min-height:160px"><%= project?.description || '' %></textarea></div>
+    <div class="form-group"><label>Client</label><input name="client" value="<%= project?.client || '' %>"></div>
+    <div class="form-group"><label>Project URL</label><input name="project_url" value="<%= project?.project_url || '' %>"></div>
+    <div class="form-group"><label>Category</label>
+      <select name="category_id">
+        <option value="">— None —</option>
+        <% categories.forEach(function(c) { %>
+        <option value="<%= c.id %>" <%= project && project.category_id == c.id ? 'selected' : '' %>><%= c.name %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="form-group"><label>Completion date</label><input name="completion_date" value="<%= project?.completion_date || '' %>" placeholder="2025-11"></div>
+    <div class="form-group"><label>Cover image URL</label><input name="cover_image" value="<%= project?.cover_image || '' %>"></div>
+    <div class="form-group"><label>Or upload cover</label><input type="file" name="cover_file" accept="image/*"></div>
+    <div class="form-group full"><label>Technologies (comma-separated)</label><input name="technologies" value="<%= project?.techText || '' %>"></div>
+    <div class="form-group full"><label>Gallery image URLs (one per line)</label><textarea name="gallery"><%= project?.galleryText || '' %></textarea></div>
+    <div class="form-group"><label>Meta title</label><input name="meta_title" value="<%= project?.meta_title || '' %>"></div>
+    <div class="form-group"><label>Sort order</label><input type="number" name="sort_order" value="<%= project?.sort_order || 0 %>"></div>
+    <div class="form-group full"><label>Meta description</label><input name="meta_description" value="<%= project?.meta_description || '' %>"></div>
+    <div class="form-group full check-row">
+      <label><input type="checkbox" name="is_featured" value="1" <%= project && project.is_featured ? 'checked' : (!project ? 'checked' : '') %>> Featured</label>
+      <label><input type="checkbox" name="is_published" value="1" <%= !project || project.is_published ? 'checked' : '' %>> Published</label>
+    </div>
+  </div>
+  <button class="btn btn-teal" type="submit"><%= project ? 'Update' : 'Create' %> project</button>
+  <a class="btn btn-outline" href="/admin/projects">Cancel</a>
+</form>

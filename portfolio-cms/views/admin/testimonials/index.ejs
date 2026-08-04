@@ -1,0 +1,22 @@
+<div class="panel">
+  <div class="panel-head"><h2>Testimonials</h2><a class="btn btn-teal btn-sm" href="/admin/testimonials/new">Add</a></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Name</th><th>Company</th><th>Rating</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <% testimonials.forEach(function(t) { %>
+      <tr>
+        <td><strong><%= t.name %></strong><div class="help"><%= t.role %></div></td>
+        <td><%= t.company || '—' %></td>
+        <td><%= t.rating %>/5</td>
+        <td><span class="pill <%= t.is_published ? 'pill-green' : 'pill-gray' %>"><%= t.is_published ? 'Live' : 'Draft' %></span></td>
+        <td class="actions">
+          <a class="btn btn-outline btn-sm" href="/admin/testimonials/<%= t.id %>/edit">Edit</a>
+          <form method="POST" action="/admin/testimonials/<%= t.id %>/delete" style="display:inline" data-confirm="Delete?">
+            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>

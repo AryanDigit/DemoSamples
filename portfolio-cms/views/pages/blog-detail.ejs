@@ -1,0 +1,41 @@
+<section class="page-hero">
+  <div class="container-wide">
+    <div class="eyebrow"><%= post.category_name || 'Article' %> · <%= formatDate(post.published_at) %></div>
+    <h1><%= post.title %></h1>
+    <p><%= post.excerpt %></p>
+  </div>
+</section>
+<% if (post.cover_image) { %>
+<div class="detail-hero-media" data-aos="fade-up"><img src="<%= post.cover_image %>" alt="<%= post.title %>"></div>
+<% } %>
+<section style="padding-top:0">
+  <div class="container detail-layout">
+    <article class="prose" data-aos="fade-up"><%- post.html %></article>
+    <aside class="side-panel" data-aos="fade-up" data-aos-delay="80">
+      <dl>
+        <dt>Author</dt><dd><%= post.author_name || siteName %></dd>
+        <dt>Published</dt><dd><%= formatDate(post.published_at) %></dd>
+        <% if (post.tagList && post.tagList.length) { %>
+        <dt>Tags</dt>
+        <dd><div class="tag-list"><% post.tagList.forEach(function(t) { %><span class="tag"><%= t %></span><% }) %></div></dd>
+        <% } %>
+      </dl>
+    </aside>
+  </div>
+</section>
+<% if (related && related.length) { %>
+<section>
+  <div class="container-wide">
+    <div class="section-head"><h2>Keep reading</h2></div>
+    <div class="blog-grid">
+      <% related.forEach(function(p) { %>
+      <a class="blog-card" href="/blog/<%= p.slug %>">
+        <div class="blog-card-media"><img src="<%= p.cover_image %>" alt="<%= p.title %>" loading="lazy"></div>
+        <h3><%= p.title %></h3>
+        <p><%= p.excerpt %></p>
+      </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>

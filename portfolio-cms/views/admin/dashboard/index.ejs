@@ -1,0 +1,42 @@
+<div class="stats-grid">
+  <div class="stat-card"><div class="label">Projects</div><div class="value"><%= stats.projects %></div></div>
+  <div class="stat-card"><div class="label">Services</div><div class="value"><%= stats.services %></div></div>
+  <div class="stat-card"><div class="label">Blog posts</div><div class="value"><%= stats.posts %></div></div>
+  <div class="stat-card"><div class="label">Unread messages</div><div class="value"><%= stats.messages %></div></div>
+</div>
+<div class="two-col">
+  <div class="panel">
+    <div class="panel-head"><h2>Recent messages</h2><a class="btn btn-outline btn-sm" href="/admin/messages">View all</a></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>From</th><th>Subject</th><th>Status</th></tr></thead>
+        <tbody>
+          <% recentMessages.forEach(function(m) { %>
+          <tr>
+            <td><a href="/admin/messages/<%= m.id %>"><%= m.name %></a><div class="help"><%= m.email %></div></td>
+            <td><%= m.subject || '—' %></td>
+            <td><span class="pill <%= m.is_read ? 'pill-gray' : 'pill-amber' %>"><%= m.is_read ? 'Read' : 'New' %></span></td>
+          </tr>
+          <% }) %>
+          <% if (!recentMessages.length) { %><tr><td colspan="3">No messages yet.</td></tr><% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-head"><h2>Recent projects</h2><a class="btn btn-outline btn-sm" href="/admin/projects">Manage</a></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Title</th><th>Status</th></tr></thead>
+        <tbody>
+          <% recentProjects.forEach(function(p) { %>
+          <tr>
+            <td><a href="/admin/projects/<%= p.id %>/edit"><%= p.title %></a></td>
+            <td><span class="pill <%= p.is_published ? 'pill-green' : 'pill-gray' %>"><%= p.is_published ? 'Live' : 'Draft' %></span></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

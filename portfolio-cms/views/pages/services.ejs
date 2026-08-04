@@ -1,0 +1,21 @@
+<section class="page-hero">
+  <div class="container-wide">
+    <div class="eyebrow">Services</div>
+    <h1><%= page?.title || 'Our Services' %></h1>
+    <p>Strategy, design, development, and creative direction — tailored for freelancers, agencies, and ambitious brands.</p>
+  </div>
+</section>
+<section style="padding-top:0">
+  <div class="container-wide">
+    <div class="services-grid">
+      <% services.forEach(function(s, i) { %>
+      <article class="service-item" data-aos="fade-up" data-aos-delay="<%= (i % 3) * 70 %>">
+        <div class="service-icon"><%= s.icon === 'code' ? '</>' : '◆' %></div>
+        <h3><%= s.title %></h3>
+        <p><%= s.short_description %></p>
+        <a class="service-link" href="/services/<%= s.slug %>">Learn more →</a>
+      </article>
+      <% }) %>
+    </div>
+  </div>
+</section>

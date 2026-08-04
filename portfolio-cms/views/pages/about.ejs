@@ -1,0 +1,97 @@
+<section class="page-hero">
+  <div class="container-wide">
+    <div class="eyebrow"><%= settings.about_subtitle || 'About' %></div>
+    <h1><%= settings.about_title || 'About us' %></h1>
+    <p><%= settings.site_description %></p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="container-wide about-split">
+    <div class="about-visual" data-aos="fade-up">
+      <img src="<%= settings.about_image %>" alt="About <%= siteName %>">
+    </div>
+    <div class="about-copy" data-aos="fade-up" data-aos-delay="80">
+      <p><%= settings.about_content %></p>
+      <% if (settings.resume_url && settings.resume_url !== '#') { %>
+      <a class="btn btn-dark" href="<%= settings.resume_url %>" target="_blank" rel="noopener">Download resume</a>
+      <% } %>
+      <% if (stats && stats.length) { %>
+      <div class="stats-row">
+        <% stats.forEach(function(s) { %>
+        <div class="stat-item">
+          <div class="stat-value" data-count="<%= s.value %>" data-suffix="<%= s.suffix || '' %>">0<%= s.suffix || '' %></div>
+          <p class="stat-label"><%= s.label %></p>
+        </div>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<% if (skills && skills.length) { %>
+<section>
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <div class="eyebrow">Skills</div>
+      <h2>Craft across disciplines</h2>
+    </div>
+    <div class="skills-grid" data-aos="fade-up">
+      <% skills.forEach(function(s) { %>
+      <div class="skill-row">
+        <div class="skill-top"><span><%= s.name %></span><span><%= s.percentage %>%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-value="<%= s.percentage %>"></div></div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<% if (experience && experience.length) { %>
+<section>
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <div class="eyebrow">Experience</div>
+      <h2>Path & practice</h2>
+    </div>
+    <div class="timeline" data-aos="fade-up">
+      <% experience.forEach(function(e) { %>
+      <div class="timeline-item">
+        <h3><%= e.title %></h3>
+        <div class="timeline-meta">
+          <%= [e.company, e.location].filter(Boolean).join(' · ') %>
+          · <%= e.start_date %><% if (e.is_current) { %> — Present<% } else if (e.end_date) { %> — <%= e.end_date %><% } %>
+          · <%= e.type === 'education' ? 'Education' : 'Work' %>
+        </div>
+        <p><%= e.description %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<% if (team && team.length) { %>
+<section>
+  <div class="container-wide">
+    <div class="section-head" data-aos="fade-up">
+      <div class="eyebrow">Team</div>
+      <h2>People behind the work</h2>
+    </div>
+    <div class="team-grid">
+      <% team.forEach(function(m, i) { %>
+      <article class="team-card" data-aos="fade-up" data-aos-delay="<%= i * 80 %>">
+        <div class="team-card-media">
+          <img src="<%= m.avatar %>" alt="<%= m.name %>" loading="lazy">
+        </div>
+        <h3><%= m.name %></h3>
+        <div class="role"><%= m.role %></div>
+        <p><%= m.bio %></p>
+      </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>

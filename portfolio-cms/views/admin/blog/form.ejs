@@ -1,0 +1,27 @@
+<form method="POST" action="<%= post ? '/admin/blog/' + post.id : '/admin/blog' %>" enctype="multipart/form-data" class="panel">
+  <div class="form-grid">
+    <div class="form-group"><label>Title</label><input name="title" required value="<%= post?.title || '' %>"></div>
+    <div class="form-group"><label>Slug</label><input name="slug" value="<%= post?.slug || '' %>"></div>
+    <div class="form-group full"><label>Excerpt</label><textarea name="excerpt"><%= post?.excerpt || '' %></textarea></div>
+    <div class="form-group full"><label>Content (Markdown supported)</label><textarea name="content" style="min-height:240px"><%= post?.content || '' %></textarea></div>
+    <div class="form-group"><label>Category</label>
+      <select name="category_id">
+        <option value="">— None —</option>
+        <% categories.forEach(function(c) { %>
+        <option value="<%= c.id %>" <%= post && post.category_id == c.id ? 'selected' : '' %>><%= c.name %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="form-group"><label>Tags (comma-separated)</label><input name="tags" value="<%= post?.tagsText || '' %>"></div>
+    <div class="form-group"><label>Cover image URL</label><input name="cover_image" value="<%= post?.cover_image || '' %>"></div>
+    <div class="form-group"><label>Or upload cover</label><input type="file" name="cover_file" accept="image/*"></div>
+    <div class="form-group"><label>Meta title</label><input name="meta_title" value="<%= post?.meta_title || '' %>"></div>
+    <div class="form-group"><label>Meta description</label><input name="meta_description" value="<%= post?.meta_description || '' %>"></div>
+    <div class="form-group full check-row">
+      <label><input type="checkbox" name="is_featured" value="1" <%= post && post.is_featured ? 'checked' : '' %>> Featured</label>
+      <label><input type="checkbox" name="is_published" value="1" <%= !post || post.is_published ? 'checked' : '' %>> Published</label>
+    </div>
+  </div>
+  <button class="btn btn-teal" type="submit"><%= post ? 'Update' : 'Publish' %> post</button>
+  <a class="btn btn-outline" href="/admin/blog">Cancel</a>
+</form>

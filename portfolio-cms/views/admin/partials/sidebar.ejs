@@ -1,0 +1,18 @@
+<aside class="sidebar">
+  <div class="sidebar-brand"><span></span> Atelier CMS</div>
+  <nav class="side-nav">
+    <a href="/admin" class="<%= currentPath === '/admin' || currentPath === '/admin/' ? 'active' : '' %>">Dashboard</a>
+    <a href="/admin/settings" class="<%= currentPath.startsWith('/admin/settings') ? 'active' : '' %>">Site Settings</a>
+    <a href="/admin/pages" class="<%= currentPath.startsWith('/admin/pages') ? 'active' : '' %>">Pages & SEO</a>
+    <a href="/admin/services" class="<%= currentPath.startsWith('/admin/services') ? 'active' : '' %>">Services</a>
+    <a href="/admin/projects" class="<%= currentPath.startsWith('/admin/projects') ? 'active' : '' %>">Portfolio</a>
+    <a href="/admin/blog" class="<%= currentPath.startsWith('/admin/blog') ? 'active' : '' %>">Blog</a>
+    <a href="/admin/testimonials" class="<%= currentPath.startsWith('/admin/testimonials') ? 'active' : '' %>">Testimonials</a>
+    <a href="/admin/team" class="<%= currentPath.startsWith('/admin/team') ? 'active' : '' %>">Team</a>
+    <a href="/admin/skills" class="<%= currentPath.startsWith('/admin/skills') ? 'active' : '' %>">Skills & Stats</a>
+    <a href="/admin/messages" class="<%= currentPath.startsWith('/admin/messages') ? 'active' : '' %>">
+      Messages <% if (unreadMessages) { %><span class="badge"><%= unreadMessages %></span><% } %>
+    </a>
+    <a href="/admin/media" class="<%= currentPath.startsWith('/admin/media') ? 'active' : '' %>">Media Library</a>
+  </nav>
+</aside>

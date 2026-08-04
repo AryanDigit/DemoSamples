@@ -1,0 +1,21 @@
+<% const social = member?.social || {}; %>
+<form method="POST" action="<%= member ? '/admin/team/' + member.id : '/admin/team' %>" enctype="multipart/form-data" class="panel">
+  <div class="form-grid">
+    <div class="form-group"><label>Name</label><input name="name" required value="<%= member?.name || '' %>"></div>
+    <div class="form-group"><label>Role</label><input name="role" value="<%= member?.role || '' %>"></div>
+    <div class="form-group full"><label>Bio</label><textarea name="bio"><%= member?.bio || '' %></textarea></div>
+    <div class="form-group"><label>Email</label><input name="email" value="<%= member?.email || '' %>"></div>
+    <div class="form-group"><label>Sort order</label><input type="number" name="sort_order" value="<%= member?.sort_order || 0 %>"></div>
+    <div class="form-group"><label>Avatar URL</label><input name="avatar" value="<%= member?.avatar || '' %>"></div>
+    <div class="form-group"><label>Or upload avatar</label><input type="file" name="avatar_file" accept="image/*"></div>
+    <div class="form-group"><label>LinkedIn</label><input name="linkedin" value="<%= social.linkedin || '' %>"></div>
+    <div class="form-group"><label>Dribbble</label><input name="dribbble" value="<%= social.dribbble || '' %>"></div>
+    <div class="form-group"><label>GitHub</label><input name="github" value="<%= social.github || '' %>"></div>
+    <div class="form-group"><label>Behance</label><input name="behance" value="<%= social.behance || '' %>"></div>
+    <div class="form-group full check-row">
+      <label><input type="checkbox" name="is_published" value="1" <%= !member || member.is_published ? 'checked' : '' %>> Published</label>
+    </div>
+  </div>
+  <button class="btn btn-teal" type="submit">Save</button>
+  <a class="btn btn-outline" href="/admin/team">Cancel</a>
+</form>

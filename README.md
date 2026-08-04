@@ -27,3 +27,17 @@ Open [`stationery-demo/index.html`](stationery-demo/index.html) in a browser for
 Works fully offline — images and fonts are bundled under `stationery-demo/assets/`.
 
 **Local download:** unzip `quillmark-stationery-demo.zip`, then open `index.html`.
+
+## Atelier — Premium Portfolio CMS
+
+Full-stack portfolio website with secure Admin CMS for freelancers, agencies, designers, developers, photographers, and creatives.
+
+```bash
+cd portfolio-cms && npm install && npm run seed && npm start
+```
+
+- Site: http://localhost:3000  
+- Admin: http://localhost:3000/admin (`admin@atelier.demo` / `Admin@12345`)  
+
+See [`portfolio-cms/README.md`](portfolio-cms/README.md).
+

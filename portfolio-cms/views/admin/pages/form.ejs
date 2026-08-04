@@ -1,0 +1,15 @@
+<form method="POST" action="/admin/pages/<%= page.id %>" class="panel">
+  <div class="form-grid">
+    <div class="form-group"><label>Title</label><input name="title" required value="<%= page.title %>"></div>
+    <div class="form-group"><label>Slug</label><input value="<%= page.slug %>" disabled><p class="help">Slug is fixed for core pages</p></div>
+    <div class="form-group full"><label>Content note</label><textarea name="content"><%= page.content || '' %></textarea></div>
+    <div class="form-group full"><label>Meta title</label><input name="meta_title" value="<%= page.meta_title || '' %>"></div>
+    <div class="form-group full"><label>Meta description</label><textarea name="meta_description"><%= page.meta_description || '' %></textarea></div>
+    <div class="form-group full"><label>Meta keywords</label><input name="meta_keywords" value="<%= page.meta_keywords || '' %>"></div>
+    <div class="form-group full check-row">
+      <label><input type="checkbox" name="is_published" value="1" <%= page.is_published ? 'checked' : '' %>> Published</label>
+    </div>
+  </div>
+  <button class="btn btn-teal" type="submit">Save page</button>
+  <a class="btn btn-outline" href="/admin/pages">Cancel</a>
+</form>
