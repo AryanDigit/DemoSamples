@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://example.com/gifting-shop/index.html</loc></url>
+  <url><loc>https://example.com/gifting-shop/shop.html</loc></url>
+  <url><loc>https://example.com/gifting-shop/about.html</loc></url>
+  <url><loc>https://example.com/gifting-shop/corporate.html</loc></url>
+  <url><loc>https://example.com/gifting-shop/contact.html</loc></url>
+  <url><loc>https://example.com/gifting-shop/blog.html</loc></url>
+  <url><loc>https://example.com/gifting-shop/product.html?id=curated-keepsake-box</loc></url>
+  <url><loc>https://example.com/gifting-shop/product.html?id=festive-celebration-hamper</loc></url>
+</urlset>

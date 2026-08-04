@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact & Support — Liora</title>
+  <meta name="description" content="Liora FAQ for shipping, returns, and personalization timelines. Contact form, WhatsApp, phone, and email support." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div data-header></div>
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Support</p>
+        <h1>We’re here for the details.</h1>
+      </div>
+    </div>
+    <section>
+      <div class="container contact-layout">
+        <div>
+          <h2 class="display" style="font-size:2rem;margin-bottom:1rem" id="faq">FAQ</h2>
+          <div class="faq">
+            <details open>
+              <summary>How long does shipping take?</summary>
+              <p>Most gifts ship in 1–2 days. Personalized items need 2–4 extra days. You can pick an occasion delivery date at checkout.</p>
+            </details>
+            <details>
+              <summary>What is your return policy?</summary>
+              <p>Non-personalized items may be returned within 7 days if unused and in original packaging. Personalized and perishable gifts are final sale.</p>
+            </details>
+            <details>
+              <summary>How long does personalization take?</summary>
+              <p>Engraving and monograms typically add 2–4 business days. Corporate logo runs are quoted per order.</p>
+            </details>
+            <details>
+              <summary>Do you offer COD?</summary>
+              <p>Yes, cash on delivery is available on eligible pin codes for orders under ₹10,000.</p>
+            </details>
+            <details>
+              <summary>Can I track my order?</summary>
+              <p>Yes — use <a href="track.html">Order tracking</a> with your order ID from the confirmation email.</p>
+            </details>
+          </div>
+        </div>
+        <div>
+          <h2 class="display" style="font-size:2rem;margin-bottom:0.75rem">Contact</h2>
+          <p class="muted" style="margin-bottom:1rem">Email <a href="mailto:hello@liora.gifts">hello@liora.gifts</a> · Phone <a href="tel:+919876543210">+91 98765 43210</a></p>
+          <p style="margin-bottom:1.25rem"><a class="btn" href="https://wa.me/919876543210?text=Hi%20Liora" target="_blank" rel="noopener">WhatsApp chat</a></p>
+          <form id="contact-form" class="form-grid">
+            <div class="field full"><label for="cname">Name</label><input id="cname" required /></div>
+            <div class="field full"><label for="cemail">Email</label><input id="cemail" type="email" required /></div>
+            <div class="field full"><label for="cmsg">Message</label><textarea id="cmsg" required></textarea></div>
+            <div class="field full"><button class="btn" type="submit">Send message</button></div>
+          </form>
+          <p class="muted" id="contact-note" style="margin-top:0.75rem;min-height:1.2em"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div data-footer></div>
+  <script src="js/products.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.getElementById("contact-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      document.getElementById("contact-note").textContent = "Message received — we’ll reply within 24 hours.";
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
