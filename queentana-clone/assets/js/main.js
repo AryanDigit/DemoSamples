@@ -8,6 +8,12 @@
     });
   }
 
+  document.addEventListener("click", (e) => {
+    document.querySelectorAll(".nav-dropdown[open]").forEach((details) => {
+      if (!details.contains(e.target)) details.removeAttribute("open");
+    });
+  });
+
   document.querySelectorAll(".reveal").forEach((el) => {
     const io = new IntersectionObserver(
       (entries) => {

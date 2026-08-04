@@ -314,11 +314,27 @@ h3,
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("../img/hero-bg.webp");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.18;
+  background-image:
+    url("../img/produce-flatlay.webp"),
+    url("../img/hero-bg.webp");
+  background-size: 420px, cover;
+  background-position: 8% 70%, center;
+  background-repeat: no-repeat, no-repeat;
+  opacity: 0.22;
   pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  right: 4%;
+  top: 12%;
+  background: url("../img/produce-flatlay.webp") center / contain no-repeat;
+  opacity: 0.2;
+  pointer-events: none;
+  animation: floaty 7s ease-in-out infinite;
 }
 
 .hero-inner {
