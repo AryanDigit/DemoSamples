@@ -1,0 +1,11 @@
+{
+  "name": "queentana-fresh",
+  "version": "1.0.0",
+  "description": "Queentana Fresh — wholesale fruit & vegetables UK & EU (reference: queentana.co.uk)",
+  "scripts": {
+    "start": "npx --yes serve -l 5173 .",
+    "dev": "npx --yes serve -l 5173 .",
+    "build": "node scripts/build-pages.js"
+  },
+  "private": true
+}
