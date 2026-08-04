@@ -4,13 +4,15 @@ Collection of static website demos.
 
 ## Queentana Fresh — Wholesale fruit & vegetables (UK & EU)
 
-Professional multi-page website inspired by [queentana.co.uk](https://www.queentana.co.uk/).
+Faithful static clone of [queentana.co.uk](https://www.queentana.co.uk/).
 
-Open [`queentana/index.html`](queentana/index.html) in a browser (no build step).
+Open [`queentana-clone/index.html`](queentana-clone/index.html) in a browser (no build step).
 
-**Local download:** [`queentana/dist/queentana-html-template.zip`](queentana/dist/queentana-html-template.zip)
+**Local download:** [`queentana-clone/dist/queentana-clone.zip`](queentana-clone/dist/queentana-clone.zip)
 
-See [`queentana/README.md`](queentana/README.md).
+See [`queentana-clone/README.md`](queentana-clone/README.md).
+
+An alternate professional multi-page template (with 10 homepage demos) is also available in [`queentana/`](queentana/).
 
 ## Liora — Gifting shop e-commerce demo
 
