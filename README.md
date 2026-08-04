@@ -2,15 +2,15 @@
 
 Collection of static website demos.
 
-## Verdura — Vegetable selling & import/export
+## Queentana Fresh — Wholesale fruit & vegetables (UK & EU)
 
-Professional multi-page website for vegetable selling, wholesale, and import/export, plus 10 homepage demos.
+Professional multi-page website inspired by [queentana.co.uk](https://www.queentana.co.uk/).
 
-Open [`verdura/index.html`](verdura/index.html) in a browser (no build step).
+Open [`queentana/index.html`](queentana/index.html) in a browser (no build step).
 
-**Local download:** [`verdura/dist/verdura-html-template.zip`](verdura/dist/verdura-html-template.zip)
+**Local download:** [`queentana/dist/queentana-html-template.zip`](queentana/dist/queentana-html-template.zip)
 
-See [`verdura/README.md`](verdura/README.md) for structure and details.
+See [`queentana/README.md`](queentana/README.md).
 
 ## Liora — Gifting shop e-commerce demo
 
