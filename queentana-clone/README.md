@@ -12,6 +12,12 @@ python3 -m http.server 8080 --directory .
 
 Then visit `http://localhost:8080`.
 
+## Publish (GitHub Pages)
+
+After this branch is merged to `main` and GitHub Pages is enabled for the repo (Source: GitHub Actions), the site deploys automatically via `.github/workflows/pages.yml`.
+
+Expected URL: `https://aryandigit.github.io/DemoSamples/`
+
 ## Pages
 
 | Path | Description |
