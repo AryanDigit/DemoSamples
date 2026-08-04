@@ -1064,7 +1064,7 @@ def hero_html(demo):
           <div class="container hero-content" data-aos="fade-up">
             <h1>{t}</h1>
             <p class="lead">{s}</p>
-            <a href="shop.html" class="btn btn-primary btn-ripple">Taste the Collection</a>
+            <a href="shop.html" class="btn btn-primary btn-ripple">Shop Chocolate Gifts</a>
           </div>
         </div>
         <div class="swiper-slide" style="background-image:url('{img(demo["id"] + "-hero1", 1920, 1000)}')">
@@ -1104,7 +1104,7 @@ def hero_html(demo):
       <p class="eyebrow">🎉 Birthday Central</p>
       <h1>{t}</h1>
       <p class="lead mx-auto">{s}</p>
-      <a href="shop.html" class="btn btn-primary btn-lg btn-ripple">Shop Party Gear</a>
+      <a href="shop.html" class="btn btn-primary btn-lg btn-ripple">Shop Birthday Gifts</a>
     </div>
   </section>"""
 
@@ -1152,7 +1152,7 @@ def hero_html(demo):
             <div class="market-hero-copy" data-aos="fade-up">
               <h1>{t}</h1>
               <p>{s}</p>
-              <a href="shop.html" class="btn btn-primary btn-ripple">Explore Marketplace</a>
+              <a href="shop.html" class="btn btn-primary btn-ripple">Shop Gift Marketplace</a>
             </div>
           </div>
         </div>
