@@ -35,3 +35,13 @@ Each demo includes: Home, Shop, Product, About, Gallery, Blog, FAQ, Contact.
 HTML5 · CSS3 · Bootstrap 5 · Vanilla JS · Font Awesome · Swiper.js · AOS
 
 See `documentation/index.html` for full docs.
+
+## Images
+
+Content-matched photography lives in `assets/images/`:
+
+- `products/` — mugs, frames, chocolate, jewelry, hampers, toys, etc.
+- `lifestyle/` — about / corporate / personalize scenes
+- `themes/` — demo heroes (flowers, wedding, birthday, festival, handmade, modern)
+
+Product cards, categories, and heroes pick images by demo theme and product name.

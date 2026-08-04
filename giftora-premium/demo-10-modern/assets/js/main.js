@@ -99,7 +99,7 @@
     const total = $('[data-cart-total]');
     if (!box) return;
     if (!cart.length) {
-      box.innerHTML = '<p class="empty-cart">Your bag is empty.</p>';
+      box.innerHTML = '<p class="empty-cart">Your gift bag is empty — find something lovely.</p>';
       if (total) total.textContent = '$0';
       return;
     }

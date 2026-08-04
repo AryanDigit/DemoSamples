@@ -1,3 +1,10 @@
+## 1.0.2 — Gift Shop Look
+
+- Added shop-by-occasion, shop-by-recipient, trust strip, and gift-wrap band
+- Product cards now feel like a real gift shop (Gift ready, ratings, Add to Gift Bag)
+- Nav/cart copy updated (Shop Gifts, Gift Guide, Gift Bag)
+- Heroes and CTAs oriented around gifting
+
 # Changelog
 
 ## 1.0.1 — Content Images

@@ -405,11 +405,11 @@ PRODUCT_IMAGE_RULES = [
 
 DEMO_IMAGE_POOLS = {
     "demo-01-luxury": {
-        "hero": ["themes/gifts-hero.jpg", "themes/wrapped-gifts.jpg", "themes/jewelry.jpg", "themes/perfume.jpg", "themes/watch.jpg"],
+        "hero": ["themes/gift-wrap-table.jpg", "themes/gifts-hero.jpg", "themes/wrapped-gifts.jpg", "products/hamper-1.jpg", "themes/jewelry.jpg"],
         "category": ["themes/jewelry.jpg", "themes/perfume.jpg", "themes/cosmetics.jpg", "themes/watch.jpg", "products/hamper-1.jpg", "products/box-1.jpg"],
-        "gallery": ["themes/gifts-hero.jpg", "themes/jewelry.jpg", "themes/perfume.jpg", "themes/watch.jpg", "products/box-1.jpg", "products/box-2.jpg", "products/hamper-1.jpg", "themes/wrapped-gifts.jpg", "products/jewelry-1.jpg", "products/perfume-1.jpg", "products/watch-1.jpg", "lifestyle/hero.jpg"],
+        "gallery": ["themes/gift-wrap-table.jpg", "themes/gifts-hero.jpg", "themes/jewelry.jpg", "themes/perfume.jpg", "themes/watch.jpg", "products/box-1.jpg", "products/box-2.jpg", "products/hamper-1.jpg", "themes/wrapped-gifts.jpg", "products/jewelry-1.jpg", "products/perfume-1.jpg", "lifestyle/hero.jpg"],
         "blog": ["themes/wrapped-gifts.jpg", "themes/gifts-hero.jpg", "themes/jewelry.jpg", "themes/perfume.jpg", "products/hamper-1.jpg", "lifestyle/about.jpg"],
-        "about": ["lifestyle/about.jpg", "themes/gifts-hero.jpg"],
+        "about": ["lifestyle/about.jpg", "themes/gift-wrap-table.jpg"],
         "default": ["themes/gifts-hero.jpg", "products/box-1.jpg", "themes/jewelry.jpg", "themes/perfume.jpg"],
     },
     "demo-02-flower": {
@@ -590,11 +590,11 @@ def header_html(demo, active):
     brand = demo["brand"]
     nav = [
         ("index", "Home"),
-        ("shop", "Shop"),
-        ("product", "Product"),
-        ("about", "About"),
-        ("gallery", "Gallery"),
-        ("blog", "Blog"),
+        ("shop", "Shop Gifts"),
+        ("product", "Gift Guide"),
+        ("about", "Our Story"),
+        ("gallery", "Lookbook"),
+        ("blog", "Ideas"),
         ("faq", "FAQ"),
         ("contact", "Contact"),
     ]
@@ -813,25 +813,136 @@ def product_cards(demo, start=0, count=8, cols="col-6 col-md-4 col-lg-3"):
         badge_html = f'<span class="product-badge badge-{badge}">{badge}</span>' if badge else ""
         old_html = f'<span class="old-price">${old}</span>' if old else ""
         src = pick_product_image(name, seed)
+        rating = 4.6 + ((i * 7) % 4) * 0.1
         cards.append(f"""
         <div class="{cols}" data-aos="fade-up" data-aos-delay="{(i % 4) * 80}">
-          <article class="product-card" data-product-id="{seed}" data-name="{name}" data-price="{price}">
+          <article class="product-card gift-card" data-product-id="{seed}" data-name="{name}" data-price="{price}">
             <div class="product-media">
               {badge_html}
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="{src}" alt="{name}" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">{name}</a></h3>
+              <div class="product-rating" aria-label="{rating:.1f} stars">{"★" * 5}<span>{rating:.1f}</span></div>
               <div class="product-price"><span class="price">${price}</span>{old_html}</div>
             </div>
           </article>
         </div>""")
     return "\n".join(cards)
+
+
+OCCASIONS = [
+    ("Birthday", "themes/birthday-hero.jpg", "cake"),
+    ("Anniversary", "themes/jewelry.jpg", "jewelry"),
+    ("Wedding", "themes/wedding-rings.jpg", "wedding"),
+    ("Thank You", "themes/wrapped-gifts.jpg", "gift"),
+    ("Corporate", "themes/corporate.jpg", "corporate"),
+    ("Festive", "themes/christmas.jpg", "festive"),
+]
+
+RECIPIENTS = [
+    ("For Her", "Jewelry, scent & keepsakes", "themes/perfume.jpg"),
+    ("For Him", "Watches, journals & sets", "themes/watch.jpg"),
+    ("For Kids", "Toys, party & soft gifts", "products/toy-1.jpg"),
+    ("For Couples", "Shared boxes & frames", "themes/wedding-couple.jpg"),
+]
+
+
+def trust_strip_html(demo):
+    return f"""
+  <section class="trust-strip" aria-label="Gift shop promises">
+    <div class="container">
+      <ul>
+        <li><i class="fa-solid fa-gift"></i> Free gift wrap over $40</li>
+        <li><i class="fa-solid fa-truck-fast"></i> Same-day city delivery</li>
+        <li><i class="fa-solid fa-pen-fancy"></i> Personal message card</li>
+        <li><i class="fa-solid fa-rotate-left"></i> Easy 7-day exchanges</li>
+      </ul>
+    </div>
+  </section>"""
+
+
+def occasions_html(demo):
+    # Override images per demo theme where it helps
+    theme_map = {
+        "demo-02-flower": [("Birthday", "themes/bouquet.jpg"), ("Anniversary", "themes/roses.jpg"), ("Wedding", "themes/peony.jpg"), ("Thank You", "themes/garden.jpg"), ("Corporate", "themes/potted.jpg"), ("Festive", "themes/flower-hero.jpg")],
+        "demo-05-chocolate": [("Birthday", "themes/cake.jpg"), ("Anniversary", "themes/truffles.jpg"), ("Wedding", "themes/chocolate-box.jpg"), ("Thank You", "products/choc-1.jpg"), ("Corporate", "products/box-1.jpg"), ("Festive", "themes/dessert.jpg")],
+        "demo-07-birthday": [("Birthday", "themes/balloons.jpg"), ("Anniversary", "themes/cake.jpg"), ("Wedding", "themes/celebration.jpg"), ("Thank You", "themes/party-gifts.jpg"), ("Corporate", "products/box-1.jpg"), ("Festive", "themes/birthday-hero.jpg")],
+    }
+    items = theme_map.get(demo["id"])
+    if items:
+        tiles = "".join(
+            f'<a class="occasion-tile" href="shop.html"><img src="{asset(img)}" alt="{name}" loading="lazy"><span>{name}</span></a>'
+            for name, img in items
+        )
+    else:
+        tiles = "".join(
+            f'<a class="occasion-tile" href="shop.html"><img src="{asset(img)}" alt="{name}" loading="lazy"><span>{name}</span></a>'
+            for name, img, _ in OCCASIONS
+        )
+    return f"""
+  <section class="section occasions">
+    <div class="container">
+      <div class="section-head text-center" data-aos="fade-up">
+        <p class="eyebrow">Shop by occasion</p>
+        <h2>Start with the moment</h2>
+        <p>Curated gift edits for the occasions you celebrate most</p>
+      </div>
+      <div class="occasion-grid" data-aos="fade-up">{tiles}</div>
+    </div>
+  </section>"""
+
+
+def recipients_html(demo):
+    tiles = "".join(
+        f'''<a class="recipient-card" href="shop.html" data-aos="fade-up">
+          <img src="{asset(img)}" alt="{title}" loading="lazy">
+          <div><h3>{title}</h3><p>{desc}</p></div>
+        </a>'''
+        for title, desc, img in RECIPIENTS
+    )
+    return f"""
+  <section class="section recipients">
+    <div class="container">
+      <div class="section-head text-center" data-aos="fade-up">
+        <p class="eyebrow">Shop by recipient</p>
+        <h2>For someone specific</h2>
+      </div>
+      <div class="recipient-grid">{tiles}</div>
+    </div>
+  </section>"""
+
+
+def giftwrap_html(demo):
+    img_src = pick_demo_image(demo["id"], "about", demo["id"] + "-wrap")
+    # Prefer gift wrap photo when available
+    wrap = asset("themes/gift-wrap-table.jpg")
+    return f"""
+  <section class="section gift-wrap-band">
+    <div class="container">
+      <div class="gift-wrap-card" data-aos="fade-up">
+        <div class="gift-wrap-media" style="background-image:url('{wrap}')"></div>
+        <div class="gift-wrap-copy">
+          <p class="eyebrow">Make it theirs</p>
+          <h2>Names, notes & wrapping that feel intentional</h2>
+          <p>Every {demo['brand']} order can include complimentary gift wrap, a handwritten-style card, and scheduled delivery — so it arrives like it was chosen in person.</p>
+          <ul class="feature-list">
+            <li><i class="fa-solid fa-check"></i> Ribbon & tissue options</li>
+            <li><i class="fa-solid fa-check"></i> Personal message card</li>
+            <li><i class="fa-solid fa-check"></i> Surprise delivery scheduling</li>
+          </ul>
+          <a href="product.html" class="btn btn-primary btn-ripple">Build a Gift Box</a>
+        </div>
+      </div>
+    </div>
+  </section>"""
 
 
 def category_grid(demo):
@@ -865,8 +976,8 @@ def hero_html(demo):
                 <h1>{t}</h1>
                 <p class="lead">{s}</p>
                 <div class="hero-cta">
-                  <a href="shop.html" class="btn btn-primary btn-ripple">Shop Collection</a>
-                  <a href="about.html" class="btn btn-outline-light">Our Story</a>
+                  <a href="shop.html" class="btn btn-primary btn-ripple">Shop Gifts</a>
+                  <a href="shop.html" class="btn btn-outline-light">Gift Hampers</a>
                 </div>
               </div>
             </div>"""
@@ -891,7 +1002,7 @@ def hero_html(demo):
             <p class="eyebrow">Fresh · Seasonal · Local</p>
             <h1>{t}</h1>
             <p class="lead">{s}</p>
-            <a href="shop.html" class="btn btn-primary btn-ripple">Shop Bouquets</a>
+            <a href="shop.html" class="btn btn-primary btn-ripple">Shop Flower Gifts</a>
           </div>
         </div>
         <div class="col-lg-7 hero-visual" style="background-image:url('{img(demo["id"] + "-hero", 1400, 900)}')" data-aos="fade-left"></div>
@@ -1426,9 +1537,9 @@ def footer_html(demo):
   <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
   <a href="https://wa.me/18005550199" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
   <div class="cart-drawer" id="cartDrawer" aria-hidden="true">
-    <div class="cart-drawer-header"><h3>Your Bag</h3><button type="button" data-cart-close aria-label="Close">&times;</button></div>
-    <div class="cart-drawer-body" data-cart-items><p class="empty-cart">Your bag is empty.</p></div>
-    <div class="cart-drawer-footer"><div class="d-flex justify-content-between"><strong>Total</strong><strong data-cart-total>$0</strong></div><a href="shop.html" class="btn btn-primary w-100 mt-3">Checkout Demo</a></div>
+    <div class="cart-drawer-header"><h3>Your Gift Bag</h3><button type="button" data-cart-close aria-label="Close">&times;</button></div>
+    <div class="cart-drawer-body" data-cart-items><p class="empty-cart">Your gift bag is empty — find something lovely.</p></div>
+    <div class="cart-drawer-footer"><div class="d-flex justify-content-between"><strong>Total</strong><strong data-cart-total>$0</strong></div><a href="shop.html" class="btn btn-primary w-100 mt-3">Checkout Gift Bag</a></div>
   </div>
   <div class="cart-overlay" data-cart-close></div>
   <div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
@@ -1463,24 +1574,41 @@ def index_page(demo):
         head_html(demo, demo["name"], "index"),
         header_html(demo, "index"),
         hero_html(demo),
+        trust_strip_html(demo),
+        occasions_html(demo),
         f"""
   <section class="section categories">
     <div class="container">
-      <div class="section-head text-center" data-aos="fade-up"><h2>Featured Categories</h2><p>Explore our curated gift worlds</p></div>
+      <div class="section-head text-center" data-aos="fade-up">
+        <p class="eyebrow">Gift collections</p>
+        <h2>Shop by category</h2>
+        <p>Find the perfect present in our curated gift aisles</p>
+      </div>
       <div class="row g-3">{category_grid(demo)}</div>
     </div>
   </section>""",
         f"""
   <section class="section bestsellers">
     <div class="container">
-      <div class="section-head text-center" data-aos="fade-up"><h2>Best Sellers</h2><p>Most-loved gifts this season</p></div>
+      <div class="section-head text-center" data-aos="fade-up">
+        <p class="eyebrow">Trending now</p>
+        <h2>Best-selling gifts</h2>
+        <p>Pieces guests reorder — and recipients keep</p>
+      </div>
       <div class="row g-4">{product_cards(demo, 0, 4)}</div>
+      <div class="text-center mt-4"><a href="shop.html" class="btn btn-outline-primary btn-ripple">View all gifts</a></div>
     </div>
   </section>""",
+        recipients_html(demo),
+        giftwrap_html(demo),
         f"""
   <section class="section new-arrivals">
     <div class="container">
-      <div class="section-head text-center" data-aos="fade-up"><h2>New Arrivals</h2><p>Fresh finds just landed</p></div>
+      <div class="section-head text-center" data-aos="fade-up">
+        <p class="eyebrow">Just unboxed</p>
+        <h2>New gift arrivals</h2>
+        <p>Fresh finds ready to wrap</p>
+      </div>
       <div class="row g-4">{product_cards(demo, 4, 4)}</div>
     </div>
   </section>""",
@@ -1505,11 +1633,14 @@ def shop_page(demo):
       <div class="row g-4">
         <aside class="col-lg-3">
           <div class="shop-sidebar glass-card">
-            <h3>Categories</h3>
+            <h3>Shop by occasion</h3>
+            <ul class="side-cats">{"".join(f'<li><a href="#">{n}</a></li>' for n, _, __ in OCCASIONS)}</ul>
+            <h3 class="mt-4">Categories</h3>
             <ul class="side-cats">{"".join(f'<li><a href="#">{c}</a></li>' for c in demo["categories"])}</ul>
             <h3 class="mt-4">Price</h3>
             <div class="price-filter"><input type="range" min="0" max="300" value="200" aria-label="Max price"><p>Up to $200</p></div>
-            <h3 class="mt-4">Availability</h3>
+            <h3 class="mt-4">Gift options</h3>
+            <label class="d-block"><input type="checkbox" checked> Gift wrap available</label>
             <label class="d-block"><input type="checkbox" checked> In stock</label>
             <label class="d-block"><input type="checkbox"> On sale</label>
           </div>
@@ -2063,6 +2194,84 @@ h1,h2,h3,h4,.navbar-brand {{ font-family: var(--font-display); font-weight: 600;
 .cart-overlay.open {{ opacity: 1; pointer-events: auto; }}
 .cart-line {{ display: flex; justify-content: space-between; gap: 1rem; padding: .75rem 0; border-bottom: 1px solid var(--border); }}
 
+/* Gift shop UX */
+.trust-strip {{
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  border-bottom: 1px solid var(--border);
+  padding: .85rem 0;
+  font-size: .92rem;
+}}
+.trust-strip ul {{
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; justify-content: center;
+}}
+.trust-strip i {{ color: var(--primary); margin-right: .4rem; }}
+.occasion-grid {{
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem;
+}}
+.occasion-tile {{
+  position: relative; display: block; border-radius: var(--radius); overflow: hidden;
+  aspect-ratio: 1; color: #fff; box-shadow: var(--shadow);
+}}
+.occasion-tile img {{ width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }}
+.occasion-tile::after {{
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,.05));
+}}
+.occasion-tile span {{
+  position: absolute; left: 0; right: 0; bottom: .9rem; z-index: 1;
+  text-align: center; font-weight: 700; font-family: var(--font-display); font-size: 1.05rem;
+}}
+.occasion-tile:hover img {{ transform: scale(1.08); }}
+.recipient-grid {{
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+}}
+.recipient-card {{
+  display: grid; grid-template-rows: 160px auto; background: var(--card);
+  border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; color: var(--text);
+  transition: transform .3s ease, box-shadow .3s ease;
+}}
+.recipient-card:hover {{ transform: translateY(-4px); box-shadow: var(--shadow); color: var(--text); }}
+.recipient-card img {{ width: 100%; height: 160px; object-fit: cover; }}
+.recipient-card div {{ padding: 1rem 1.1rem 1.2rem; }}
+.recipient-card h3 {{ margin: 0 0 .25rem; font-size: 1.15rem; }}
+.recipient-card p {{ margin: 0; color: var(--muted); font-size: .92rem; }}
+.gift-wrap-card {{
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 0; overflow: hidden;
+  border-radius: calc(var(--radius) + .35rem); border: 1px solid var(--border); background: var(--card);
+}}
+.gift-wrap-media {{ min-height: 360px; background-size: cover; background-position: center; }}
+.gift-wrap-copy {{ padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }}
+.gift-ready {{
+  position: absolute; top: .75rem; right: .75rem; z-index: 2;
+  background: rgba(255,255,255,.92); color: #222; font-size: .68rem; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase; padding: .35rem .55rem; border-radius: .3rem;
+}}
+.gift-card .product-meta {{ margin: 0 0 .2rem; color: var(--muted); font-size: .75rem; }}
+.gift-card .product-rating {{ color: var(--primary); font-size: .85rem; margin-bottom: .35rem; letter-spacing: .05em; }}
+.gift-card .product-rating span {{ color: var(--muted); margin-left: .35rem; letter-spacing: 0; }}
+.btn-bag {{
+  position: absolute; left: .75rem; right: .75rem; bottom: .75rem; z-index: 2;
+  border: 0; border-radius: var(--radius); padding: .7rem .85rem; font-weight: 700; font-size: .85rem;
+  background: var(--primary); color: #fff; opacity: 0; transform: translateY(8px); transition: .3s ease;
+}}
+.gift-card:hover .btn-bag {{ opacity: 1; transform: none; }}
+.btn-bag i {{ margin-right: .35rem; }}
+.product-actions {{ bottom: 3.6rem; }}
+
+@media (max-width: 991.98px) {{
+  .occasion-grid {{ grid-template-columns: repeat(3, 1fr); }}
+  .recipient-grid {{ grid-template-columns: repeat(2, 1fr); }}
+  .gift-wrap-card {{ grid-template-columns: 1fr; }}
+  .gift-wrap-media {{ min-height: 240px; }}
+  .btn-bag {{ opacity: 1; transform: none; position: static; margin: .75rem; width: calc(100% - 1.5rem); }}
+  .product-actions {{ bottom: .75rem; }}
+}}
+@media (max-width: 575.98px) {{
+  .occasion-grid {{ grid-template-columns: repeat(2, 1fr); }}
+  .recipient-grid {{ grid-template-columns: 1fr; }}
+}}
+
 /* Demo-specific tweaks */
 .demo-demo-01-luxury .product-card {{ background: rgba(255,255,255,.05); }}
 .demo-demo-01-luxury .section {{ padding: 6rem 0; }}
@@ -2200,7 +2409,7 @@ SHARED_JS = r"""/* Giftora Premium — shared demo interactions */
     const total = $('[data-cart-total]');
     if (!box) return;
     if (!cart.length) {
-      box.innerHTML = '<p class="empty-cart">Your bag is empty.</p>';
+      box.innerHTML = '<p class="empty-cart">Your gift bag is empty — find something lovely.</p>';
       if (total) total.textContent = '$0';
       return;
     }

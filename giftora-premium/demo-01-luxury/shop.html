@@ -28,7 +28,7 @@
         <a class="navbar-brand" href="index.html"><span class="gold-text">Giftora Luxe</span></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
         <div class="collapse navbar-collapse" id="navMain">
-          <ul class="navbar-nav mx-auto"><li class="nav-item"><a class="nav-link" href="index.html">Home</a></li><li class="nav-item"><a class="nav-link active" href="shop.html">Shop</a></li><li class="nav-item"><a class="nav-link" href="product.html">Product</a></li><li class="nav-item"><a class="nav-link" href="about.html">About</a></li><li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li><li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li><li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li><li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li></ul>
+          <ul class="navbar-nav mx-auto"><li class="nav-item"><a class="nav-link" href="index.html">Home</a></li><li class="nav-item"><a class="nav-link active" href="shop.html">Shop Gifts</a></li><li class="nav-item"><a class="nav-link" href="product.html">Gift Guide</a></li><li class="nav-item"><a class="nav-link" href="about.html">Our Story</a></li><li class="nav-item"><a class="nav-link" href="gallery.html">Lookbook</a></li><li class="nav-item"><a class="nav-link" href="blog.html">Ideas</a></li><li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li><li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li></ul>
           <div class="header-actions">
             <button class="btn-icon" data-wishlist aria-label="Wishlist"><i class="fa-regular fa-heart"></i><span class="badge-count" data-wish-count>0</span></button>
             <button class="btn-icon" data-cart-toggle aria-label="Cart"><i class="fa-solid fa-bag-shopping"></i><span class="badge-count" data-cart-count>0</span></button>
@@ -52,11 +52,14 @@
       <div class="row g-4">
         <aside class="col-lg-3">
           <div class="shop-sidebar glass-card">
-            <h3>Categories</h3>
+            <h3>Shop by occasion</h3>
+            <ul class="side-cats"><li><a href="#">Birthday</a></li><li><a href="#">Anniversary</a></li><li><a href="#">Wedding</a></li><li><a href="#">Thank You</a></li><li><a href="#">Corporate</a></li><li><a href="#">Festive</a></li></ul>
+            <h3 class="mt-4">Categories</h3>
             <ul class="side-cats"><li><a href="#">Jewelry Boxes</a></li><li><a href="#">Perfume Sets</a></li><li><a href="#">Silk Scarves</a></li><li><a href="#">Crystal Décor</a></li><li><a href="#">Watches</a></li><li><a href="#">Champagne Hampers</a></li></ul>
             <h3 class="mt-4">Price</h3>
             <div class="price-filter"><input type="range" min="0" max="300" value="200" aria-label="Max price"><p>Up to $200</p></div>
-            <h3 class="mt-4">Availability</h3>
+            <h3 class="mt-4">Gift options</h3>
+            <label class="d-block"><input type="checkbox" checked> Gift wrap available</label>
             <label class="d-block"><input type="checkbox" checked> In stock</label>
             <label class="d-block"><input type="checkbox"> On sale</label>
           </div>
@@ -68,144 +71,168 @@
           </div>
           <div class="row g-4">
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="0">
-          <article class="product-card" data-product-id="demo-01-luxury-p0" data-name="Velvet Jewelry Box" data-price="189">
+          <article class="product-card gift-card" data-product-id="demo-01-luxury-p0" data-name="Velvet Jewelry Box" data-price="189">
             <div class="product-media">
               <span class="product-badge badge-sale">sale</span>
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/products/jewelry-2.jpg" alt="Velvet Jewelry Box" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Velvet Jewelry Box</a></h3>
+              <div class="product-rating" aria-label="4.6 stars">★★★★★<span>4.6</span></div>
               <div class="product-price"><span class="price">$189</span><span class="old-price">$249</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="80">
-          <article class="product-card" data-product-id="demo-01-luxury-p1" data-name="Gold-Trim Perfume Set" data-price="129">
+          <article class="product-card gift-card" data-product-id="demo-01-luxury-p1" data-name="Gold-Trim Perfume Set" data-price="129">
             <div class="product-media">
               <span class="product-badge badge-new">new</span>
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/themes/jewelry.jpg" alt="Gold-Trim Perfume Set" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Gold-Trim Perfume Set</a></h3>
+              <div class="product-rating" aria-label="4.9 stars">★★★★★<span>4.9</span></div>
               <div class="product-price"><span class="price">$129</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="160">
-          <article class="product-card" data-product-id="demo-01-luxury-p2" data-name="Silk Evening Scarf" data-price="89">
+          <article class="product-card gift-card" data-product-id="demo-01-luxury-p2" data-name="Silk Evening Scarf" data-price="89">
             <div class="product-media">
               
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/themes/perfume.jpg" alt="Silk Evening Scarf" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Silk Evening Scarf</a></h3>
+              <div class="product-rating" aria-label="4.8 stars">★★★★★<span>4.8</span></div>
               <div class="product-price"><span class="price">$89</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="240">
-          <article class="product-card" data-product-id="demo-01-luxury-p3" data-name="Crystal Decanter" data-price="210">
+          <article class="product-card gift-card" data-product-id="demo-01-luxury-p3" data-name="Crystal Decanter" data-price="210">
             <div class="product-media">
               <span class="product-badge badge-hot">hot</span>
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/products/box-1.jpg" alt="Crystal Decanter" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Crystal Decanter</a></h3>
+              <div class="product-rating" aria-label="4.7 stars">★★★★★<span>4.7</span></div>
               <div class="product-price"><span class="price">$210</span><span class="old-price">$260</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="0">
-          <article class="product-card" data-product-id="demo-01-luxury-p4" data-name="Champagne Gift Hamper" data-price="299">
+          <article class="product-card gift-card" data-product-id="demo-01-luxury-p4" data-name="Champagne Gift Hamper" data-price="299">
             <div class="product-media">
               <span class="product-badge badge-sale">sale</span>
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/products/tea-1.jpg" alt="Champagne Gift Hamper" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Champagne Gift Hamper</a></h3>
+              <div class="product-rating" aria-label="4.6 stars">★★★★★<span>4.6</span></div>
               <div class="product-price"><span class="price">$299</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="80">
-          <article class="product-card" data-product-id="demo-01-luxury-p5" data-name="Leather Desk Set" data-price="159">
+          <article class="product-card gift-card" data-product-id="demo-01-luxury-p5" data-name="Leather Desk Set" data-price="159">
             <div class="product-media">
               
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/products/notebook-1.jpg" alt="Leather Desk Set" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Leather Desk Set</a></h3>
+              <div class="product-rating" aria-label="4.9 stars">★★★★★<span>4.9</span></div>
               <div class="product-price"><span class="price">$159</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="160">
-          <article class="product-card" data-product-id="demo-01-luxury-p6" data-name="Gold Cufflinks" data-price="79">
+          <article class="product-card gift-card" data-product-id="demo-01-luxury-p6" data-name="Gold Cufflinks" data-price="79">
             <div class="product-media">
               <span class="product-badge badge-sale">sale</span>
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/products/jewelry-2.jpg" alt="Gold Cufflinks" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Gold Cufflinks</a></h3>
+              <div class="product-rating" aria-label="4.8 stars">★★★★★<span>4.8</span></div>
               <div class="product-price"><span class="price">$79</span><span class="old-price">$99</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="240">
-          <article class="product-card" data-product-id="demo-01-luxury-p7" data-name="Marble Candle Duo" data-price="68">
+          <article class="product-card gift-card" data-product-id="demo-01-luxury-p7" data-name="Marble Candle Duo" data-price="68">
             <div class="product-media">
               <span class="product-badge badge-new">new</span>
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/products/candle-2.jpg" alt="Marble Candle Duo" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Marble Candle Duo</a></h3>
+              <div class="product-rating" aria-label="4.7 stars">★★★★★<span>4.7</span></div>
               <div class="product-price"><span class="price">$68</span></div>
             </div>
           </article>
@@ -254,9 +281,9 @@
   <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
   <a href="https://wa.me/18005550199" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
   <div class="cart-drawer" id="cartDrawer" aria-hidden="true">
-    <div class="cart-drawer-header"><h3>Your Bag</h3><button type="button" data-cart-close aria-label="Close">&times;</button></div>
-    <div class="cart-drawer-body" data-cart-items><p class="empty-cart">Your bag is empty.</p></div>
-    <div class="cart-drawer-footer"><div class="d-flex justify-content-between"><strong>Total</strong><strong data-cart-total>$0</strong></div><a href="shop.html" class="btn btn-primary w-100 mt-3">Checkout Demo</a></div>
+    <div class="cart-drawer-header"><h3>Your Gift Bag</h3><button type="button" data-cart-close aria-label="Close">&times;</button></div>
+    <div class="cart-drawer-body" data-cart-items><p class="empty-cart">Your gift bag is empty — find something lovely.</p></div>
+    <div class="cart-drawer-footer"><div class="d-flex justify-content-between"><strong>Total</strong><strong data-cart-total>$0</strong></div><a href="shop.html" class="btn btn-primary w-100 mt-3">Checkout Gift Bag</a></div>
   </div>
   <div class="cart-overlay" data-cart-close></div>
   <div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">

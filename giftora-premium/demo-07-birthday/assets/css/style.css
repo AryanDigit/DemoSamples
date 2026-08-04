@@ -310,6 +310,84 @@ h1,h2,h3,h4,.navbar-brand { font-family: var(--font-display); font-weight: 600; 
 .cart-overlay.open { opacity: 1; pointer-events: auto; }
 .cart-line { display: flex; justify-content: space-between; gap: 1rem; padding: .75rem 0; border-bottom: 1px solid var(--border); }
 
+/* Gift shop UX */
+.trust-strip {
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  border-bottom: 1px solid var(--border);
+  padding: .85rem 0;
+  font-size: .92rem;
+}
+.trust-strip ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; justify-content: center;
+}
+.trust-strip i { color: var(--primary); margin-right: .4rem; }
+.occasion-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem;
+}
+.occasion-tile {
+  position: relative; display: block; border-radius: var(--radius); overflow: hidden;
+  aspect-ratio: 1; color: #fff; box-shadow: var(--shadow);
+}
+.occasion-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+.occasion-tile::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,.05));
+}
+.occasion-tile span {
+  position: absolute; left: 0; right: 0; bottom: .9rem; z-index: 1;
+  text-align: center; font-weight: 700; font-family: var(--font-display); font-size: 1.05rem;
+}
+.occasion-tile:hover img { transform: scale(1.08); }
+.recipient-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+}
+.recipient-card {
+  display: grid; grid-template-rows: 160px auto; background: var(--card);
+  border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; color: var(--text);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.recipient-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); color: var(--text); }
+.recipient-card img { width: 100%; height: 160px; object-fit: cover; }
+.recipient-card div { padding: 1rem 1.1rem 1.2rem; }
+.recipient-card h3 { margin: 0 0 .25rem; font-size: 1.15rem; }
+.recipient-card p { margin: 0; color: var(--muted); font-size: .92rem; }
+.gift-wrap-card {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 0; overflow: hidden;
+  border-radius: calc(var(--radius) + .35rem); border: 1px solid var(--border); background: var(--card);
+}
+.gift-wrap-media { min-height: 360px; background-size: cover; background-position: center; }
+.gift-wrap-copy { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+.gift-ready {
+  position: absolute; top: .75rem; right: .75rem; z-index: 2;
+  background: rgba(255,255,255,.92); color: #222; font-size: .68rem; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase; padding: .35rem .55rem; border-radius: .3rem;
+}
+.gift-card .product-meta { margin: 0 0 .2rem; color: var(--muted); font-size: .75rem; }
+.gift-card .product-rating { color: var(--primary); font-size: .85rem; margin-bottom: .35rem; letter-spacing: .05em; }
+.gift-card .product-rating span { color: var(--muted); margin-left: .35rem; letter-spacing: 0; }
+.btn-bag {
+  position: absolute; left: .75rem; right: .75rem; bottom: .75rem; z-index: 2;
+  border: 0; border-radius: var(--radius); padding: .7rem .85rem; font-weight: 700; font-size: .85rem;
+  background: var(--primary); color: #fff; opacity: 0; transform: translateY(8px); transition: .3s ease;
+}
+.gift-card:hover .btn-bag { opacity: 1; transform: none; }
+.btn-bag i { margin-right: .35rem; }
+.product-actions { bottom: 3.6rem; }
+
+@media (max-width: 991.98px) {
+  .occasion-grid { grid-template-columns: repeat(3, 1fr); }
+  .recipient-grid { grid-template-columns: repeat(2, 1fr); }
+  .gift-wrap-card { grid-template-columns: 1fr; }
+  .gift-wrap-media { min-height: 240px; }
+  .btn-bag { opacity: 1; transform: none; position: static; margin: .75rem; width: calc(100% - 1.5rem); }
+  .product-actions { bottom: .75rem; }
+}
+@media (max-width: 575.98px) {
+  .occasion-grid { grid-template-columns: repeat(2, 1fr); }
+  .recipient-grid { grid-template-columns: 1fr; }
+}
+
 /* Demo-specific tweaks */
 .demo-demo-01-luxury .product-card { background: rgba(255,255,255,.05); }
 .demo-demo-01-luxury .section { padding: 6rem 0; }

@@ -32,7 +32,7 @@
         </form>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
         <div class="collapse navbar-collapse" id="navMain">
-          <ul class="navbar-nav"><li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li><li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li><li class="nav-item"><a class="nav-link" href="product.html">Product</a></li><li class="nav-item"><a class="nav-link" href="about.html">About</a></li><li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li><li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li><li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li><li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li></ul>
+          <ul class="navbar-nav"><li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li><li class="nav-item"><a class="nav-link" href="shop.html">Shop Gifts</a></li><li class="nav-item"><a class="nav-link" href="product.html">Gift Guide</a></li><li class="nav-item"><a class="nav-link" href="about.html">Our Story</a></li><li class="nav-item"><a class="nav-link" href="gallery.html">Lookbook</a></li><li class="nav-item"><a class="nav-link" href="blog.html">Ideas</a></li><li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li><li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li></ul>
           <div class="header-actions">
             <button class="btn-icon" data-wishlist aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
             <button class="btn-icon btn-cart" data-cart-toggle aria-label="Cart"><i class="fa-solid fa-cart-shopping"></i> <span data-cart-count>0</span></button>
@@ -67,9 +67,35 @@
     </div>
   </section>
 
+  <section class="trust-strip" aria-label="Gift shop promises">
+    <div class="container">
+      <ul>
+        <li><i class="fa-solid fa-gift"></i> Free gift wrap over $40</li>
+        <li><i class="fa-solid fa-truck-fast"></i> Same-day city delivery</li>
+        <li><i class="fa-solid fa-pen-fancy"></i> Personal message card</li>
+        <li><i class="fa-solid fa-rotate-left"></i> Easy 7-day exchanges</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section occasions">
+    <div class="container">
+      <div class="section-head text-center" data-aos="fade-up">
+        <p class="eyebrow">Shop by occasion</p>
+        <h2>Start with the moment</h2>
+        <p>Curated gift edits for the occasions you celebrate most</p>
+      </div>
+      <div class="occasion-grid" data-aos="fade-up"><a class="occasion-tile" href="shop.html"><img src="../assets/images/themes/birthday-hero.jpg" alt="Birthday" loading="lazy"><span>Birthday</span></a><a class="occasion-tile" href="shop.html"><img src="../assets/images/themes/jewelry.jpg" alt="Anniversary" loading="lazy"><span>Anniversary</span></a><a class="occasion-tile" href="shop.html"><img src="../assets/images/themes/wedding-rings.jpg" alt="Wedding" loading="lazy"><span>Wedding</span></a><a class="occasion-tile" href="shop.html"><img src="../assets/images/themes/wrapped-gifts.jpg" alt="Thank You" loading="lazy"><span>Thank You</span></a><a class="occasion-tile" href="shop.html"><img src="../assets/images/themes/corporate.jpg" alt="Corporate" loading="lazy"><span>Corporate</span></a><a class="occasion-tile" href="shop.html"><img src="../assets/images/themes/christmas.jpg" alt="Festive" loading="lazy"><span>Festive</span></a></div>
+    </div>
+  </section>
+
   <section class="section categories">
     <div class="container">
-      <div class="section-head text-center" data-aos="fade-up"><h2>Featured Categories</h2><p>Explore our curated gift worlds</p></div>
+      <div class="section-head text-center" data-aos="fade-up">
+        <p class="eyebrow">Gift collections</p>
+        <h2>Shop by category</h2>
+        <p>Find the perfect present in our curated gift aisles</p>
+      </div>
       <div class="row g-3">
         <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="0">
           <a class="category-card" href="shop.html">
@@ -117,153 +143,227 @@
 
   <section class="section bestsellers">
     <div class="container">
-      <div class="section-head text-center" data-aos="fade-up"><h2>Best Sellers</h2><p>Most-loved gifts this season</p></div>
+      <div class="section-head text-center" data-aos="fade-up">
+        <p class="eyebrow">Trending now</p>
+        <h2>Best-selling gifts</h2>
+        <p>Pieces guests reorder — and recipients keep</p>
+      </div>
       <div class="row g-4">
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="0">
-          <article class="product-card" data-product-id="demo-03-personalized-p0" data-name="Photo Collage Mug" data-price="24">
+          <article class="product-card gift-card" data-product-id="demo-03-personalized-p0" data-name="Photo Collage Mug" data-price="24">
             <div class="product-media">
               <span class="product-badge badge-sale">sale</span>
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/themes/mug.jpg" alt="Photo Collage Mug" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Photo Collage Mug</a></h3>
+              <div class="product-rating" aria-label="4.6 stars">★★★★★<span>4.6</span></div>
               <div class="product-price"><span class="price">$24</span><span class="old-price">$32</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="80">
-          <article class="product-card" data-product-id="demo-03-personalized-p1" data-name="LED Night Lamp" data-price="49">
+          <article class="product-card gift-card" data-product-id="demo-03-personalized-p1" data-name="LED Night Lamp" data-price="49">
             <div class="product-media">
               <span class="product-badge badge-new">new</span>
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/themes/camera.jpg" alt="LED Night Lamp" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">LED Night Lamp</a></h3>
+              <div class="product-rating" aria-label="4.9 stars">★★★★★<span>4.9</span></div>
               <div class="product-price"><span class="price">$49</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="160">
-          <article class="product-card" data-product-id="demo-03-personalized-p2" data-name="Wooden Photo Frame" data-price="35">
+          <article class="product-card gift-card" data-product-id="demo-03-personalized-p2" data-name="Wooden Photo Frame" data-price="35">
             <div class="product-media">
               
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/products/frame-2.jpg" alt="Wooden Photo Frame" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Wooden Photo Frame</a></h3>
+              <div class="product-rating" aria-label="4.8 stars">★★★★★<span>4.8</span></div>
               <div class="product-price"><span class="price">$35</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="240">
-          <article class="product-card" data-product-id="demo-03-personalized-p3" data-name="Name Necklace Gold" data-price="78">
+          <article class="product-card gift-card" data-product-id="demo-03-personalized-p3" data-name="Name Necklace Gold" data-price="78">
             <div class="product-media">
               <span class="product-badge badge-hot">hot</span>
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/themes/jewelry.jpg" alt="Name Necklace Gold" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Name Necklace Gold</a></h3>
+              <div class="product-rating" aria-label="4.7 stars">★★★★★<span>4.7</span></div>
               <div class="product-price"><span class="price">$78</span><span class="old-price">$95</span></div>
             </div>
           </article>
         </div></div>
+      <div class="text-center mt-4"><a href="shop.html" class="btn btn-outline-primary btn-ripple">View all gifts</a></div>
+    </div>
+  </section>
+
+  <section class="section recipients">
+    <div class="container">
+      <div class="section-head text-center" data-aos="fade-up">
+        <p class="eyebrow">Shop by recipient</p>
+        <h2>For someone specific</h2>
+      </div>
+      <div class="recipient-grid"><a class="recipient-card" href="shop.html" data-aos="fade-up">
+          <img src="../assets/images/themes/perfume.jpg" alt="For Her" loading="lazy">
+          <div><h3>For Her</h3><p>Jewelry, scent & keepsakes</p></div>
+        </a><a class="recipient-card" href="shop.html" data-aos="fade-up">
+          <img src="../assets/images/themes/watch.jpg" alt="For Him" loading="lazy">
+          <div><h3>For Him</h3><p>Watches, journals & sets</p></div>
+        </a><a class="recipient-card" href="shop.html" data-aos="fade-up">
+          <img src="../assets/images/products/toy-1.jpg" alt="For Kids" loading="lazy">
+          <div><h3>For Kids</h3><p>Toys, party & soft gifts</p></div>
+        </a><a class="recipient-card" href="shop.html" data-aos="fade-up">
+          <img src="../assets/images/themes/wedding-couple.jpg" alt="For Couples" loading="lazy">
+          <div><h3>For Couples</h3><p>Shared boxes & frames</p></div>
+        </a></div>
+    </div>
+  </section>
+
+  <section class="section gift-wrap-band">
+    <div class="container">
+      <div class="gift-wrap-card" data-aos="fade-up">
+        <div class="gift-wrap-media" style="background-image:url('../assets/images/themes/gift-wrap-table.jpg')"></div>
+        <div class="gift-wrap-copy">
+          <p class="eyebrow">Make it theirs</p>
+          <h2>Names, notes & wrapping that feel intentional</h2>
+          <p>Every Giftora Custom order can include complimentary gift wrap, a handwritten-style card, and scheduled delivery — so it arrives like it was chosen in person.</p>
+          <ul class="feature-list">
+            <li><i class="fa-solid fa-check"></i> Ribbon & tissue options</li>
+            <li><i class="fa-solid fa-check"></i> Personal message card</li>
+            <li><i class="fa-solid fa-check"></i> Surprise delivery scheduling</li>
+          </ul>
+          <a href="product.html" class="btn btn-primary btn-ripple">Build a Gift Box</a>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="section new-arrivals">
     <div class="container">
-      <div class="section-head text-center" data-aos="fade-up"><h2>New Arrivals</h2><p>Fresh finds just landed</p></div>
+      <div class="section-head text-center" data-aos="fade-up">
+        <p class="eyebrow">Just unboxed</p>
+        <h2>New gift arrivals</h2>
+        <p>Fresh finds ready to wrap</p>
+      </div>
       <div class="row g-4">
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="0">
-          <article class="product-card" data-product-id="demo-03-personalized-p4" data-name="Printed Memory Cushion" data-price="29">
+          <article class="product-card gift-card" data-product-id="demo-03-personalized-p4" data-name="Printed Memory Cushion" data-price="29">
             <div class="product-media">
               
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/themes/lamp.jpg" alt="Printed Memory Cushion" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Printed Memory Cushion</a></h3>
+              <div class="product-rating" aria-label="4.6 stars">★★★★★<span>4.6</span></div>
               <div class="product-price"><span class="price">$29</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="80">
-          <article class="product-card" data-product-id="demo-03-personalized-p5" data-name="Engraved Fountain Pen" data-price="55">
+          <article class="product-card gift-card" data-product-id="demo-03-personalized-p5" data-name="Engraved Fountain Pen" data-price="55">
             <div class="product-media">
               <span class="product-badge badge-new">new</span>
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/products/notebook-2.jpg" alt="Engraved Fountain Pen" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Engraved Fountain Pen</a></h3>
+              <div class="product-rating" aria-label="4.9 stars">★★★★★<span>4.9</span></div>
               <div class="product-price"><span class="price">$55</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="160">
-          <article class="product-card" data-product-id="demo-03-personalized-p6" data-name="Custom Puzzle Print" data-price="39">
+          <article class="product-card gift-card" data-product-id="demo-03-personalized-p6" data-name="Custom Puzzle Print" data-price="39">
             <div class="product-media">
               <span class="product-badge badge-sale">sale</span>
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/lifestyle/personalize.jpg" alt="Custom Puzzle Print" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Custom Puzzle Print</a></h3>
+              <div class="product-rating" aria-label="4.8 stars">★★★★★<span>4.8</span></div>
               <div class="product-price"><span class="price">$39</span><span class="old-price">$48</span></div>
             </div>
           </article>
         </div>
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="240">
-          <article class="product-card" data-product-id="demo-03-personalized-p7" data-name="Star Map Poster" data-price="42">
+          <article class="product-card gift-card" data-product-id="demo-03-personalized-p7" data-name="Star Map Poster" data-price="42">
             <div class="product-media">
               
+              <span class="gift-ready"><i class="fa-solid fa-gift"></i> Gift ready</span>
               <img src="../assets/images/products/frame-1.jpg" alt="Star Map Poster" loading="lazy" width="600" height="700">
               <div class="product-actions">
                 <button type="button" class="btn-wish" data-add-wish aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
                 <button type="button" class="btn-quick" data-quick-view aria-label="Quick view"><i class="fa-regular fa-eye"></i></button>
-                <button type="button" class="btn-add" data-add-cart aria-label="Add to cart"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <button type="button" class="btn-bag" data-add-cart aria-label="Add to gift bag"><i class="fa-solid fa-bag-shopping"></i> Add to Gift Bag</button>
             </div>
             <div class="product-body">
+              <p class="product-meta">Hand-wrapped · Same-day option</p>
               <h3 class="product-title"><a href="product.html">Star Map Poster</a></h3>
+              <div class="product-rating" aria-label="4.7 stars">★★★★★<span>4.7</span></div>
               <div class="product-price"><span class="price">$42</span></div>
             </div>
           </article>
@@ -374,9 +474,9 @@
   <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
   <a href="https://wa.me/18005550199" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
   <div class="cart-drawer" id="cartDrawer" aria-hidden="true">
-    <div class="cart-drawer-header"><h3>Your Bag</h3><button type="button" data-cart-close aria-label="Close">&times;</button></div>
-    <div class="cart-drawer-body" data-cart-items><p class="empty-cart">Your bag is empty.</p></div>
-    <div class="cart-drawer-footer"><div class="d-flex justify-content-between"><strong>Total</strong><strong data-cart-total>$0</strong></div><a href="shop.html" class="btn btn-primary w-100 mt-3">Checkout Demo</a></div>
+    <div class="cart-drawer-header"><h3>Your Gift Bag</h3><button type="button" data-cart-close aria-label="Close">&times;</button></div>
+    <div class="cart-drawer-body" data-cart-items><p class="empty-cart">Your gift bag is empty — find something lovely.</p></div>
+    <div class="cart-drawer-footer"><div class="d-flex justify-content-between"><strong>Total</strong><strong data-cart-total>$0</strong></div><a href="shop.html" class="btn btn-primary w-100 mt-3">Checkout Gift Bag</a></div>
   </div>
   <div class="cart-overlay" data-cart-close></div>
   <div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
