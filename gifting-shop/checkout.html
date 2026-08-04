@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Liora</title>
+  <meta name="description" content="Guest checkout with delivery date selection, gift message, and multiple payment methods." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div data-header></div>
+  <main class="container">
+    <div class="page-hero" style="margin:0 -1.25rem;padding-inline:1.25rem">
+      <p class="eyebrow">Checkout</p>
+      <h1>Almost there</h1>
+      <div class="steps"><span class="done">Cart</span><span>→</span><span class="current">Details &amp; payment</span><span>→</span><span>Confirmation</span></div>
+    </div>
+    <form class="checkout-layout" id="checkout-form">
+      <div>
+        <h2 class="display" style="font-size:1.75rem;margin-bottom:1rem">Contact &amp; delivery</h2>
+        <p class="muted" style="margin-bottom:1rem">Guest checkout enabled — no account required.</p>
+        <div class="form-grid">
+          <div class="field"><label for="name">Full name</label><input id="name" required autocomplete="name" /></div>
+          <div class="field"><label for="phone">Phone</label><input id="phone" type="tel" required autocomplete="tel" /></div>
+          <div class="field full"><label for="email">Email</label><input id="email" type="email" required autocomplete="email" /></div>
+          <div class="field full"><label for="address">Address</label><textarea id="address" required placeholder="Street, area, landmark"></textarea></div>
+          <div class="field"><label for="city">City</label><input id="city" required /></div>
+          <div class="field"><label for="pincode">PIN code</label><input id="pincode" required pattern="[0-9]{6}" /></div>
+          <div class="field"><label for="deliver-on">Delivery date</label><input id="deliver-on" type="date" required /></div>
+          <div class="field"><label for="occasion">Occasion</label>
+            <select id="occasion">
+              <option>Birthday</option><option>Anniversary</option><option>Wedding</option>
+              <option>Corporate</option><option>Festive</option><option>Other</option>
+            </select>
+          </div>
+          <div class="field full"><label for="gift-message">Gift message</label>
+            <textarea id="gift-message" placeholder="Printed or handwritten-style card"></textarea>
+          </div>
+          <div class="field full">
+            <label><input type="checkbox" id="save-address" /> Save to address book (this device)</label>
+          </div>
+        </div>
+
+        <h2 class="display" style="font-size:1.75rem;margin:2rem 0 1rem">Payment</h2>
+        <div class="payment-options">
+          <label><input type="radio" name="pay" value="card" checked /> Credit / Debit card</label>
+          <label><input type="radio" name="pay" value="upi" /> UPI</label>
+          <label><input type="radio" name="pay" value="wallet" /> Wallets</label>
+          <label><input type="radio" name="pay" value="cod" /> Cash on delivery</label>
+        </div>
+        <p class="muted" style="margin-top:0.75rem;font-size:0.85rem">Demo mode: no real charges. In production, connect Razorpay / Stripe / PayU.</p>
+        <button class="btn" style="margin-top:1.25rem" type="submit">Place order</button>
+      </div>
+      <aside class="summary" id="summary"></aside>
+    </form>
+  </main>
+  <div data-footer></div>
+  <script src="js/products.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const items = Liora.store.getCart();
+      if (!items.length) {
+        location.href = "cart.html";
+        return;
+      }
+      const sub = Liora.cartSubtotal(items);
+      const ship = Liora.shippingFor(sub);
+      document.getElementById("summary").innerHTML = `
+        <h2>Order summary</h2>
+        ${items
+          .map((i) => {
+            const p = getProduct(i.id);
+            return `<div class="summary-row"><span>${p.name} × ${i.qty}</span><span>${formatINR(i.unitPrice * i.qty)}</span></div>`;
+          })
+          .join("")}
+        <div class="summary-row"><span>Shipping</span><span>${ship ? formatINR(ship) : "Free"}</span></div>
+        <div class="summary-row total"><span>Total</span><span>${formatINR(sub + ship)}</span></div>`;
+
+      const dateInput = document.getElementById("deliver-on");
+      const min = new Date();
+      min.setDate(min.getDate() + 2);
+      dateInput.min = min.toISOString().slice(0, 10);
+      dateInput.value = min.toISOString().slice(0, 10);
+      document.getElementById("gift-message").value = localStorage.getItem("liora_gift_message") || "";
+
+      const saved = JSON.parse(localStorage.getItem("liora_address") || "null");
+      if (saved) {
+        ["name", "phone", "email", "address", "city", "pincode"].forEach((k) => {
+          if (saved[k]) document.getElementById(k).value = saved[k];
+        });
+      }
+
+      document.getElementById("checkout-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (document.getElementById("save-address").checked) {
+          localStorage.setItem(
+            "liora_address",
+            JSON.stringify({
+              name: name.value,
+              phone: phone.value,
+              email: email.value,
+              address: address.value,
+              city: city.value,
+              pincode: pincode.value,
+            })
+          );
+        }
+        const order = {
+          id: "LR" + Date.now().toString().slice(-8),
+          createdAt: new Date().toISOString(),
+          items,
+          total: sub + ship,
+          payment: document.querySelector('input[name="pay"]:checked').value,
+          deliverOn: dateInput.value,
+          occasion: occasion.value,
+          giftMessage: document.getElementById("gift-message").value,
+          customer: { name: name.value, email: email.value, phone: phone.value },
+          status: "Confirmed",
+        };
+        Liora.store.addOrder(order);
+        Liora.store.setCart([]);
+        localStorage.removeItem("liora_gift_message");
+        location.href = `order.html?id=${order.id}`;
+      });
+    });
+  </script>
+</body>
+</html>

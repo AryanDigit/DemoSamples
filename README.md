@@ -1,43 +1,27 @@
-# Verdura — Professional Vegetable Trade Website
+# DemoSamples
 
-A professional multi-page website for **vegetable selling**, wholesale supply, and **import/export**, plus an optional gallery of 10 homepage demos.
+Collection of static website demos.
 
-## Quick start (local — no server)
+## Verdura — Vegetable selling & import/export
 
-1. Download **`dist/verdura-html-template.zip`** or clone this branch.
-2. Open **`index.html`** in your browser.
-3. Browse Produce, Services, Import & Export, About, and Contact.
+Professional multi-page website for vegetable selling, wholesale, and import/export, plus 10 homepage demos.
 
-Demo photos load from Unsplash (internet needed for images).
+Open [`verdura/index.html`](verdura/index.html) in a browser (no build step).
 
-### Optional local server
+**Local download:** [`verdura/dist/verdura-html-template.zip`](verdura/dist/verdura-html-template.zip)
 
-```bash
-npm start
-```
+See [`verdura/README.md`](verdura/README.md) for structure and details.
 
-Open [http://localhost:5173](http://localhost:5173).
+## Liora — Gifting shop e-commerce demo
 
-## Site structure
+Open [`gifting-shop/index.html`](gifting-shop/index.html) for a full multi-page premium gifting storefront (HTML/CSS/JS).
 
-| Path | Description |
-|------|-------------|
-| `index.html` | **Professional company homepage** |
-| `pages/about.html` | Company story & origins |
-| `pages/products.html` | Produce catalog |
-| `pages/services.html` | Trade services |
-| `pages/import-export.html` | Corridors & documentation |
-| `pages/contact.html` | RFQ / contact form |
-| `demos.html` | 10 alternate homepage demos |
-| `demos/01-market` … `10-season` | Individual demo homepages |
-| `assets/` | CSS & JS |
+Includes shop filters, product personalization, cart/checkout, corporate inquiry, blog, and a demo admin panel. See [`gifting-shop/ADMIN.md`](gifting-shop/ADMIN.md).
 
-## Regenerating HTML
+## Quillmark — Stationery website demo
 
-```bash
-node scripts/build-pages.js
-```
+Open [`stationery-demo/index.html`](stationery-demo/index.html) in a browser for a single-page stationery brand landing demo (HTML/CSS/JS, no build step).
 
-## Stack
+Works fully offline — images and fonts are bundled under `stationery-demo/assets/`.
 
-Static HTML + CSS + vanilla JS. Fonts: Fraunces, DM Sans, IBM Plex Mono.
+**Local download:** unzip `quillmark-stationery-demo.zip`, then open `index.html`.

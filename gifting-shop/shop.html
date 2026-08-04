@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop Gifts — Liora</title>
+  <meta name="description" content="Browse Liora gifts by occasion, recipient, price, and personalization. Sort by popularity, price, or newest." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div data-header></div>
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Catalog</p>
+        <h1 id="shop-title">All gifts</h1>
+        <p class="muted" id="shop-count"></p>
+      </div>
+    </div>
+    <div class="container shop-layout">
+      <aside class="filters" aria-label="Filters">
+        <div class="filter-group">
+          <h3>Occasion</h3>
+          <div id="filter-occasion"></div>
+        </div>
+        <div class="filter-group">
+          <h3>Recipient</h3>
+          <div id="filter-recipient"></div>
+        </div>
+        <div class="filter-group">
+          <h3>Category</h3>
+          <div id="filter-category"></div>
+        </div>
+        <div class="filter-group">
+          <h3>Price</h3>
+          <label><input type="radio" name="price" value="all" checked /> Any</label>
+          <label><input type="radio" name="price" value="0-1500" /> Under ₹1,500</label>
+          <label><input type="radio" name="price" value="1500-3000" /> ₹1,500–₹3,000</label>
+          <label><input type="radio" name="price" value="3000+" /> ₹3,000+</label>
+        </div>
+        <div class="filter-group">
+          <h3>Personalization</h3>
+          <label><input type="checkbox" id="filter-personal" /> Personalization available</label>
+        </div>
+      </aside>
+      <div>
+        <div class="shop-toolbar">
+          <p class="muted" id="result-label">Showing gifts</p>
+          <label>
+            <span class="sr-only">Sort</span>
+            <select id="sort">
+              <option value="popularity">Popularity</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="newest">Newest</option>
+            </select>
+          </label>
+        </div>
+        <div class="product-grid" id="shop-grid"></div>
+      </div>
+    </div>
+  </main>
+  <div data-footer></div>
+  <script src="js/products.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const occasions = [...new Set(LIORA_PRODUCTS.flatMap((p) => p.occasions))].sort();
+    const recipients = [...new Set(LIORA_PRODUCTS.flatMap((p) => p.recipients))].sort();
+    const categories = [...new Set(LIORA_PRODUCTS.map((p) => p.category))].sort();
+
+    function checks(id, items, name, pre) {
+      document.getElementById(id).innerHTML = items
+        .map((item) => `<label><input type="checkbox" name="${name}" value="${item}" ${pre === item ? "checked" : ""} /> ${item}</label>`)
+        .join("");
+    }
+
+    checks("filter-occasion", occasions, "occasion", params.get("occasion"));
+    checks("filter-recipient", recipients, "recipient", params.get("recipient"));
+    checks("filter-category", categories, "category", params.get("category"));
+    if (params.get("personalizable") === "1") document.getElementById("filter-personal").checked = true;
+
+    const titles = {
+      Birthday: "Birthday gifts",
+      Anniversary: "Anniversary gifts",
+      Weddings: "Wedding gifts",
+      Corporate: "Corporate gifts",
+      Festive: "Festive gifts",
+    };
+    if (params.get("occasion") && titles[params.get("occasion")]) {
+      document.getElementById("shop-title").textContent = titles[params.get("occasion")];
+    } else if (params.get("personalizable") === "1") {
+      document.getElementById("shop-title").textContent = "Personalized gifts";
+    } else if (params.get("recipient")) {
+      document.getElementById("shop-title").textContent = params.get("recipient");
+    }
+
+    function selected(name) {
+      return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map((el) => el.value);
+    }
+
+    function apply() {
+      let list = [...LIORA_PRODUCTS];
+      const occ = selected("occasion");
+      const rec = selected("recipient");
+      const cat = selected("category");
+      const price = document.querySelector('input[name="price"]:checked')?.value || "all";
+      const personal = document.getElementById("filter-personal").checked;
+      const sort = document.getElementById("sort").value;
+
+      if (occ.length) list = list.filter((p) => occ.some((o) => p.occasions.includes(o)));
+      if (rec.length) list = list.filter((p) => rec.some((r) => p.recipients.includes(r)));
+      if (cat.length) list = list.filter((p) => cat.includes(p.category));
+      if (personal) list = list.filter((p) => p.personalizable);
+      if (price === "0-1500") list = list.filter((p) => p.price < 1500);
+      if (price === "1500-3000") list = list.filter((p) => p.price >= 1500 && p.price <= 3000);
+      if (price === "3000+") list = list.filter((p) => p.price > 3000);
+
+      if (sort === "price-asc") list.sort((a, b) => a.price - b.price);
+      else if (sort === "price-desc") list.sort((a, b) => b.price - a.price);
+      else if (sort === "newest") list.sort((a, b) => Number(b.newest) - Number(a.newest));
+      else list.sort((a, b) => b.reviews - a.reviews);
+
+      document.getElementById("result-label").textContent = `${list.length} gift${list.length === 1 ? "" : "s"}`;
+      Liora.renderProductGrid("#shop-grid", list);
+    }
+
+    document.querySelector(".filters").addEventListener("change", apply);
+    document.getElementById("sort").addEventListener("change", apply);
+    document.addEventListener("DOMContentLoaded", apply);
+  </script>
+</body>
+</html>
