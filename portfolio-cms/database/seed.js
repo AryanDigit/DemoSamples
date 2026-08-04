@@ -128,19 +128,22 @@ From concept to launch, every project is treated as a signature piece: researche
   services.forEach(s => insertService.run(...s));
 
   // Projects
+  const catId = (slug) => db.prepare('SELECT id FROM categories WHERE slug = ?').get(slug)?.id;
   const projects = [
-    ['Lumina Finance', 'lumina-finance', 'Fintech brand & dashboard redesign', 'A complete brand refresh and product UI system for a modern finance platform. We redefined visual hierarchy, introduced a calm color language, and shipped a component library used across web and mobile.', 'Lumina Inc.', 'https://example.com', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80', '["https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80","https://images.unsplash.com/photo-1556155092-490a1ba16284?w=1200&q=80"]', 2, '["Figma","React","Tailwind","Framer Motion"]', '2025-11', 1, 1],
-    ['Nordic Atelier', 'nordic-atelier', 'Architecture portfolio for a Nordic studio', 'An immersive architecture site with full-bleed photography, subtle motion, and a CMS-driven project library — built for quiet luxury.', 'Nordic Atelier AS', '#', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80', '["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80"]', 5, '["HTML","GSAP","CMS","Photography"]', '2025-08', 1, 2],
-    ['Pulse Agency', 'pulse-agency', 'Marketing site for a growth agency', 'Positioning, messaging, and a conversion-focused website with case studies, service pages, and lead capture flows.', 'Pulse Media', '#', 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80', '[]', 1, '["Brand Strategy","Web Design","SEO"]', '2025-06', 1, 3],
-    ['Frame & Form', 'frame-and-form', 'Photographer portfolio with booking', 'A cinematic portfolio for a commercial photographer featuring galleries, client proofs, and inquiry workflows.', 'Maya Chen', '#', 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1200&q=80', '[]', 4, '["Photography","UX","Booking System"]', '2025-03', 1, 4],
-    ['CodeCraft SaaS', 'codecraft-saas', 'Developer tools landing & docs', 'Product marketing site and documentation portal for a developer SaaS — fast, accessible, and search-optimized.', 'CodeCraft Labs', '#', 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80', '[]', 3, '["Next.js","MDX","TypeScript"]', '2024-12', 0, 5],
-    ['Verde Kitchen', 'verde-kitchen', 'Hospitality brand identity system', 'Identity, menus, and digital presence for a farm-to-table restaurant group.', 'Verde Group', '#', 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80', '[]', 1, '["Branding","Print","Web"]', '2024-09', 0, 6]
+    ['Lumina Finance', 'lumina-finance', 'Fintech brand & dashboard redesign', 'A complete brand refresh and product UI system for a modern finance platform. We redefined visual hierarchy, introduced a calm color language, and shipped a component library used across web and mobile.', 'Lumina Inc.', 'https://example.com', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80', '["https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80","https://images.unsplash.com/photo-1556155092-490a1ba16284?w=1200&q=80"]', 'web-design', '["Figma","React","Tailwind","Framer Motion"]', '2025-11', 1, 1],
+    ['Nordic Atelier', 'nordic-atelier', 'Architecture portfolio for a Nordic studio', 'An immersive architecture site with full-bleed photography, subtle motion, and a CMS-driven project library — built for quiet luxury.', 'Nordic Atelier AS', '#', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80', '["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80"]', 'architecture', '["HTML","GSAP","CMS","Photography"]', '2025-08', 1, 2],
+    ['Pulse Agency', 'pulse-agency', 'Marketing site for a growth agency', 'Positioning, messaging, and a conversion-focused website with case studies, service pages, and lead capture flows.', 'Pulse Media', '#', 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80', '[]', 'branding', '["Brand Strategy","Web Design","SEO"]', '2025-06', 1, 3],
+    ['Frame & Form', 'frame-and-form', 'Photographer portfolio with booking', 'A cinematic portfolio for a commercial photographer featuring galleries, client proofs, and inquiry workflows.', 'Maya Chen', '#', 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1200&q=80', '[]', 'photography', '["Photography","UX","Booking System"]', '2025-03', 1, 4],
+    ['CodeCraft SaaS', 'codecraft-saas', 'Developer tools landing & docs', 'Product marketing site and documentation portal for a developer SaaS — fast, accessible, and search-optimized.', 'CodeCraft Labs', '#', 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80', '[]', 'development', '["Next.js","MDX","TypeScript"]', '2024-12', 0, 5],
+    ['Verde Kitchen', 'verde-kitchen', 'Hospitality brand identity system', 'Identity, menus, and digital presence for a farm-to-table restaurant group.', 'Verde Group', '#', 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80', '[]', 'branding', '["Branding","Print","Web"]', '2024-09', 0, 6]
   ];
   const insertProject = db.prepare(`
     INSERT INTO projects (title, slug, short_description, description, client, project_url, cover_image, gallery, category_id, technologies, completion_date, is_featured, is_published, sort_order)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)
   `);
-  projects.forEach(p => insertProject.run(...p));
+  projects.forEach(([title, slug, shortDesc, desc, client, url, cover, gallery, catSlug, tech, date, featured, order]) => {
+    insertProject.run(title, slug, shortDesc, desc, client, url, cover, gallery, catId(catSlug), tech, date, featured, order);
+  });
 
   // Blog
   const designCat = db.prepare("SELECT id FROM categories WHERE slug = 'design'").get()?.id;
