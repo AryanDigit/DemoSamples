@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Journal — Gift Guides · Liora</title>
+  <meta name="description" content="Liora gift guides for Diwali, anniversaries, and corporate etiquette — SEO-friendly inspiration." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div data-header></div>
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Journal</p>
+        <h1>Gift guides &amp; ideas</h1>
+      </div>
+    </div>
+    <section>
+      <div class="container blog-grid" id="blog-grid"></div>
+    </section>
+    <section class="band-blush" id="post" hidden>
+      <div class="container prose">
+        <p class="eyebrow" id="post-tag"></p>
+        <h2 id="post-title" style="font-size:clamp(2rem,4vw,2.75rem)"></h2>
+        <p class="muted" id="post-date"></p>
+        <p id="post-body" style="margin-top:1.25rem"></p>
+        <p style="margin-top:1.5rem"><a class="btn" href="shop.html">Shop related gifts</a></p>
+      </div>
+    </section>
+  </main>
+  <div data-footer></div>
+  <script src="js/products.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    const bodies = {
+      "anniversary-gift-ideas": "Choose something they will use together or keep close: engraved jewelry, a shared keepsake box, or a frame with a date plaque. Pair with a handwritten note and schedule delivery for the evening of your celebration.",
+      "diwali-top-10": "Lead with light and taste — festive hampers, candles, tea caddies, and chocolate trays. For teams, keep branding subtle on the insert card and offer a few SKUs so recipients feel considered, not processed.",
+      "corporate-gifting-etiquette": "Match budget to relationship depth, avoid overly personal fragrance unless requested, and always confirm dietary notes for gourmet sets. A short branded card beats loud logo packaging.",
+    };
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("blog-grid").innerHTML = LIORA_BLOG.map(
+        (b) => `<article class="blog-card">
+          <a href="blog.html?post=${b.id}"><img src="${b.image}" alt="" loading="lazy" /></a>
+          <p class="pill">${b.tag}</p>
+          <h3><a href="blog.html?post=${b.id}">${b.title}</a></h3>
+          <p class="muted">${b.excerpt}</p>
+        </article>`
+      ).join("");
+
+      const id = new URLSearchParams(location.search).get("post");
+      const post = LIORA_BLOG.find((b) => b.id === id);
+      if (post) {
+        document.getElementById("post").hidden = false;
+        document.getElementById("post-tag").textContent = post.tag;
+        document.getElementById("post-title").textContent = post.title;
+        document.getElementById("post-date").textContent = new Date(post.date).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" });
+        document.getElementById("post-body").textContent = bodies[post.id] || post.excerpt;
+        document.title = `${post.title} — Liora Journal`;
+        document.getElementById("post").scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  </script>
+</body>
+</html>

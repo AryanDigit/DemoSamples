@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corporate Gifting — Liora</title>
+  <meta name="description" content="Bulk corporate gifts with custom branding, catalog download, and quote requests from Liora." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div data-header></div>
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Corporate</p>
+        <h1>Gifting that represents your brand.</h1>
+        <p class="muted" style="max-width:40ch;margin-top:0.75rem">Bulk orders, logo cards, branded wrap, and delivery windows for festivals, onboarding, and client appreciation.</p>
+      </div>
+    </div>
+    <section>
+      <div class="container split">
+        <img src="assets/lifestyle/corporate.jpg" alt="Team meeting for corporate gifting" width="1200" height="800" />
+        <div>
+          <p class="eyebrow">Custom branding</p>
+          <h2 class="display" style="font-size:2rem;margin:0.4rem 0 0.85rem">Logo cards, foil stamps, and curated sets</h2>
+          <ul class="muted" style="display:grid;gap:0.55rem;margin-bottom:1.5rem">
+            <li>• Minimum order guidance from 25 units</li>
+            <li>• Branded inserts and optional packaging colors</li>
+            <li>• Pan-India multi-address shipping</li>
+            <li>• Dedicated WhatsApp coordinator</li>
+          </ul>
+          <a class="btn" href="assets/liora-corporate-catalog.txt" download>Download catalog</a>
+          <a class="btn btn-outline-dark" style="margin-left:0.5rem" href="#quote">Request a quote</a>
+        </div>
+      </div>
+    </section>
+    <section class="band-blush" id="quote">
+      <div class="container" style="max-width:40rem">
+        <div class="section-head">
+          <p class="eyebrow">Inquiry</p>
+          <h2>Bulk order form</h2>
+          <p>Tell us volume, budget, and date — we’ll reply within one business day.</p>
+        </div>
+        <form id="corp-form" class="form-grid">
+          <div class="field"><label for="cname">Company</label><input id="cname" required /></div>
+          <div class="field"><label for="ccontact">Contact name</label><input id="ccontact" required /></div>
+          <div class="field"><label for="cemail">Work email</label><input id="cemail" type="email" required /></div>
+          <div class="field"><label for="cphone">Phone</label><input id="cphone" type="tel" required /></div>
+          <div class="field"><label for="cqty">Estimated quantity</label><input id="cqty" type="number" min="10" required /></div>
+          <div class="field"><label for="cbudget">Budget per gift (₹)</label><input id="cbudget" type="number" min="500" /></div>
+          <div class="field full"><label for="cnotes">Occasion &amp; branding notes</label><textarea id="cnotes" required placeholder="Diwali hampers with logo card, deliver by…"></textarea></div>
+          <div class="field full"><button class="btn" type="submit">Submit inquiry</button></div>
+        </form>
+        <p class="muted" id="corp-note" style="margin-top:0.85rem;min-height:1.2em"></p>
+      </div>
+    </section>
+  </main>
+  <div data-footer></div>
+  <script src="js/products.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.getElementById("corp-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const inquiries = JSON.parse(localStorage.getItem("liora_corp") || "[]");
+      inquiries.push({
+        company: cname.value,
+        contact: ccontact.value,
+        email: cemail.value,
+        phone: cphone.value,
+        qty: cqty.value,
+        budget: cbudget.value,
+        notes: cnotes.value,
+        at: new Date().toISOString(),
+      });
+      localStorage.setItem("liora_corp", JSON.stringify(inquiries));
+      document.getElementById("corp-note").textContent = "Thank you — our corporate team will email a quote shortly.";
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>

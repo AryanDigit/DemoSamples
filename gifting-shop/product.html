@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — Liora</title>
+  <meta name="description" content="View gift details, personalization options, delivery estimate, and reviews at Liora." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div data-header></div>
+  <main class="container">
+    <div class="pdp" id="pdp"></div>
+    <section>
+      <div class="section-head">
+        <p class="eyebrow">Complete the gift</p>
+        <h2>Related &amp; complementary pieces</h2>
+      </div>
+      <div class="product-grid" id="related"></div>
+    </section>
+    <section style="padding-top:0">
+      <div class="section-head">
+        <p class="eyebrow">Reviews</p>
+        <h2 id="reviews-title">Customer reviews</h2>
+      </div>
+      <div class="testimonial-grid" id="product-reviews"></div>
+    </section>
+  </main>
+  <div data-footer></div>
+  <script src="js/products.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const id = new URLSearchParams(location.search).get("id") || LIORA_PRODUCTS[0].id;
+      const p = getProduct(id) || LIORA_PRODUCTS[0];
+      document.title = `${p.name} — Liora`;
+
+      const schema = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: p.name,
+        description: p.description,
+        image: p.images,
+        sku: p.id,
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "INR",
+          price: p.price,
+          availability: p.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+        },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: p.rating,
+          reviewCount: p.reviews,
+        },
+      };
+      const s = document.createElement("script");
+      s.type = "application/ld+json";
+      s.textContent = JSON.stringify(schema);
+      document.head.appendChild(s);
+
+      const wished = Liora.store.getWish().includes(p.id);
+      document.getElementById("pdp").innerHTML = `
+        <div>
+          <div class="gallery-main" id="gallery-main"><img src="${p.images[0]}" alt="${p.name}" id="main-img" /></div>
+          <div class="gallery-thumbs" id="thumbs">
+            ${p.images.map((src, i) => `<button type="button" class="${i === 0 ? "active" : ""}" data-src="${src}"><img src="${src}" alt="" /></button>`).join("")}
+          </div>
+        </div>
+        <div class="pdp-info">
+          <p class="eyebrow">${p.category}${p.personalizable ? " · Personalizable" : ""}</p>
+          <h1>${p.name}</h1>
+          <p class="pdp-price">${formatINR(p.price)}${p.compareAt ? ` <s class="muted" style="font-size:1rem;font-weight:400">${formatINR(p.compareAt)}</s>` : ""}</p>
+          <div class="pdp-meta">
+            <span>★ ${p.rating} (${p.reviews} reviews)</span>
+            <span>${p.stock > 5 ? "In stock" : p.stock > 0 ? `Only ${p.stock} left` : "Out of stock"}</span>
+            <span>Delivery in ${p.deliveryDays} days</span>
+          </div>
+          <p class="muted" style="margin-bottom:1.25rem">${p.description}</p>
+          <form id="pdp-form">
+            ${
+              p.personalizable
+                ? `<div class="option-block"><label for="engraving">Personalization</label>
+                   <input id="engraving" name="engraving" maxlength="40" placeholder="${(p.personalization[0] || "Add text").replace(/"/g, "")}" /></div>
+                   <div class="option-block"><label for="message">Gift message</label>
+                   <textarea id="message" name="message" placeholder="A short note for the recipient"></textarea></div>`
+                : ""
+            }
+            <div class="option-block">
+              <label><input type="checkbox" id="wrap" /> Gift wrap (+₹99)</label>
+            </div>
+            <div class="option-block">
+              <label><input type="checkbox" id="card" /> Greeting card (+₹49)</label>
+            </div>
+            <div class="qty-row">
+              <label for="qty">Qty</label>
+              <input id="qty" type="number" min="1" max="${p.stock}" value="1" />
+            </div>
+            <div class="pdp-actions">
+              <button class="btn" type="submit" ${p.stock ? "" : "disabled"}>Add to Cart</button>
+              <button class="btn btn-gold" type="button" id="buy-now" ${p.stock ? "" : "disabled"}>Buy Now</button>
+            </div>
+            <button class="btn-ghost" type="button" id="wish-btn">${wished ? "♥ Saved" : "♡ Save to wishlist"}</button>
+          </form>
+        </div>`;
+
+      const main = document.getElementById("gallery-main");
+      main.addEventListener("click", () => main.classList.toggle("zoomed"));
+      document.getElementById("thumbs").addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-src]");
+        if (!btn) return;
+        document.getElementById("main-img").src = btn.dataset.src;
+        document.querySelectorAll("#thumbs button").forEach((b) => b.classList.toggle("active", b === btn));
+      });
+
+      const pushCart = () => {
+        Liora.addToCart(p.id, {
+          qty: Number(document.getElementById("qty").value) || 1,
+          engraving: document.getElementById("engraving")?.value || "",
+          message: document.getElementById("message")?.value || "",
+          wrap: document.getElementById("wrap").checked,
+          card: document.getElementById("card").checked,
+        });
+      };
+
+      document.getElementById("pdp-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        pushCart();
+      });
+      document.getElementById("buy-now").addEventListener("click", () => {
+        pushCart();
+        location.href = "checkout.html";
+      });
+      document.getElementById("wish-btn").addEventListener("click", (e) => {
+        const on = Liora.toggleWish(p.id);
+        e.target.textContent = on ? "♥ Saved" : "♡ Save to wishlist";
+      });
+
+      const related = LIORA_PRODUCTS.filter(
+        (x) => x.id !== p.id && (x.category === p.category || x.occasions.some((o) => p.occasions.includes(o)))
+      ).slice(0, 4);
+      Liora.renderProductGrid("#related", related);
+
+      document.getElementById("reviews-title").textContent = `Reviews · ${p.rating}★`;
+      document.getElementById("product-reviews").innerHTML = LIORA_REVIEWS.map(
+        (r) => `<article class="testimonial"><div class="stars">${"★".repeat(r.rating)}</div><blockquote>“${r.text}”</blockquote><cite>${r.name}</cite></article>`
+      ).join("");
+    });
+  </script>
+</body>
+</html>

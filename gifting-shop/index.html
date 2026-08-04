@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liora — Curated Gifts for Every Occasion</title>
+  <meta name="description" content="Liora is a premium gifting shop for birthdays, anniversaries, weddings, corporate events, and personalized gifts. Shop curated presents with scheduled delivery." />
+  <link rel="canonical" href="https://example.com/gifting-shop/" />
+  <meta property="og:title" content="Liora — Curated Gifts" />
+  <meta property="og:description" content="Warm, elegant gifts with personalization and on-time delivery." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Liora",
+    "description": "Curated gifting shop for occasions and personalized gifts.",
+    "url": "https://example.com/gifting-shop/",
+    "priceRange": "₹₹"
+  }
+  </script>
+</head>
+<body>
+  <div data-header></div>
+
+  <main>
+    <section class="hero" aria-label="Featured collection">
+      <div class="hero-media">
+        <img src="assets/lifestyle/hero.jpg" alt="Beautifully wrapped gifts on a soft surface" width="1800" height="1200" />
+      </div>
+      <div class="container hero-content">
+        <p class="brand-mark">Liora</p>
+        <h1>Gifts that feel found, not filled.</h1>
+        <p>Seasonal keepsakes and personalized pieces for birthdays, vows, and every quiet celebration.</p>
+        <div class="cta-row">
+          <a class="btn btn-gold" href="shop.html">Shop Now</a>
+          <a class="btn btn-outline" href="shop.html?occasion=Festive">Festive edit</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Shop by occasion</p>
+          <h2>Start with the moment.</h2>
+          <p>Browse curated edits for the occasions you gift most.</p>
+        </div>
+        <div class="occasion-grid reveal">
+          <a class="occasion-tile" href="shop.html?occasion=Birthday"><img src="assets/products/choc-1.jpg" alt="" /><span>Birthday</span></a>
+          <a class="occasion-tile" href="shop.html?occasion=Anniversary"><img src="assets/products/jewelry-1.jpg" alt="" /><span>Anniversary</span></a>
+          <a class="occasion-tile" href="shop.html?occasion=Weddings"><img src="assets/products/frame-2.jpg" alt="" /><span>Weddings</span></a>
+          <a class="occasion-tile" href="shop.html?occasion=Corporate"><img src="assets/lifestyle/corporate.jpg" alt="" /><span>Corporate</span></a>
+          <a class="occasion-tile" href="shop.html?occasion=Festive"><img src="assets/products/hamper-1.jpg" alt="" /><span>Festive</span></a>
+          <a class="occasion-tile" href="shop.html?personalizable=1"><img src="assets/products/notebook-1.jpg" alt="" /><span>Personalized</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band-blush">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Trending now</p>
+          <h2>Best-sellers loved this season.</h2>
+          <p>Pieces guests reorder — and recipients keep.</p>
+        </div>
+        <div class="carousel" id="bestsellers" data-bestsellers></div>
+        <div class="carousel-controls">
+          <button class="icon-btn" type="button" data-carousel-prev aria-label="Previous">←</button>
+          <button class="icon-btn" type="button" data-carousel-next aria-label="Next">→</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Shop by recipient</p>
+          <h2>For someone specific.</h2>
+        </div>
+        <div class="recipient-row reveal">
+          <a class="recipient-link" href="shop.html?recipient=For%20Him"><h3>For Him</h3><p class="muted">Watches, journals, refined sets</p></a>
+          <a class="recipient-link" href="shop.html?recipient=For%20Her"><h3>For Her</h3><p class="muted">Jewelry, scent, keepsakes</p></a>
+          <a class="recipient-link" href="shop.html?recipient=For%20Kids"><h3>For Kids</h3><p class="muted">Soft toys and storytime gifts</p></a>
+          <a class="recipient-link" href="shop.html?recipient=For%20Couples"><h3>For Couples</h3><p class="muted">Shared boxes and frames</p></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="highlight reveal">
+      <div class="highlight-media">
+        <img src="assets/lifestyle/personalize.jpg" alt="Hands arranging a personalized gift box" width="1200" height="900" />
+      </div>
+      <div class="highlight-copy">
+        <p class="eyebrow">Make it theirs</p>
+        <h2>Names, notes, and wrapping that feel intentional.</h2>
+        <p>Add engraving, monograms, gift wrap, and a greeting card — then pick the delivery date that matches the occasion.</p>
+        <a class="btn" href="shop.html?personalizable=1">Explore personalization</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Kind words</p>
+          <h2>Trusted for the gifts that matter.</h2>
+        </div>
+        <div class="testimonial-grid" id="testimonials"></div>
+      </div>
+    </section>
+
+    <section class="band-blush">
+      <div class="container">
+        <div class="newsletter reveal">
+          <div>
+            <p class="eyebrow">Newsletter</p>
+            <h2 class="display" style="font-size:clamp(2rem,4vw,2.75rem);margin:0.4rem 0 0.6rem">10% off your first order</h2>
+            <p class="muted">Seasonal edits, gift guides, and early access to limited drops.</p>
+          </div>
+          <form id="newsletter-form" class="newsletter-form">
+            <label class="sr-only" for="email">Email</label>
+            <input id="email" type="email" required placeholder="Your email" autocomplete="email" />
+            <button class="btn" type="submit">Join</button>
+          </form>
+        </div>
+        <p class="muted" id="newsletter-note" style="margin-top:0.75rem;min-height:1.2em"></p>
+        <div class="trust-row reveal">
+          <div class="trust-item"><h4>Secure payment</h4><p>Cards, UPI, wallets &amp; COD — SSL-ready checkout.</p></div>
+          <div class="trust-item"><h4>Free shipping ₹1,999+</h4><p>Pan-India delivery with occasion-date scheduling.</p></div>
+          <div class="trust-item"><h4>Easy returns</h4><p>7-day returns on non-personalized items.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-footer></div>
+
+  <script src="js/products.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const bestsellers = LIORA_PRODUCTS.filter((p) => p.bestseller || p.trending).slice(0, 8);
+      const track = document.querySelector("[data-bestsellers]");
+      track.innerHTML = bestsellers.map(Liora.productCardHTML).join("");
+
+      document.querySelector("[data-carousel-prev]")?.addEventListener("click", () => {
+        track.scrollBy({ left: -track.clientWidth * 0.8, behavior: "smooth" });
+      });
+      document.querySelector("[data-carousel-next]")?.addEventListener("click", () => {
+        track.scrollBy({ left: track.clientWidth * 0.8, behavior: "smooth" });
+      });
+
+      document.getElementById("testimonials").innerHTML = LIORA_REVIEWS.map(
+        (r) => `<article class="testimonial reveal">
+          <div class="stars">${"★".repeat(r.rating)}</div>
+          <blockquote>“${r.text}”</blockquote>
+          <cite>${r.name} · ${r.product}</cite>
+        </article>`
+      ).join("");
+
+      document.getElementById("newsletter-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        document.getElementById("newsletter-note").textContent = "Welcome — your 10% code LIORA10 is ready at checkout.";
+        e.target.reset();
+      });
+    });
+  </script>
+</body>
+</html>

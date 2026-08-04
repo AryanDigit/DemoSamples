@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Track Order — Liora</title>
+  <meta name="description" content="Track your Liora gift order by order ID." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div data-header></div>
+  <main class="container" style="padding:3rem 0 5rem;max-width:36rem">
+    <p class="eyebrow">Tracking</p>
+    <h1 class="display" style="font-size:2.4rem;margin:0.4rem 0 1rem">Track your order</h1>
+    <form id="track-form" class="form-grid">
+      <div class="field full"><label for="oid">Order ID</label><input id="oid" required placeholder="e.g. LR12345678" /></div>
+      <div class="field full"><button class="btn" type="submit">Track</button></div>
+    </form>
+    <div id="track-result" class="summary" style="margin-top:1.5rem;position:static;display:none"></div>
+  </main>
+  <div data-footer></div>
+  <script src="js/products.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.getElementById("track-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const id = oid.value.trim();
+      const order = Liora.store.getOrders().find((o) => o.id === id);
+      const el = document.getElementById("track-result");
+      el.style.display = "block";
+      if (!order) {
+        el.innerHTML = `<p>We couldn’t find that order on this device. Check the ID from your confirmation page.</p>`;
+        return;
+      }
+      el.innerHTML = `
+        <h2>${order.id}</h2>
+        <div class="summary-row"><span>Status</span><span>${order.status}</span></div>
+        <div class="summary-row"><span>Scheduled delivery</span><span>${order.deliverOn}</span></div>
+        <div class="summary-row"><span>Items</span><span>${order.items.length}</span></div>
+        <div class="summary-row total"><span>Total</span><span>${formatINR(order.total)}</span></div>`;
+    });
+  </script>
+</body>
+</html>

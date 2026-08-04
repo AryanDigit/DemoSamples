@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmation — Liora</title>
+  <meta name="description" content="Your Liora order confirmation and tracking details." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div data-header></div>
+  <main class="container" style="padding:3rem 0 5rem;max-width:40rem">
+    <p class="eyebrow">Confirmation</p>
+    <h1 class="display" style="font-size:clamp(2rem,4vw,2.75rem);margin:0.4rem 0 0.75rem">Thank you for gifting with Liora</h1>
+    <div id="order-box" class="summary" style="position:static"></div>
+    <p style="margin-top:1.25rem"><a class="btn" href="track.html">Track order</a> <a class="btn btn-outline-dark" href="shop.html">Continue shopping</a></p>
+  </main>
+  <div data-footer></div>
+  <script src="js/products.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const id = new URLSearchParams(location.search).get("id");
+      const order = Liora.store.getOrders().find((o) => o.id === id) || Liora.store.getOrders()[0];
+      const box = document.getElementById("order-box");
+      if (!order) {
+        box.innerHTML = `<p>No order found. <a href="shop.html">Return to shop</a></p>`;
+        return;
+      }
+      box.innerHTML = `
+        <h2>Order ${order.id}</h2>
+        <div class="summary-row"><span>Status</span><span>${order.status}</span></div>
+        <div class="summary-row"><span>Deliver on</span><span>${order.deliverOn}</span></div>
+        <div class="summary-row"><span>Occasion</span><span>${order.occasion}</span></div>
+        <div class="summary-row"><span>Payment</span><span>${order.payment.toUpperCase()}</span></div>
+        <div class="summary-row total"><span>Total</span><span>${formatINR(order.total)}</span></div>
+        <p class="muted" style="margin-top:0.85rem;font-size:0.9rem">A confirmation email would be sent to ${order.customer.email} in production (demo stores orders on this device).</p>`;
+    });
+  </script>
+</body>
+</html>
