@@ -1,14 +1,17 @@
 /**
- * coin.js — Collectible coins and power-up pickups
+ * coin.js — Collectible coins, gems, hearts, and power-up pickups
  */
 (function (global) {
   'use strict';
 
   const PICKUP = Object.freeze({
     COIN: 'coin',
+    GEM: 'gem',
+    HEART: 'heart',
     MAGNET: 'magnet',
     SHIELD: 'shield',
     BOOST: 'boost',
+    SLOWMO: 'slowmo',
   });
 
   class Pickup {
@@ -21,10 +24,11 @@
       this.type = type;
       this.x = x;
       this.y = y;
-      this.r = type === PICKUP.COIN ? 12 : 16;
+      this.r = type === PICKUP.COIN ? 12 : type === PICKUP.GEM ? 14 : 16;
       this.active = true;
       this.anim = Math.random() * Math.PI * 2;
-      this.value = type === PICKUP.COIN ? 1 : 0;
+      this.value = type === PICKUP.COIN ? 1 : type === PICKUP.GEM ? 5 : 0;
+      this.markedNear = false;
     }
 
     /**
@@ -36,12 +40,13 @@
       this.anim += dt * 5;
       this.x -= speed * dt;
 
-      if (attractor && attractor.magnet && this.type === PICKUP.COIN) {
+      const magnetTypes = [PICKUP.COIN, PICKUP.GEM];
+      if (attractor && attractor.magnet && magnetTypes.includes(this.type)) {
         const dx = attractor.x - this.x;
         const dy = attractor.y - this.y;
         const dist = Math.hypot(dx, dy);
-        if (dist < 220 && dist > 1) {
-          const pull = (1 - dist / 220) * 520 * dt;
+        if (dist < 240 && dist > 1) {
+          const pull = (1 - dist / 240) * 560 * dt;
           this.x += (dx / dist) * pull;
           this.y += (dy / dist) * pull;
         }
@@ -69,6 +74,12 @@
         case PICKUP.COIN:
           this._drawCoin(ctx);
           break;
+        case PICKUP.GEM:
+          this._drawGem(ctx);
+          break;
+        case PICKUP.HEART:
+          this._drawHeart(ctx);
+          break;
         case PICKUP.MAGNET:
           this._drawMagnet(ctx);
           break;
@@ -77,6 +88,9 @@
           break;
         case PICKUP.BOOST:
           this._drawBoost(ctx);
+          break;
+        case PICKUP.SLOWMO:
+          this._drawSlowmo(ctx);
           break;
         default:
           break;
@@ -98,6 +112,43 @@
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('$', 0, 1);
+    }
+
+    _drawGem(ctx) {
+      ctx.fillStyle = 'rgba(56,189,248,0.25)';
+      ctx.beginPath();
+      ctx.arc(0, 0, this.r + 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#22d3ee';
+      ctx.beginPath();
+      ctx.moveTo(0, -14);
+      ctx.lineTo(12, -2);
+      ctx.lineTo(7, 12);
+      ctx.lineTo(-7, 12);
+      ctx.lineTo(-12, -2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = '#a5f3fc';
+      ctx.beginPath();
+      ctx.moveTo(0, -10);
+      ctx.lineTo(6, -2);
+      ctx.lineTo(0, 2);
+      ctx.lineTo(-6, -2);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    _drawHeart(ctx) {
+      ctx.fillStyle = '#fb7185';
+      ctx.beginPath();
+      ctx.moveTo(0, 10);
+      ctx.bezierCurveTo(14, 0, 10, -12, 0, -4);
+      ctx.bezierCurveTo(-10, -12, -14, 0, 0, 10);
+      ctx.fill();
+      ctx.fillStyle = '#fecdd3';
+      ctx.beginPath();
+      ctx.arc(-4, -4, 3, 0, Math.PI * 2);
+      ctx.fill();
     }
 
     _drawMagnet(ctx) {
@@ -161,6 +212,25 @@
       ctx.closePath();
       ctx.fill();
     }
+
+    _drawSlowmo(ctx) {
+      ctx.fillStyle = 'rgba(125,211,252,0.25)';
+      ctx.beginPath();
+      ctx.arc(0, 0, this.r + 3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#7dd3fc';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, 11, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = '#e0f2fe';
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, -8);
+      ctx.lineTo(5, 2);
+      ctx.closePath();
+      ctx.fill();
+    }
   }
 
   class PickupSpawner {
@@ -168,12 +238,14 @@
       this.pickups = [];
       this.coinTimer = 0;
       this.powerTimer = 0;
+      this.specialTimer = 0;
     }
 
     reset() {
       this.pickups.length = 0;
       this.coinTimer = 0;
       this.powerTimer = 2.5;
+      this.specialTimer = 5;
     }
 
     /**
@@ -186,15 +258,21 @@
     update(dt, speed, canvasW, groundY, attractor) {
       this.coinTimer += dt;
       this.powerTimer += dt;
+      this.specialTimer += dt;
 
       if (this.coinTimer > 0.55) {
         this.coinTimer = 0;
         this._spawnCoinPattern(canvasW, groundY);
       }
 
-      if (this.powerTimer > 8 + Math.random() * 4) {
+      if (this.powerTimer > 7.5 + Math.random() * 4) {
         this.powerTimer = 0;
         this._spawnPowerup(canvasW, groundY);
+      }
+
+      if (this.specialTimer > 12 + Math.random() * 6) {
+        this.specialTimer = 0;
+        this._spawnSpecial(canvasW, groundY);
       }
 
       for (let i = this.pickups.length - 1; i >= 0; i--) {
@@ -205,12 +283,11 @@
     }
 
     _spawnCoinPattern(canvasW, groundY) {
-      const pattern = Math.floor(Math.random() * 3);
+      const pattern = Math.floor(Math.random() * 4);
       const baseX = canvasW + 30;
       const midY = groundY - 90;
 
       if (pattern === 0) {
-        // Arc
         for (let i = 0; i < 5; i++) {
           const t = i / 4;
           const x = baseX + i * 36;
@@ -218,23 +295,36 @@
           this.pickups.push(new Pickup(PICKUP.COIN, x, y));
         }
       } else if (pattern === 1) {
-        // Low line (jumpable / runnable)
         for (let i = 0; i < 4; i++) {
           this.pickups.push(new Pickup(PICKUP.COIN, baseX + i * 34, groundY - 48));
         }
-      } else {
-        // High line
+      } else if (pattern === 2) {
         for (let i = 0; i < 4; i++) {
           this.pickups.push(new Pickup(PICKUP.COIN, baseX + i * 34, groundY - 130));
         }
+      } else {
+        // Diamond ring with a center gem
+        for (let i = 0; i < 6; i++) {
+          const a = (i / 6) * Math.PI * 2;
+          this.pickups.push(
+            new Pickup(PICKUP.COIN, baseX + 40 + Math.cos(a) * 36, midY + Math.sin(a) * 28)
+          );
+        }
+        this.pickups.push(new Pickup(PICKUP.GEM, baseX + 40, midY));
       }
     }
 
     _spawnPowerup(canvasW, groundY) {
-      const types = [PICKUP.MAGNET, PICKUP.SHIELD, PICKUP.BOOST];
+      const types = [PICKUP.MAGNET, PICKUP.SHIELD, PICKUP.BOOST, PICKUP.SLOWMO];
       const type = types[Math.floor(Math.random() * types.length)];
       const y = groundY - 70 - Math.random() * 70;
       this.pickups.push(new Pickup(type, canvasW + 40, y));
+    }
+
+    _spawnSpecial(canvasW, groundY) {
+      const type = Math.random() < 0.55 ? PICKUP.GEM : PICKUP.HEART;
+      const y = groundY - 80 - Math.random() * 60;
+      this.pickups.push(new Pickup(type, canvasW + 50, y));
     }
 
     draw(ctx) {

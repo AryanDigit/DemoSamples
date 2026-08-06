@@ -39,9 +39,30 @@
       this.magnetTime = 0;
       this.shieldTime = 0;
       this.boostTime = 0;
+      this.slowmoTime = 0;
+
+      this.skin = {
+        id: 'azure',
+        body: '#3ecfff',
+        accent: '#1a6f9a',
+        cap: '#ff6b4a',
+      };
 
       this.alive = true;
       this.runFrame = 0;
+    }
+
+    /**
+     * @param {{id:string, body:string, accent?:string, cap:string}} skin
+     */
+    setSkin(skin) {
+      if (!skin) return;
+      this.skin = {
+        id: skin.id || 'azure',
+        body: skin.body || '#3ecfff',
+        accent: skin.accent || '#1a6f9a',
+        cap: skin.cap || '#ff6b4a',
+      };
     }
 
     reset(groundY) {
@@ -57,6 +78,7 @@
       this.magnetTime = 0;
       this.shieldTime = 0;
       this.boostTime = 0;
+      this.slowmoTime = 0;
       this.alive = true;
       this.animTime = 0;
     }
@@ -83,14 +105,19 @@
       return this.boostTime > 0;
     }
 
+    hasSlowmo() {
+      return this.slowmoTime > 0;
+    }
+
     /**
-     * @param {'magnet'|'shield'|'boost'} type
+     * @param {'magnet'|'shield'|'boost'|'slowmo'} type
      * @param {number} duration seconds
      */
     applyPowerup(type, duration = 6) {
       if (type === 'magnet') this.magnetTime = Math.max(this.magnetTime, duration);
       if (type === 'shield') this.shieldTime = Math.max(this.shieldTime, duration);
       if (type === 'boost') this.boostTime = Math.max(this.boostTime, duration);
+      if (type === 'slowmo') this.slowmoTime = Math.max(this.slowmoTime, duration);
     }
 
     jump() {
@@ -146,6 +173,7 @@
       this.magnetTime = Math.max(0, this.magnetTime - dt);
       this.shieldTime = Math.max(0, this.shieldTime - dt);
       this.boostTime = Math.max(0, this.boostTime - dt);
+      this.slowmoTime = Math.max(0, this.slowmoTime - dt);
 
       if (input.jump) {
         const j = this.jump();
@@ -254,6 +282,15 @@
         ctx.fill();
       }
 
+      // Slow-mo pulse
+      if (this.hasSlowmo()) {
+        ctx.strokeStyle = 'rgba(125,211,252,0.7)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(0, 0, 36 + Math.sin(this.animTime * 8) * 3, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
       this._drawBody(ctx);
       ctx.restore();
     }
@@ -261,12 +298,13 @@
     _drawBody(ctx) {
       const sliding = this.state === STATE.SLIDE;
       const legPhase = this.runFrame;
+      const body = this.skin.body;
+      const cap = this.skin.cap;
+      const accent = this.skin.accent;
 
-      // Body
-      ctx.fillStyle = '#3ecfff';
+      ctx.fillStyle = body;
       if (sliding) {
         ctx.fillRect(-22, -8, 44, 22);
-        // Head
         ctx.fillStyle = '#ffe0c2';
         ctx.beginPath();
         ctx.arc(16, -2, 10, 0, Math.PI * 2);
@@ -275,34 +313,29 @@
         ctx.fillRect(18, -5, 4, 3);
       } else {
         ctx.fillRect(-14, -22, 28, 34);
-        // Head
         ctx.fillStyle = '#ffe0c2';
         ctx.beginPath();
         ctx.arc(0, -30, 12, 0, Math.PI * 2);
         ctx.fill();
-        // Hair / cap
-        ctx.fillStyle = '#ff6b4a';
+        ctx.fillStyle = cap;
         ctx.beginPath();
         ctx.arc(0, -34, 10, Math.PI, 0);
         ctx.fill();
-        // Eye
         ctx.fillStyle = '#0b1a2b';
         ctx.fillRect(2, -32, 4, 4);
 
-        // Legs (run cycle)
-        ctx.fillStyle = '#1a6f9a';
+        ctx.fillStyle = accent;
         if (this.state === STATE.JUMP) {
           ctx.fillRect(-10, 12, 8, 16);
           ctx.fillRect(4, 10, 8, 14);
         } else {
-          const o = (legPhase % 2 === 0 ? 6 : -6);
+          const o = legPhase % 2 === 0 ? 6 : -6;
           ctx.fillRect(-12, 12, 8, 16 + (o > 0 ? 2 : -2));
           ctx.fillRect(4, 12, 8, 16 - (o > 0 ? 2 : -2));
         }
 
-        // Arms
         ctx.fillStyle = '#ffe0c2';
-        const armSwing = this.state === STATE.JUMP ? -10 : (legPhase % 2 === 0 ? 8 : -8);
+        const armSwing = this.state === STATE.JUMP ? -10 : legPhase % 2 === 0 ? 8 : -8;
         ctx.fillRect(-20, -10, 8, 16);
         ctx.fillRect(12, -10 + armSwing * 0.15, 8, 16);
       }
