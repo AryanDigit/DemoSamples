@@ -1,0 +1,33 @@
+// Custom function: Send_Payment_Reminder
+// Scheduled daily — overdue invoices
+
+overdue = Invoices[Status == "Pending" || Status == "Partial" || Status == "Overdue"][Due_Date < zoho.currentdate];
+count = 0;
+for each inv in overdue
+{
+	inv.Status = "Overdue";
+	cust = inv.Customer;
+	if(cust.Email != null && cust.Email != "")
+	{
+		sendmail
+		[
+			from :zoho.adminuserid
+			to :cust.Email
+			subject :"Payment reminder: " + inv.Invoice_Number
+			message :"Dear " + cust.Contact_Person + ", invoice " + inv.Invoice_Number +
+				" of ₹" + inv.Grand_Total + " was due on " + inv.Due_Date.toString("dd-MMM-yyyy") +
+				". Please arrange payment at the earliest."
+		];
+	}
+	insert into Notifications
+	[
+		Title="Payment overdue"
+		Message=inv.Invoice_Number + " — " + cust.Customer_Name
+		Type="payment"
+		Is_Read=false
+		Added_User=zoho.adminuserid
+	];
+	count = count + 1;
+}
+thisapp.Audit_Log.Write("Payment reminders sent: " + count, "System");
+return count;

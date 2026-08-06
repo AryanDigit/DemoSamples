@@ -27,3 +27,9 @@ Open [`stationery-demo/index.html`](stationery-demo/index.html) in a browser for
 Works fully offline — images and fonts are bundled under `stationery-demo/assets/`.
 
 **Local download:** unzip `quillmark-stationery-demo.zip`, then open `index.html`.
+
+## ZorBill — Zoho Billing & Invoicing
+
+Cloud billing/invoicing ERP UI + Deluge backends for the Zoho ecosystem (Creator, Books, Inventory, CRM).
+
+Open [`zoho-billing/index.html`](zoho-billing/index.html) or run a static server from `zoho-billing/`. See [`zoho-billing/README.md`](zoho-billing/README.md).

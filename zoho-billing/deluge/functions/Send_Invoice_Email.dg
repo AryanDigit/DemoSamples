@@ -1,0 +1,37 @@
+// Custom function: Send_Invoice_Email
+// Arguments: invoiceId (int)
+// Uses Zoho Mail sendmail + optional WhatsApp template hook
+
+inv = Invoices[ID == invoiceId];
+if(inv.count() == 0) { return "NOT_FOUND"; }
+
+cust = inv.Customer;
+company = Company_Settings[ID != 0];
+
+subject = "Invoice " + inv.Invoice_Number + " from " + company.Trade_Name;
+body = "<p>Dear " + cust.Contact_Person + ",</p>" +
+	"<p>Please find invoice <b>" + inv.Invoice_Number + "</b> for <b>₹" + inv.Grand_Total + "</b>.</p>" +
+	"<p>Due date: " + inv.Due_Date.toString("dd-MMM-yyyy") + "</p>" +
+	"<p>GSTIN: " + company.GSTIN + "</p>" +
+	"<p>Thank you for your business.<br/>" + company.Trade_Name + "</p>";
+
+sendmail
+[
+	from :zoho.adminuserid
+	to :cust.Email
+	subject :subject
+	message :body
+];
+
+// Payment reminder notification
+insert into Notifications
+[
+	Title="Invoice emailed"
+	Message=inv.Invoice_Number + " sent to " + cust.Email
+	Type="info"
+	Is_Read=false
+	Added_User=zoho.loginuserid
+];
+
+thisapp.Audit_Log.Write("Emailed " + inv.Invoice_Number + " to " + cust.Email, zoho.loginuserid);
+return "SENT";

@@ -1,0 +1,58 @@
+// Custom function: Sync_Stock_To_Inventory
+// Arguments: productId (int)
+// Connection: zorbill_inventory
+
+prod = Products[ID == productId];
+if(prod.count() == 0) { return "NOT_FOUND"; }
+
+orgId = thisapp.OAuth_Config.Inventory_Org_ID;
+payload = Map();
+payload.put("name", prod.Product_Name);
+payload.put("sku", prod.SKU);
+payload.put("rate", prod.Sale_Price);
+payload.put("purchase_rate", prod.Purchase_Price);
+payload.put("unit", prod.Unit);
+payload.put("hsn_or_sac", prod.HSN);
+payload.put("product_type", "goods");
+stockMap = Map();
+stockMap.put("warehouse_name", prod.Warehouse);
+stockMap.put("initial_stock", prod.Stock);
+payload.put("initial_stock_list", {stockMap});
+
+url = "https://www.zohoapis.com/inventory/v1/items?organization_id=" + orgId;
+
+if(prod.Zoho_Inventory_Item_ID == null || prod.Zoho_Inventory_Item_ID == "")
+{
+	resp = invokeurl
+	[
+		url :url
+		type :POST
+		parameters:payload.toString()
+		connection:"zorbill_inventory"
+	];
+	if(resp.get("code") == 0)
+	{
+		prod.Zoho_Inventory_Item_ID = resp.get("item").get("item_id");
+		return "CREATED";
+	}
+	return "ERROR:" + resp;
+}
+else
+{
+	// Adjust stock via inventory adjustment API when quantities change
+	adj = Map();
+	adj.put("date", zoho.currentdate.toString("yyyy-MM-dd"));
+	adj.put("reason", "ZorBill sync");
+	line = Map();
+	line.put("item_id", prod.Zoho_Inventory_Item_ID);
+	line.put("quantity_adjusted", prod.Stock);
+	adj.put("line_items", {line});
+	invokeurl
+	[
+		url :"https://www.zohoapis.com/inventory/v1/inventoryadjustments?organization_id=" + orgId
+		type :POST
+		parameters:adj.toString()
+		connection:"zorbill_inventory"
+	];
+	return "ADJUSTED";
+}
