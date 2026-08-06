@@ -1,0 +1,62 @@
+[
+  {
+    "id": "demo-01-luxury",
+    "name": "Luxury Fine Dining",
+    "brand": "Maison \u00c9toile",
+    "tagline": "Michelin-Starred Elegance"
+  },
+  {
+    "id": "demo-02-italian",
+    "name": "Italian Restaurant",
+    "brand": "Trattoria Bella",
+    "tagline": "Nonna's Recipes, Modern Soul"
+  },
+  {
+    "id": "demo-03-sushi",
+    "name": "Japanese Sushi",
+    "brand": "Sakura Omote",
+    "tagline": "Precision. Season. Harmony."
+  },
+  {
+    "id": "demo-04-indian",
+    "name": "Indian Restaurant",
+    "brand": "Spice Route",
+    "tagline": "A Journey Across Flavors"
+  },
+  {
+    "id": "demo-05-mexican",
+    "name": "Mexican Restaurant",
+    "brand": "Casa Fuego",
+    "tagline": "Bold Fire. Bright Fiesta."
+  },
+  {
+    "id": "demo-06-bbq",
+    "name": "BBQ & Steak House",
+    "brand": "Smoke & Ember",
+    "tagline": "Low & Slow. Fire & Iron."
+  },
+  {
+    "id": "demo-07-seafood",
+    "name": "Seafood Restaurant",
+    "brand": "Azure Harbor",
+    "tagline": "Ocean to Table, Daily"
+  },
+  {
+    "id": "demo-08-cafe",
+    "name": "Organic Cafe",
+    "brand": "Green Leaf Kitchen",
+    "tagline": "Farm Fresh. Feel Good."
+  },
+  {
+    "id": "demo-09-fastfood",
+    "name": "Fast Food & Burger",
+    "brand": "Bolt Burger",
+    "tagline": "Smash. Stack. Satisfied."
+  },
+  {
+    "id": "demo-10-bakery",
+    "name": "Bakery & Coffee Shop",
+    "brand": "Crumb & Steam",
+    "tagline": "Baked at Dawn. Brewed with Care."
+  }
+]

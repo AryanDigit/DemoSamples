@@ -1,0 +1,168 @@
+// =============================================================================
+// Per-demo theme overrides (CSS variables applied via [data-demo])
+// =============================================================================
+
+[data-demo="demo-01-luxury"] {
+  --rui-primary: #c9a227;
+  --rui-primary-rgb: 201, 162, 39;
+  --rui-secondary: #8b7355;
+  --rui-accent: #e8d5a3;
+  --rui-bg: #0a0a0a;
+  --rui-surface: #141414;
+  --rui-text: #f5f0e8;
+  --rui-muted: #a89f91;
+  --rui-heading: #ffffff;
+  --rui-radius: 0;
+  --rui-font-display: "Cormorant Garamond", serif;
+  --rui-font-body: "Montserrat", sans-serif;
+}
+
+[data-demo="demo-02-italian"] {
+  --rui-primary: #c1121f;
+  --rui-primary-rgb: 193, 18, 31;
+  --rui-secondary: #2a9d8f;
+  --rui-accent: #f4a261;
+  --rui-bg: #fff8f3;
+  --rui-surface: #ffffff;
+  --rui-text: #2b2118;
+  --rui-muted: #7a6555;
+  --rui-heading: #1a120c;
+  --rui-footer: #1a120c;
+  --rui-radius: 0.35rem;
+  --rui-font-display: "Playfair Display", serif;
+  --rui-font-body: "Lato", sans-serif;
+  --rui-card: #ffffff;
+  --rui-border: #eadfd4;
+}
+
+[data-demo="demo-03-sushi"] {
+  --rui-primary: #e63946;
+  --rui-primary-rgb: 230, 57, 70;
+  --rui-secondary: #1d3557;
+  --rui-accent: #a8dadc;
+  --rui-bg: #0d1117;
+  --rui-surface: #161b22;
+  --rui-text: #e6edf3;
+  --rui-muted: #8b949e;
+  --rui-heading: #ffffff;
+  --rui-radius: 1rem;
+  --rui-font-display: "Zen Maru Gothic", sans-serif;
+  --rui-font-body: "Noto Sans JP", sans-serif;
+}
+
+[data-demo="demo-04-indian"] {
+  --rui-primary: #e85d04;
+  --rui-primary-rgb: 232, 93, 4;
+  --rui-secondary: #9b2226;
+  --rui-accent: #ffba08;
+  --rui-bg: #1a0f0a;
+  --rui-surface: #2a1810;
+  --rui-text: #fcefdc;
+  --rui-muted: #c4a484;
+  --rui-heading: #fff6e8;
+  --rui-radius: 0.75rem;
+  --rui-font-display: "Tiro Devanagari Hindi", serif;
+  --rui-font-body: "Poppins", sans-serif;
+}
+
+[data-demo="demo-05-mexican"] {
+  --rui-primary: #f77f00;
+  --rui-primary-rgb: 247, 127, 0;
+  --rui-secondary: #d62828;
+  --rui-accent: #fcbf49;
+  --rui-bg: #fff3e6;
+  --rui-surface: #ffffff;
+  --rui-text: #3d1f0f;
+  --rui-muted: #8a5a3b;
+  --rui-heading: #2b1408;
+  --rui-footer: #2b1408;
+  --rui-radius: 1.25rem;
+  --rui-font-display: "Abril Fatface", serif;
+  --rui-font-body: "Nunito", sans-serif;
+  --rui-card: #ffffff;
+  --rui-border: #f0d9c2;
+}
+
+[data-demo="demo-06-bbq"] {
+  --rui-primary: #bc4749;
+  --rui-primary-rgb: 188, 71, 73;
+  --rui-secondary: #6a994e;
+  --rui-accent: #f2e8cf;
+  --rui-bg: #1b120b;
+  --rui-surface: #271a10;
+  --rui-text: #f2e8cf;
+  --rui-muted: #b7a894;
+  --rui-heading: #ffffff;
+  --rui-radius: 0.25rem;
+  --rui-font-display: "Oswald", sans-serif;
+  --rui-font-body: "Source Sans 3", sans-serif;
+}
+
+[data-demo="demo-07-seafood"] {
+  --rui-primary: #0077b6;
+  --rui-primary-rgb: 0, 119, 182;
+  --rui-secondary: #00b4d8;
+  --rui-accent: #90e0ef;
+  --rui-bg: #023047;
+  --rui-surface: #03405f;
+  --rui-text: #e8f4f8;
+  --rui-muted: #9ec5d4;
+  --rui-heading: #ffffff;
+  --rui-radius: 0.5rem;
+  --rui-font-display: "Libre Baskerville", serif;
+  --rui-font-body: "DM Sans", sans-serif;
+}
+
+[data-demo="demo-08-cafe"] {
+  --rui-primary: #606c38;
+  --rui-primary-rgb: 96, 108, 56;
+  --rui-secondary: #dda15e;
+  --rui-accent: #bc6c25;
+  --rui-bg: #fefae0;
+  --rui-surface: #ffffff;
+  --rui-text: #283618;
+  --rui-muted: #6b705c;
+  --rui-heading: #1a2e05;
+  --rui-footer: #283618;
+  --rui-radius: 1.5rem;
+  --rui-font-display: "Fraunces", serif;
+  --rui-font-body: "Karla", sans-serif;
+  --rui-card: #ffffff;
+  --rui-border: #e8e2c8;
+}
+
+[data-demo="demo-09-fastfood"] {
+  --rui-primary: #ffb703;
+  --rui-primary-rgb: 255, 183, 3;
+  --rui-secondary: #fb8500;
+  --rui-accent: #023047;
+  --rui-bg: #fffbeb;
+  --rui-surface: #ffffff;
+  --rui-text: #1d1a16;
+  --rui-muted: #6c655c;
+  --rui-heading: #0f0d0b;
+  --rui-footer: #023047;
+  --rui-radius: 999px;
+  --rui-font-display: "Bebas Neue", sans-serif;
+  --rui-font-body: "Manrope", sans-serif;
+  --rui-card: #ffffff;
+  --rui-border: #ffe8a3;
+}
+
+[data-demo="demo-10-bakery"] {
+  --rui-primary: #b08968;
+  --rui-primary-rgb: 176, 137, 104;
+  --rui-secondary: #7f5539;
+  --rui-accent: #ddb892;
+  --rui-bg: #faf6f1;
+  --rui-surface: #ffffff;
+  --rui-text: #3c2f2f;
+  --rui-muted: #8a7264;
+  --rui-heading: #2c1810;
+  --rui-footer: #3c2f2f;
+  --rui-radius: 0.85rem;
+  --rui-font-display: "Bodoni Moda", serif;
+  --rui-font-body: "Outfit", sans-serif;
+  --rui-card: #ffffff;
+  --rui-border: #eadfd4;
+}
