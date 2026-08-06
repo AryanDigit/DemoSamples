@@ -9,6 +9,8 @@
     BARRIER: 'barrier',
     FLYER: 'flyer',
     LOW: 'low',
+    BOULDER: 'boulder',
+    LASER: 'laser',
   });
 
   class Enemy {
@@ -56,6 +58,20 @@
           this.color = '#f43f5e';
           this.baseY = this.y;
           break;
+        case TYPES.BOULDER:
+          this.w = 40;
+          this.h = 40;
+          this.y = this.groundY - this.h;
+          this.color = '#78716c';
+          this.speedMod = 60;
+          break;
+        case TYPES.LASER:
+          this.w = 12;
+          this.h = 90;
+          this.y = this.groundY - this.h - 10;
+          this.color = '#ef4444';
+          this.pulse = true;
+          break;
         default:
           this.w = 30;
           this.h = 30;
@@ -74,7 +90,20 @@
       if (this.type === TYPES.FLYER) {
         this.y = this.baseY + Math.sin(this.anim) * 12;
       }
+      if (this.type === TYPES.BOULDER) {
+        this.rot = (this.rot || 0) + dt * 8;
+      }
       if (this.x + this.w < -40) this.active = false;
+    }
+
+    /** Expanded near-miss probe bounds */
+    getNearMissBounds() {
+      return {
+        x: this.x - 18,
+        y: this.y - 10,
+        w: this.w + 36,
+        h: this.h + 20,
+      };
     }
 
     getBounds() {
@@ -104,6 +133,12 @@
           break;
         case TYPES.FLYER:
           this._drawFlyer(ctx);
+          break;
+        case TYPES.BOULDER:
+          this._drawBoulder(ctx);
+          break;
+        case TYPES.LASER:
+          this._drawLaser(ctx);
           break;
         default:
           ctx.fillStyle = this.color;
@@ -161,7 +196,6 @@
       ctx.beginPath();
       ctx.ellipse(this.x + this.w / 2, this.y + this.h / 2, this.w / 2, this.h / 2.4, 0, 0, Math.PI * 2);
       ctx.fill();
-      // Wings
       ctx.fillStyle = '#fb7185';
       ctx.beginPath();
       ctx.moveTo(this.x + 8, this.y + this.h / 2);
@@ -173,7 +207,6 @@
       ctx.lineTo(this.x + this.w + 10, this.y + this.h / 2 - flap);
       ctx.lineTo(this.x + this.w - 8, this.y + this.h / 2 + 6);
       ctx.fill();
-      // Eye
       ctx.fillStyle = '#fff';
       ctx.beginPath();
       ctx.arc(this.x + this.w * 0.65, this.y + this.h * 0.4, 4, 0, Math.PI * 2);
@@ -182,6 +215,39 @@
       ctx.beginPath();
       ctx.arc(this.x + this.w * 0.68, this.y + this.h * 0.4, 2, 0, Math.PI * 2);
       ctx.fill();
+    }
+
+    _drawBoulder(ctx) {
+      const cx = this.x + this.w / 2;
+      const cy = this.y + this.h / 2;
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(this.rot || 0);
+      ctx.fillStyle = '#78716c';
+      ctx.beginPath();
+      ctx.arc(0, 0, this.w / 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#a8a29e';
+      ctx.beginPath();
+      ctx.arc(-6, -4, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#44403c';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(0, 0, this.w / 2, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    _drawLaser(ctx) {
+      const pulse = 0.55 + 0.45 * Math.sin(this.anim * 2);
+      ctx.fillStyle = `rgba(239,68,68,${0.25 + pulse * 0.25})`;
+      ctx.fillRect(this.x - 6, this.y, this.w + 12, this.h);
+      ctx.fillStyle = `rgba(254,202,202,${pulse})`;
+      ctx.fillRect(this.x, this.y, this.w, this.h);
+      ctx.fillStyle = '#fecaca';
+      ctx.fillRect(this.x - 8, this.y - 6, this.w + 16, 6);
+      ctx.fillRect(this.x - 8, this.y + this.h, this.w + 16, 6);
     }
   }
 
@@ -226,24 +292,26 @@
     _spawn(canvasW, groundY, difficulty) {
       const roll = Math.random();
       let type = TYPES.SPIKE;
-      if (difficulty < 0.2) {
+      if (difficulty < 0.15) {
         type = roll < 0.7 ? TYPES.SPIKE : TYPES.BARRIER;
-      } else if (difficulty < 0.5) {
-        if (roll < 0.35) type = TYPES.SPIKE;
-        else if (roll < 0.6) type = TYPES.BARRIER;
-        else if (roll < 0.8) type = TYPES.LOW;
-        else type = TYPES.FLYER;
-      } else {
-        if (roll < 0.25) type = TYPES.SPIKE;
-        else if (roll < 0.45) type = TYPES.BARRIER;
+      } else if (difficulty < 0.4) {
+        if (roll < 0.3) type = TYPES.SPIKE;
+        else if (roll < 0.5) type = TYPES.BARRIER;
         else if (roll < 0.7) type = TYPES.LOW;
-        else type = TYPES.FLYER;
+        else if (roll < 0.88) type = TYPES.FLYER;
+        else type = TYPES.BOULDER;
+      } else {
+        if (roll < 0.18) type = TYPES.SPIKE;
+        else if (roll < 0.34) type = TYPES.BARRIER;
+        else if (roll < 0.52) type = TYPES.LOW;
+        else if (roll < 0.7) type = TYPES.FLYER;
+        else if (roll < 0.86) type = TYPES.BOULDER;
+        else type = TYPES.LASER;
       }
 
       const x = canvasW + 40 + Math.random() * 60;
       this.enemies.push(new Enemy(type, x, groundY));
 
-      // Occasional double pack at higher difficulty
       if (difficulty > 0.55 && Math.random() < 0.28) {
         const gap = 140 + Math.random() * 60;
         const second = Math.random() < 0.5 ? TYPES.SPIKE : TYPES.FLYER;

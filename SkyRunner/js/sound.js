@@ -156,6 +156,20 @@
       this._tone(880, 0.08, 'sine', 0.25, 1400);
     }
 
+    playGem() {
+      this._tone(660, 0.1, 'sine', 0.28, 990);
+      setTimeout(() => this._tone(990, 0.12, 'triangle', 0.22, 1320), 60);
+    }
+
+    playNearMiss() {
+      this._tone(520, 0.06, 'square', 0.1, 780);
+    }
+
+    playAchievement() {
+      this._tone(440, 0.1, 'triangle', 0.2, 660);
+      setTimeout(() => this._tone(660, 0.14, 'triangle', 0.22, 880), 90);
+    }
+
     playPowerup() {
       if (this._playBuffer('powerup', this.sfxGain)) return;
       this._tone(360, 0.1, 'triangle', 0.22, 720);

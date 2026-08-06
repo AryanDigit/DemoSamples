@@ -27,8 +27,64 @@
       this.trees = [];
       this.stars = [];
       this.groundTiles = [];
+      this.weather = [];
+
+      // Biome system: meadow → desert → snow → volcano (cycles)
+      this.biomeIndex = 0;
+      this.biomeBlend = 0;
+      this.biomeNames = ['MEADOW', 'DESERT', 'SNOW', 'VOLCANO'];
+      this.visitedBiomes = new Set(['MEADOW']);
 
       this._seedLayers();
+      this._seedWeather();
+    }
+
+    getBiomeName() {
+      return this.biomeNames[this.biomeIndex % this.biomeNames.length];
+    }
+
+    getVisitedBiomeCount() {
+      return this.visitedBiomes.size;
+    }
+
+    /**
+     * Advance biome based on distance. Returns new biome name if changed.
+     * @param {number} distance
+     * @returns {string|null}
+     */
+    updateBiome(distance) {
+      const next = Math.min(3, Math.floor(distance / 450));
+      const cycle = Math.floor(distance / 1800);
+      const idx = (next + cycle) % 4;
+      if (idx !== this.biomeIndex) {
+        this.biomeIndex = idx;
+        const name = this.getBiomeName();
+        this.visitedBiomes.add(name);
+        this._seedWeather();
+        return name;
+      }
+      return null;
+    }
+
+    resetBiomes() {
+      this.biomeIndex = 0;
+      this.visitedBiomes = new Set(['MEADOW']);
+      this._seedWeather();
+    }
+
+    _seedWeather() {
+      this.weather = [];
+      const name = this.getBiomeName();
+      const count = name === 'SNOW' || name === 'VOLCANO' ? 40 : name === 'DESERT' ? 18 : 0;
+      for (let i = 0; i < count; i++) {
+        this.weather.push({
+          x: Math.random() * this.width,
+          y: Math.random() * this.groundY,
+          s: 1 + Math.random() * 2.5,
+          vy: name === 'SNOW' ? 40 + Math.random() * 50 : 70 + Math.random() * 90,
+          vx: name === 'DESERT' ? -30 - Math.random() * 40 : -10 + Math.random() * 20,
+        });
+      }
     }
 
     resize(width, height) {
@@ -141,6 +197,17 @@
       for (const s of this.stars) {
         s.tw += dt * 3;
       }
+
+      for (const w of this.weather) {
+        w.y += w.vy * dt;
+        w.x += w.vx * dt;
+        if (w.y > this.groundY) {
+          w.y = -4;
+          w.x = Math.random() * this.width;
+        }
+        if (w.x < -10) w.x = this.width + 10;
+        if (w.x > this.width + 10) w.x = -10;
+      }
     }
 
     _maxMountainX() {
@@ -176,21 +243,93 @@
       this._drawClouds(ctx, night);
       this._drawTrees(ctx, gy, night);
       this._drawGround(ctx, w, h, gy, night);
+      this._drawWeather(ctx);
+    }
+
+    _biomePalette() {
+      const name = this.getBiomeName();
+      switch (name) {
+        case 'DESERT':
+          return {
+            dayTop: '#fbbf24',
+            dayBot: '#fde68a',
+            nightTop: '#1c1917',
+            nightBot: '#44403c',
+            dirt: '#b45309',
+            grass: '#d97706',
+            mountain: '#a16207',
+            leaf: '#ca8a04',
+          };
+        case 'SNOW':
+          return {
+            dayTop: '#93c5fd',
+            dayBot: '#e0f2fe',
+            nightTop: '#0f172a',
+            nightBot: '#1e293b',
+            dirt: '#cbd5e1',
+            grass: '#f8fafc',
+            mountain: '#64748b',
+            leaf: '#e2e8f0',
+          };
+        case 'VOLCANO':
+          return {
+            dayTop: '#7f1d1d',
+            dayBot: '#fb923c',
+            nightTop: '#1a0505',
+            nightBot: '#3f0a0a',
+            dirt: '#292524',
+            grass: '#b91c1c',
+            mountain: '#44403c',
+            leaf: '#78716c',
+          };
+        default:
+          return {
+            dayTop: '#4ec4ff',
+            dayBot: '#c8e8ff',
+            nightTop: '#050b18',
+            nightBot: '#1a2744',
+            dirt: '#5a3a1e',
+            grass: '#4caf50',
+            mountain: '#3d5a73',
+            leaf: '#2f8f4e',
+          };
+      }
+    }
+
+    _drawWeather(ctx) {
+      const name = this.getBiomeName();
+      if (!this.weather.length) return;
+      ctx.save();
+      if (name === 'SNOW') {
+        ctx.fillStyle = 'rgba(255,255,255,0.85)';
+        for (const w of this.weather) {
+          ctx.beginPath();
+          ctx.arc(w.x, w.y, w.s * 0.7, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      } else if (name === 'VOLCANO') {
+        ctx.fillStyle = 'rgba(251,146,60,0.7)';
+        for (const w of this.weather) {
+          ctx.fillRect(w.x, w.y, 2, w.s * 2);
+        }
+      } else if (name === 'DESERT') {
+        ctx.fillStyle = 'rgba(253,230,138,0.35)';
+        for (const w of this.weather) {
+          ctx.fillRect(w.x, w.y, w.s * 6, 1.5);
+        }
+      }
+      ctx.restore();
     }
 
     _drawSky(ctx, w, h, night) {
-      const dayTop = '#4ec4ff';
-      const dayBot = '#c8e8ff';
-      const nightTop = '#050b18';
-      const nightBot = '#1a2744';
-
-      const top = this._lerpColor(dayTop, nightTop, night);
-      const bot = this._lerpColor(dayBot, nightBot, night);
+      const p = this._biomePalette();
+      const top = this._lerpColor(p.dayTop, p.nightTop, night);
+      const bot = this._lerpColor(p.dayBot, p.nightBot, night);
 
       const g = ctx.createLinearGradient(0, 0, 0, h);
       g.addColorStop(0, top);
       g.addColorStop(0.55, bot);
-      g.addColorStop(1, this._lerpColor('#7cb86a', '#1a2e1f', night));
+      g.addColorStop(1, this._lerpColor(p.grass, '#1a2e1f', night));
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, w, h);
     }
@@ -263,8 +402,9 @@
     }
 
     _drawMountains(ctx, gy, night) {
+      const p = this._biomePalette();
       for (const m of this.mountains) {
-        const base = this._lerpColor('#3d5a73', '#1a2438', night);
+        const base = this._lerpColor(p.mountain, '#1a2438', night);
         ctx.fillStyle = this._shade(base, m.shade);
         ctx.beginPath();
         ctx.moveTo(m.x, gy);
@@ -275,9 +415,8 @@
         ctx.closePath();
         ctx.fill();
 
-        // Snow caps during day
-        if (night < 0.6) {
-          ctx.fillStyle = `rgba(255,255,255,${0.55 * (1 - night)})`;
+        if (this.getBiomeName() === 'SNOW' || (night < 0.6 && this.getBiomeName() === 'MEADOW')) {
+          ctx.fillStyle = `rgba(255,255,255,${0.55 * (1 - night * 0.5)})`;
           ctx.beginPath();
           ctx.moveTo(m.x + m.w * 0.28, gy - m.h * 0.82);
           ctx.lineTo(m.x + m.w * 0.35, gy - m.h);
@@ -285,18 +424,33 @@
           ctx.closePath();
           ctx.fill();
         }
+        if (this.getBiomeName() === 'VOLCANO') {
+          ctx.fillStyle = 'rgba(239,68,68,0.45)';
+          ctx.beginPath();
+          ctx.moveTo(m.x + m.w * 0.7, gy - m.h * 1.05);
+          ctx.lineTo(m.x + m.w * 0.75, gy - m.h * 0.85);
+          ctx.lineTo(m.x + m.w * 0.8, gy - m.h * 1.0);
+          ctx.fill();
+        }
       }
     }
 
     _drawTrees(ctx, gy, night) {
+      const p = this._biomePalette();
       for (const t of this.trees) {
         const trunk = this._lerpColor('#6b4226', '#2a1a10', night);
-        const leaf = this._lerpColor('#2f8f4e', '#143822', night);
+        const leaf = this._lerpColor(p.leaf, '#143822', night);
         ctx.fillStyle = trunk;
         ctx.fillRect(t.x - 4, gy - t.h * 0.35, 8, t.h * 0.35);
 
         ctx.fillStyle = leaf;
-        if (t.type === 0) {
+        if (this.getBiomeName() === 'DESERT') {
+          // Cactus
+          ctx.fillStyle = this._lerpColor('#16a34a', '#14532d', night);
+          ctx.fillRect(t.x - 6, gy - t.h, 12, t.h);
+          ctx.fillRect(t.x - 18, gy - t.h * 0.55, 14, 8);
+          ctx.fillRect(t.x + 4, gy - t.h * 0.7, 14, 8);
+        } else if (t.type === 0) {
           ctx.beginPath();
           ctx.moveTo(t.x, gy - t.h);
           ctx.lineTo(t.x - 18, gy - t.h * 0.35);
@@ -318,8 +472,9 @@
     }
 
     _drawGround(ctx, w, h, gy, night) {
-      const dirt = this._lerpColor('#5a3a1e', '#24180e', night);
-      const grass = this._lerpColor('#4caf50', '#1e3d24', night);
+      const p = this._biomePalette();
+      const dirt = this._lerpColor(p.dirt, '#24180e', night);
+      const grass = this._lerpColor(p.grass, '#1e3d24', night);
 
       ctx.fillStyle = dirt;
       ctx.fillRect(0, gy, w, h - gy);
@@ -327,15 +482,13 @@
       ctx.fillStyle = grass;
       ctx.fillRect(0, gy, w, 14);
 
-      // Animated ground stripes
       const tileW = 48;
       for (const g of this.groundTiles) {
         ctx.fillStyle = `rgba(0,0,0,${0.12 * g.shade})`;
         ctx.fillRect(g.x, gy + 14, tileW * 0.45, h - gy - 14);
       }
 
-      // Surface line
-      ctx.strokeStyle = this._lerpColor('#6fd66f', '#2a5530', night);
+      ctx.strokeStyle = this._lerpColor(p.grass, '#2a5530', night);
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(0, gy);
