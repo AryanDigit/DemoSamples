@@ -1,0 +1,160 @@
+<section class="hero">
+  <div class="hero-media">
+    <img src="<%= settings.hero_image || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=80' %>" alt="<%= settings.site_name %> hero" fetchpriority="high">
+  </div>
+  <div class="hero-content">
+    <div class="eyebrow"><%= settings.hero_eyebrow || 'Creative Studio' %></div>
+    <h1><%= settings.hero_title || settings.site_tagline %></h1>
+    <p class="hero-lead"><%= settings.hero_subtitle %></p>
+    <div class="hero-actions">
+      <a class="btn btn-light" href="<%= settings.hero_cta_link || '/portfolio' %>"><%= settings.hero_cta_text || 'View Work' %></a>
+      <a class="btn btn-ghost" href="<%= settings.hero_cta2_link || '/contact' %>"><%= settings.hero_cta2_text || 'Start a Project' %></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container-wide about-split">
+    <div class="about-visual" data-aos="fade-up">
+      <img src="<%= settings.about_image %>" alt="About <%= siteName %>">
+      <div class="about-badge"><%= settings.site_tagline || 'Creative Studio' %></div>
+    </div>
+    <div class="about-copy" data-aos="fade-up" data-aos-delay="100">
+      <div class="eyebrow"><%= settings.about_subtitle || 'About' %></div>
+      <h2><%= settings.about_title || 'About us' %></h2>
+      <p><%= settings.about_content %></p>
+      <a class="btn btn-dark" href="/about">More about us</a>
+      <% if (stats && stats.length) { %>
+      <div class="stats-row">
+        <% stats.forEach(function(s) { %>
+        <div class="stat-item">
+          <div class="stat-value" data-count="<%= s.value %>" data-suffix="<%= s.suffix || '' %>">0<%= s.suffix || '' %></div>
+          <p class="stat-label"><%= s.label %></p>
+        </div>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container-wide">
+    <div class="section-row">
+      <div class="section-head">
+        <div class="eyebrow">Services</div>
+        <h2>Capabilities built for ambitious brands</h2>
+        <p>From identity systems to product engineering — one studio, end to end.</p>
+      </div>
+      <a class="btn btn-outline" href="/services">All services</a>
+    </div>
+    <div class="services-grid">
+      <% services.forEach(function(s, i) { %>
+      <article class="service-item" data-aos="fade-up" data-aos-delay="<%= (i % 3) * 80 %>">
+        <div class="service-icon" aria-hidden="true"><%= s.icon === 'code' ? '</>' : (s.icon === 'palette' ? '◆' : (s.icon === 'layout' ? '▣' : (s.icon === 'megaphone' ? '◈' : (s.icon === 'camera' ? '◎' : '✧')))) %></div>
+        <h3><%= s.title %></h3>
+        <p><%= s.short_description %></p>
+        <a class="service-link" href="/services/<%= s.slug %>">Explore →</a>
+      </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container-wide">
+    <div class="section-row">
+      <div class="section-head">
+        <div class="eyebrow">Selected Work</div>
+        <h2>Projects with presence</h2>
+        <p>Case studies across branding, product, architecture, and campaign craft.</p>
+      </div>
+      <a class="btn btn-outline" href="/portfolio">View portfolio</a>
+    </div>
+    <div class="portfolio-grid">
+      <% projects.forEach(function(p, i) { %>
+      <a class="project-card" href="/portfolio/<%= p.slug %>" data-aos="fade-up" data-aos-delay="<%= (i % 2) * 100 %>">
+        <div class="project-media">
+          <img src="<%= p.cover_image %>" alt="<%= p.title %>" loading="lazy">
+          <div class="project-meta">
+            <div class="project-cat"><%= p.category_name || 'Project' %></div>
+            <h3><%= p.title %></h3>
+            <p><%= p.short_description %></p>
+          </div>
+        </div>
+      </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<% if (testimonials && testimonials.length) { %>
+<section>
+  <div class="container-wide testimonials-wrap">
+    <div data-aos="fade-up">
+      <div class="eyebrow">Testimonials</div>
+      <blockquote class="testimonial-quote">“<%= testimonials[0].content %>”</blockquote>
+      <div class="testimonial-author">
+        <% if (testimonials[0].avatar) { %><img src="<%= testimonials[0].avatar %>" alt="<%= testimonials[0].name %>"><% } %>
+        <div>
+          <strong><%= testimonials[0].name %></strong>
+          <span><%= [testimonials[0].role, testimonials[0].company].filter(Boolean).join(' · ') %></span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-list" data-aos="fade-up" data-aos-delay="100">
+      <% testimonials.slice(1).forEach(function(t) { %>
+      <div class="testimonial-mini">
+        <p>“<%= t.content %>”</p>
+        <strong style="color:var(--ink)"><%= t.name %></strong>
+        <span style="color:var(--muted); font-size:.88rem"> — <%= [t.role, t.company].filter(Boolean).join(', ') %></span>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<% if (clients && clients.length) { %>
+<section style="padding-top:0">
+  <div class="container-wide">
+    <div class="clients-row" data-aos="fade-up">
+      <% clients.forEach(function(c) { %><span><%= c.name %></span><% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<% if (posts && posts.length) { %>
+<section>
+  <div class="container-wide">
+    <div class="section-row">
+      <div class="section-head">
+        <div class="eyebrow">Insights</div>
+        <h2>Notes on craft & growth</h2>
+      </div>
+      <a class="btn btn-outline" href="/blog">All articles</a>
+    </div>
+    <div class="blog-grid">
+      <% posts.forEach(function(post, i) { %>
+      <a class="blog-card" href="/blog/<%= post.slug %>" data-aos="fade-up" data-aos-delay="<%= i * 80 %>">
+        <div class="blog-card-media">
+          <img src="<%= post.cover_image %>" alt="<%= post.title %>" loading="lazy">
+        </div>
+        <div class="meta"><%= post.category_name || 'Article' %> · <%= formatDate(post.published_at) %></div>
+        <h3><%= post.title %></h3>
+        <p><%= post.excerpt %></p>
+      </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<div class="cta-band" data-aos="fade-up">
+  <div>
+    <h2>Have a project in mind?</h2>
+    <p>Tell us about your brand, product, or campaign — we’ll reply with a clear next step.</p>
+  </div>
+  <a class="btn btn-light" href="/contact">Let’s talk</a>
+</div>

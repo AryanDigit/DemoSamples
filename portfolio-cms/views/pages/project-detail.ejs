@@ -1,0 +1,59 @@
+<section class="page-hero">
+  <div class="container-wide">
+    <div class="eyebrow"><%= project.category_name || 'Project' %></div>
+    <h1><%= project.title %></h1>
+    <p><%= project.short_description %></p>
+  </div>
+</section>
+<div class="detail-hero-media" data-aos="fade-up">
+  <img src="<%= project.cover_image %>" alt="<%= project.title %>">
+</div>
+<section style="padding-top:0">
+  <div class="container detail-layout">
+    <div class="prose" data-aos="fade-up">
+      <p><%= project.description %></p>
+      <% if (project.galleryList && project.galleryList.length) { %>
+      <h2>Gallery</h2>
+      <div class="portfolio-grid" style="margin-top:1rem">
+        <% project.galleryList.forEach(function(img) { %>
+        <div class="project-media" style="aspect-ratio:16/10"><img src="<%= img %>" alt="" loading="lazy"></div>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+    <aside class="side-panel" data-aos="fade-up" data-aos-delay="80">
+      <dl>
+        <% if (project.client) { %><dt>Client</dt><dd><%= project.client %></dd><% } %>
+        <% if (project.completion_date) { %><dt>Completed</dt><dd><%= project.completion_date %></dd><% } %>
+        <% if (project.category_name) { %><dt>Category</dt><dd><%= project.category_name %></dd><% } %>
+        <% if (project.techList && project.techList.length) { %>
+        <dt>Technologies</dt>
+        <dd><div class="tag-list"><% project.techList.forEach(function(t) { %><span class="tag"><%= t %></span><% }) %></div></dd>
+        <% } %>
+        <% if (project.project_url && project.project_url !== '#') { %>
+        <dt>Link</dt><dd><a href="<%= project.project_url %>" target="_blank" rel="noopener" style="color:var(--teal)">Visit project →</a></dd>
+        <% } %>
+      </dl>
+    </aside>
+  </div>
+</section>
+<% if (related && related.length) { %>
+<section>
+  <div class="container-wide">
+    <div class="section-head"><div class="eyebrow">More work</div><h2>Related projects</h2></div>
+    <div class="portfolio-grid">
+      <% related.forEach(function(p) { %>
+      <a class="project-card" href="/portfolio/<%= p.slug %>">
+        <div class="project-media">
+          <img src="<%= p.cover_image %>" alt="<%= p.title %>" loading="lazy">
+          <div class="project-meta">
+            <div class="project-cat"><%= p.category_name || 'Project' %></div>
+            <h3><%= p.title %></h3>
+          </div>
+        </div>
+      </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>

@@ -1,0 +1,49 @@
+<section class="page-hero">
+  <div class="container-wide">
+    <div class="eyebrow">Contact</div>
+    <h1>Let’s build something remarkable</h1>
+    <p>Share a few details about your project — we’ll get back with a clear next step.</p>
+  </div>
+</section>
+<section style="padding-top:0">
+  <div class="container contact-grid">
+    <div class="contact-info" data-aos="fade-up">
+      <h2>Say hello</h2>
+      <p>Whether you’re a freelancer needing a portfolio, an agency refreshing your brand, or a founder launching a product — we’re ready.</p>
+      <ul class="contact-list">
+        <% if (settings.contact_email) { %><li><strong>Email</strong><a href="mailto:<%= settings.contact_email %>"><%= settings.contact_email %></a></li><% } %>
+        <% if (settings.contact_phone) { %><li><strong>Phone</strong><a href="tel:<%= settings.contact_phone %>"><%= settings.contact_phone %></a></li><% } %>
+        <% if (settings.contact_address) { %><li><strong>Location</strong><%= settings.contact_address %></li><% } %>
+      </ul>
+    </div>
+    <div class="contact-form" data-aos="fade-up" data-aos-delay="80">
+      <% if (flash.success && flash.success.length) { %><div class="alert alert-success"><%= flash.success[0] %></div><% } %>
+      <% if (flash.error && flash.error.length) { %><div class="alert alert-error"><%= flash.error[0] %></div><% } %>
+      <form method="POST" action="/contact">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" name="name" required placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@company.com">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" placeholder="Optional">
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input id="subject" name="subject" placeholder="Project inquiry">
+          </div>
+          <div class="form-group full">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required placeholder="Tell us about your goals, timeline, and budget range."></textarea>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Send message</button>
+      </form>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,22 @@
+<div class="panel">
+  <div class="panel-head"><h2>Blog posts</h2><a class="btn btn-teal btn-sm" href="/admin/blog/new">New post</a></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>Title</th><th>Category</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <% posts.forEach(function(p) { %>
+      <tr>
+        <td><% if (p.cover_image) { %><img class="thumb" src="<%= p.cover_image %>" alt=""><% } %></td>
+        <td><strong><%= p.title %></strong><div class="help">/blog/<%= p.slug %></div></td>
+        <td><%= p.category_name || '—' %></td>
+        <td><span class="pill <%= p.is_published ? 'pill-green' : 'pill-gray' %>"><%= p.is_published ? 'Live' : 'Draft' %></span></td>
+        <td class="actions">
+          <a class="btn btn-outline btn-sm" href="/admin/blog/<%= p.id %>/edit">Edit</a>
+          <form method="POST" action="/admin/blog/<%= p.id %>/delete" style="display:inline" data-confirm="Delete this post?">
+            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>

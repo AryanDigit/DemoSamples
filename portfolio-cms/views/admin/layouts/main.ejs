@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title || 'Admin' %> — Atelier CMS</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <div class="admin-shell">
+    <%- include('../partials/sidebar') %>
+    <div class="admin-main">
+      <header class="admin-top">
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <button class="mobile-toggle" type="button" data-sidebar-toggle aria-label="Menu">☰</button>
+          <h1><%= title || 'Dashboard' %></h1>
+        </div>
+        <div class="admin-user">
+          <span><%= currentUser?.name || 'Admin' %></span>
+          <a class="btn btn-outline btn-sm" href="/" target="_blank">View site</a>
+          <form method="POST" action="/admin/logout" style="margin:0">
+            <button class="btn btn-sm" type="submit">Logout</button>
+          </form>
+        </div>
+      </header>
+      <div class="admin-content">
+        <% if (flash.success && flash.success.length) { %><div class="alert alert-success"><%= flash.success[0] %></div><% } %>
+        <% if (flash.error && flash.error.length) { %><div class="alert alert-error"><%= flash.error[0] %></div><% } %>
+        <%- body %>
+      </div>
+    </div>
+  </div>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

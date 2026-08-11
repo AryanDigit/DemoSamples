@@ -1,0 +1,31 @@
+<div class="panel">
+  <div class="panel-head"><h2>Portfolio projects</h2><a class="btn btn-teal btn-sm" href="/admin/projects/new">Add project</a></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>Title</th><th>Category</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <% projects.forEach(function(p) { %>
+      <tr>
+        <td><% if (p.cover_image) { %><img class="thumb" src="<%= p.cover_image %>" alt=""><% } %></td>
+        <td><strong><%= p.title %></strong><div class="help">/portfolio/<%= p.slug %></div></td>
+        <td><%= p.category_name || '—' %></td>
+        <td><span class="pill <%= p.is_published ? 'pill-green' : 'pill-gray' %>"><%= p.is_published ? 'Live' : 'Draft' %></span></td>
+        <td class="actions">
+          <a class="btn btn-outline btn-sm" href="/admin/projects/<%= p.id %>/edit">Edit</a>
+          <form method="POST" action="/admin/projects/<%= p.id %>/delete" style="display:inline" data-confirm="Delete this project?">
+            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>
+<div class="panel">
+  <div class="panel-head"><h2>Add category</h2></div>
+  <form method="POST" action="/admin/categories" class="form-grid">
+    <input type="hidden" name="type" value="project">
+    <input type="hidden" name="redirect" value="/admin/projects">
+    <div class="form-group"><label>Name</label><input name="name" required placeholder="e.g. Branding"></div>
+    <div class="form-group" style="display:flex;align-items:end"><button class="btn btn-outline" type="submit">Add category</button></div>
+  </form>
+</div>

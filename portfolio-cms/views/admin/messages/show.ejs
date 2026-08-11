@@ -1,0 +1,16 @@
+<div class="panel">
+  <div class="panel-head">
+    <h2><%= message.subject || 'Message' %></h2>
+    <div class="actions">
+      <form method="POST" action="/admin/messages/<%= message.id %>/replied"><button class="btn btn-teal btn-sm" type="submit">Mark replied</button></form>
+      <a class="btn btn-outline btn-sm" href="/admin/messages">Back</a>
+    </div>
+  </div>
+  <p><strong><%= message.name %></strong> · <a href="mailto:<%= message.email %>"><%= message.email %></a>
+  <% if (message.phone) { %> · <%= message.phone %><% } %></p>
+  <p class="help"><%= message.created_at %></p>
+  <div style="margin-top:1.25rem;white-space:pre-wrap;line-height:1.6"><%= message.message %></div>
+  <div style="margin-top:1.5rem">
+    <a class="btn btn-teal" href="mailto:<%= message.email %>?subject=Re: <%= encodeURIComponent(message.subject || 'Your inquiry') %>">Reply by email</a>
+  </div>
+</div>

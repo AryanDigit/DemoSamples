@@ -1,0 +1,39 @@
+<section class="page-hero">
+  <div class="container-wide">
+    <div class="eyebrow">Service</div>
+    <h1><%= service.title %></h1>
+    <p><%= service.short_description %></p>
+  </div>
+</section>
+<% if (service.image) { %>
+<div class="detail-hero-media" data-aos="fade-up">
+  <img src="<%= service.image %>" alt="<%= service.title %>">
+</div>
+<% } %>
+<section style="padding-top:0">
+  <div class="container detail-layout">
+    <div class="prose" data-aos="fade-up">
+      <p><%= service.description %></p>
+      <% if (service.featuresList && service.featuresList.length) { %>
+      <h2>What's included</h2>
+      <ul>
+        <% service.featuresList.forEach(function(f) { %><li><%= f %></li><% }) %>
+      </ul>
+      <% } %>
+      <a class="btn btn-primary" href="/contact" style="margin-top:1.5rem">Request this service</a>
+    </div>
+    <aside class="side-panel" data-aos="fade-up" data-aos-delay="80">
+      <dl>
+        <dt>Service</dt><dd><%= service.title %></dd>
+        <% if (others.length) { %>
+        <dt>Also explore</dt>
+        <dd>
+          <% others.forEach(function(o) { %>
+          <div style="margin:.4rem 0"><a href="/services/<%= o.slug %>" style="color:var(--teal)"><%= o.title %></a></div>
+          <% }) %>
+        </dd>
+        <% } %>
+      </dl>
+    </aside>
+  </div>
+</section>

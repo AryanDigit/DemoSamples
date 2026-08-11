@@ -1,0 +1,29 @@
+<div class="panel">
+  <div class="panel-head"><h2>Upload media</h2></div>
+  <form method="POST" action="/admin/media" enctype="multipart/form-data" class="form-grid">
+    <div class="form-group"><label>File</label><input type="file" name="file" required accept="image/*,application/pdf"></div>
+    <div class="form-group"><label>Alt text</label><input name="alt_text"></div>
+    <div class="form-group" style="display:flex;align-items:end"><button class="btn btn-teal" type="submit">Upload</button></div>
+  </form>
+</div>
+<div class="panel">
+  <div class="panel-head"><h2>Library</h2></div>
+  <% if (!media.length) { %><p class="help">No uploads yet. Uploaded files appear here with copyable paths.</p><% } %>
+  <div class="media-grid">
+    <% media.forEach(function(m) { %>
+    <div class="media-item">
+      <% if ((m.mime_type || '').startsWith('image/')) { %>
+      <img src="<%= m.path %>" alt="<%= m.alt_text || m.original_name %>">
+      <% } else { %>
+      <div style="aspect-ratio:1;display:grid;place-items:center;background:#f3f4f6;font-weight:700">PDF</div>
+      <% } %>
+      <div class="meta">
+        <div style="word-break:break-all"><%= m.path %></div>
+        <form method="POST" action="/admin/media/<%= m.id %>/delete" style="margin-top:.5rem" data-confirm="Delete file?">
+          <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</div>

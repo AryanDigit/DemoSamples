@@ -1,0 +1,22 @@
+<div class="panel">
+  <div class="panel-head"><h2>Team members</h2><a class="btn btn-teal btn-sm" href="/admin/team/new">Add member</a></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>Name</th><th>Role</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <% team.forEach(function(m) { %>
+      <tr>
+        <td><% if (m.avatar) { %><img class="thumb" src="<%= m.avatar %>" alt=""><% } %></td>
+        <td><strong><%= m.name %></strong></td>
+        <td><%= m.role %></td>
+        <td><span class="pill <%= m.is_published ? 'pill-green' : 'pill-gray' %>"><%= m.is_published ? 'Live' : 'Draft' %></span></td>
+        <td class="actions">
+          <a class="btn btn-outline btn-sm" href="/admin/team/<%= m.id %>/edit">Edit</a>
+          <form method="POST" action="/admin/team/<%= m.id %>/delete" style="display:inline" data-confirm="Delete member?">
+            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>

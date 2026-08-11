@@ -1,0 +1,39 @@
+<footer class="site-footer">
+  <div class="container-wide">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><%= settings.logo_text || siteName %></div>
+        <p><%= settings.footer_text || settings.site_tagline || '' %></p>
+        <div class="socials" style="margin-top:1.25rem">
+          <% if (settings.social_dribbble) { %><a href="<%= settings.social_dribbble %>" target="_blank" rel="noopener" aria-label="Dribbble">Dr</a><% } %>
+          <% if (settings.social_behance) { %><a href="<%= settings.social_behance %>" target="_blank" rel="noopener" aria-label="Behance">Be</a><% } %>
+          <% if (settings.social_linkedin) { %><a href="<%= settings.social_linkedin %>" target="_blank" rel="noopener" aria-label="LinkedIn">in</a><% } %>
+          <% if (settings.social_github) { %><a href="<%= settings.social_github %>" target="_blank" rel="noopener" aria-label="GitHub">Gh</a><% } %>
+          <% if (settings.social_instagram) { %><a href="<%= settings.social_instagram %>" target="_blank" rel="noopener" aria-label="Instagram">Ig</a><% } %>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="/about">About</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/portfolio">Portfolio</a></li>
+          <li><a href="/blog">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul class="footer-links">
+          <% if (settings.contact_email) { %><li><a href="mailto:<%= settings.contact_email %>"><%= settings.contact_email %></a></li><% } %>
+          <% if (settings.contact_phone) { %><li><a href="tel:<%= settings.contact_phone %>"><%= settings.contact_phone %></a></li><% } %>
+          <% if (settings.contact_address) { %><li><%= settings.contact_address %></li><% } %>
+          <li><a href="/contact">Get in touch</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span><%= settings.footer_copyright || ('© ' + year + ' ' + siteName) %></span>
+      <span>Built for creatives · <a href="/admin">Admin</a></span>
+    </div>
+  </div>
+</footer>

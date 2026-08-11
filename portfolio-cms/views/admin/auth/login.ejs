@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Atelier CMS</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="login-page">
+  <div class="login-card">
+    <h1>Atelier CMS</h1>
+    <p>Sign in to manage your portfolio website.</p>
+    <% if (flash.error && flash.error.length) { %><div class="alert alert-error"><%= flash.error[0] %></div><% } %>
+    <% if (flash.success && flash.success.length) { %><div class="alert alert-success"><%= flash.success[0] %></div><% } %>
+    <form method="POST" action="/admin/login">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required autocomplete="username" placeholder="admin@atelier.demo">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required autocomplete="current-password">
+      </div>
+      <button class="btn btn-teal" type="submit" style="width:100%">Sign in</button>
+    </form>
+    <p class="help" style="margin-top:1rem">Demo: admin@atelier.demo / Admin@12345</p>
+  </div>
+</body>
+</html>

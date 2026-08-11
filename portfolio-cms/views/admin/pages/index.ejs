@@ -1,0 +1,17 @@
+<div class="panel">
+  <div class="panel-head"><h2>Pages & SEO meta</h2></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Page</th><th>Slug</th><th>Meta title</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <% pages.forEach(function(p) { %>
+      <tr>
+        <td><strong><%= p.title %></strong></td>
+        <td>/<%= p.slug === 'home' ? '' : p.slug %></td>
+        <td><%= p.meta_title || '—' %></td>
+        <td><span class="pill <%= p.is_published ? 'pill-green' : 'pill-gray' %>"><%= p.is_published ? 'Live' : 'Hidden' %></span></td>
+        <td><a class="btn btn-outline btn-sm" href="/admin/pages/<%= p.id %>/edit">Edit SEO</a></td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>
