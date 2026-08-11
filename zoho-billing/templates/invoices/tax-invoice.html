@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tax Invoice Template — ZorBill</title>
+  <style>
+    :root { --blue: #2563eb; --text: #0f172a; --muted: #64748b; }
+    body { font-family: "DM Sans", system-ui, sans-serif; color: var(--text); padding: 32px; max-width: 800px; margin: 0 auto; }
+    .header { display: flex; justify-content: space-between; gap: 24px; }
+    .brand h1 { margin: 0; font-size: 22px; }
+    .badge { color: var(--blue); font-size: 22px; font-weight: 700; letter-spacing: 0.04em; }
+    .muted { color: var(--muted); font-size: 12px; }
+    hr { border: none; border-top: 2px solid var(--blue); margin: 20px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { border: 1px solid #e2e8f0; padding: 8px 10px; font-size: 13px; text-align: left; }
+    th { background: #eff6ff; }
+    .totals { margin-left: auto; max-width: 280px; margin-top: 16px; }
+    .totals div { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
+    .grand { font-weight: 700; font-size: 16px; border-top: 2px solid var(--blue); margin-top: 8px; padding-top: 8px; color: var(--blue); }
+    .footer { margin-top: 32px; font-size: 11px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <!-- Placeholders replaced by Deluge / JS print engine -->
+  <div class="header">
+    <div class="brand">
+      <h1>{{COMPANY_NAME}}</h1>
+      <div class="muted">GSTIN: {{COMPANY_GSTIN}} · PAN: {{COMPANY_PAN}}</div>
+      <div class="muted">{{COMPANY_ADDRESS}}</div>
+    </div>
+    <div style="text-align:right">
+      <div class="badge">TAX INVOICE</div>
+      <div><strong>{{INVOICE_NUMBER}}</strong></div>
+      <div class="muted">Date: {{INVOICE_DATE}} · Due: {{DUE_DATE}}</div>
+    </div>
+  </div>
+  <hr />
+  <div>
+    <strong>Bill To:</strong> {{CUSTOMER_NAME}}<br />
+    <span class="muted">{{CUSTOMER_ADDRESS}}<br />GSTIN: {{CUSTOMER_GSTIN}} · State: {{CUSTOMER_STATE}} ({{CUSTOMER_STATE_CODE}})</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Item</th><th>HSN</th><th>Qty</th><th>Rate</th><th>Disc%</th><th>Taxable</th><th>Tax</th><th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{LINE_ITEMS}}
+    </tbody>
+  </table>
+  <div class="totals">
+    <div><span>Taxable</span><span>{{TAXABLE}}</span></div>
+    <div><span>CGST</span><span>{{CGST}}</span></div>
+    <div><span>SGST</span><span>{{SGST}}</span></div>
+    <div><span>IGST</span><span>{{IGST}}</span></div>
+    <div><span>Round off</span><span>{{ROUND_OFF}}</span></div>
+    <div class="grand"><span>Grand Total</span><span>{{GRAND_TOTAL}}</span></div>
+  </div>
+  <div class="footer">
+    {{NOTES}}<br />
+    Computer-generated invoice · ZorBill on Zoho Creator · Subject to {{COMPANY_STATE}} jurisdiction
+  </div>
+</body>
+</html>

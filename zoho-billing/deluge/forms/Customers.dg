@@ -1,0 +1,104 @@
+// ZorBill — Zoho Creator Form: Customers
+// Form link name: Customers
+// Map fields in Creator UI to match this schema.
+
+/*
+Fields:
+  Customer_Name (Single Line) — mandatory
+  Contact_Person (Single Line)
+  Email (Email)
+  Phone (Phone) — mandatory
+  GSTIN (Single Line) — max 15
+  PAN (Single Line) — max 10
+  Billing_Address (Multi Line)
+  Shipping_Address (Multi Line)
+  City (Single Line)
+  State (Single Line)
+  State_Code (Single Line) — max 2
+  Pincode (Single Line)
+  Customer_Type (Dropdown: Retailer|Wholesaler|Distributor|Manufacturer|Service)
+  Credit_Limit (Currency)
+  Outstanding (Currency) — formula / updated by workflows
+  Status (Dropdown: Active|Inactive)
+  Zoho_CRM_ID (Single Line)
+  Zoho_Books_Contact_ID (Single Line)
+*/
+
+// ——— On Success (Create/Edit) ———
+// Sync contact to Zoho Books + Zoho CRM
+try
+{
+	customerName = input.Customer_Name;
+	gstin = input.GSTIN;
+	email = input.Email;
+	phone = input.Phone;
+
+	// Validate GSTIN format (optional)
+	if(gstin != null && gstin != "" && gstin.length() != 15)
+	{
+		alert "GSTIN must be 15 characters";
+		cancel submit;
+	}
+
+	// Build Books contact payload
+	booksContact = Map();
+	booksContact.put("contact_name", customerName);
+	booksContact.put("contact_type", "customer");
+	booksContact.put("gst_no", gstin);
+	booksContact.put("email", email);
+	booksContact.put("phone", phone);
+	billing = Map();
+	billing.put("address", input.Billing_Address);
+	billing.put("city", input.City);
+	billing.put("state", input.State);
+	billing.put("zip", input.Pincode);
+	booksContact.put("billing_address", billing);
+
+	orgId = zoho.encryption.aesdecode(thisapp.OAuth_Config.Books_Org_ID_Encrypted);
+	booksUrl = "https://www.zohoapis.com/books/v3/contacts?organization_id=" + orgId;
+
+	if(input.Zoho_Books_Contact_ID == null || input.Zoho_Books_Contact_ID == "")
+	{
+		resp = invokeurl
+		[
+			url :booksUrl
+			type :POST
+			parameters:booksContact.toString()
+			connection:"zorbill_books"
+		];
+		if(resp.get("code") == 0)
+		{
+			input.Zoho_Books_Contact_ID = resp.get("contact").get("contact_id");
+		}
+	}
+	else
+	{
+		invokeurl
+		[
+			url :booksUrl + "/" + input.Zoho_Books_Contact_ID
+			type :PUT
+			parameters:booksContact.toString()
+			connection:"zorbill_books"
+		];
+	}
+
+	// CRM upsert
+	crmData = Map();
+	crmData.put("Account_Name", customerName);
+	crmData.put("Phone", phone);
+	crmData.put("Email", email);
+	crmData.put("GSTIN", gstin);
+	crmResp = zoho.crm.upsert("Accounts", crmData);
+	if(crmResp != null && crmResp.get("id") != null)
+	{
+		input.Zoho_CRM_ID = crmResp.get("id");
+	}
+
+	// Audit log
+	thisapp.Audit_Log.Write("Customer saved: " + customerName, zoho.loginuserid);
+}
+catch (e)
+{
+	info "Customer sync error: " + e;
+	thisapp.Audit_Log.Write("ERROR Customer sync: " + e, zoho.loginuserid);
+}

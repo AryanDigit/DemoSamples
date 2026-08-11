@@ -1,0 +1,49 @@
+// Schedulers (configure in Zoho Creator → Workflow → Schedules)
+
+/*
+1) Nightly_Zoho_Sync — Daily 22:00
+   Call: thisapp.Functions.Nightly_Sync_All();
+
+2) Payment_Reminders — Daily 09:00
+   Call: thisapp.Functions.Send_Payment_Reminder();
+
+3) Low_Stock_Digest — Daily 08:30
+   Call: thisapp.Functions.Low_Stock_Digest();
+
+4) Weekly_Backup — Sunday 01:00
+   Call: thisapp.Functions.Export_Backup_JSON();
+*/
+
+// ——— Nightly_Sync_All ———
+booksOk = thisapp.Functions.Sync_All_Invoices_To_Books();
+invOk = thisapp.Functions.Sync_All_Products_To_Inventory();
+crmOk = thisapp.Functions.Sync_Customers_To_CRM();
+
+insert into Notifications
+[
+	Title="Zoho nightly sync complete"
+	Message="Books: " + booksOk + " | Inventory: " + invOk + " | CRM: " + crmOk
+	Type="sync"
+	Is_Read=false
+	Added_User=zoho.adminuserid
+];
+
+thisapp.Audit_Log.Write("Nightly sync finished", "System");
+
+// ——— Low_Stock_Digest ———
+low = Products[Stock <= Reorder_Level && Warehouse != "Virtual"];
+if(low.count() > 0)
+{
+	msg = "Low stock items: ";
+	for each p in low
+	{
+		msg = msg + p.Product_Name + " (" + p.Stock + "), ";
+	}
+	sendmail
+	[
+		from :zoho.adminuserid
+		to :zoho.adminuserid
+		subject :"ZorBill low stock digest"
+		message :msg
+	];
+}

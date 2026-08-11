@@ -1,0 +1,116 @@
+// ZorBill — Invoice form workflows (Create / Edit / On Success)
+// Form: Invoices
+// Subform: Line_Items (Product, Qty, Rate, Discount_Pct, GST_Rate, Taxable, CGST, SGST, IGST, Line_Total)
+
+/*
+Fields:
+  Invoice_Number (Single Line) — auto via workflow
+  Invoice_Date (Date)
+  Due_Date (Date)
+  Customer (Lookup → Customers)
+  Status (Dropdown: Draft|Pending|Partial|Paid|Overdue)
+  Payment_Mode (Dropdown)
+  Notes (Multi Line)
+  Taxable_Amount, CGST_Total, SGST_Total, IGST_Total, CESS_Total, Round_Off, Grand_Total (Currency)
+  Zoho_Books_Invoice_ID (Single Line)
+  PDF_File (File Upload)
+*/
+
+// ——— On Load (Create) — generate invoice number ———
+if(input.Invoice_Number == null || input.Invoice_Number == "")
+{
+	prefix = thisapp.Company_Settings[ID != 0].Invoice_Prefix;
+	fy = zoho.currentdate.toString("yyyy");
+	last = Invoices[ID != 0] sort by Added_Time desc;
+	seq = 1;
+	if(last.count() > 0)
+	{
+		parts = last.Invoice_Number.toList("-");
+		if(parts.size() >= 3)
+		{
+			seq = parts.get(2).toLong() + 1;
+		}
+	}
+	input.Invoice_Number = prefix + "-" + fy + "-" + seq.leftpad(4);
+	input.Invoice_Date = zoho.currentdate;
+	input.Due_Date = zoho.currentdate.addDay(15);
+	input.Status = "Draft";
+}
+
+// ——— On User Input — Line_Items (recalculate GST) ———
+companyState = thisapp.Company_Settings[ID != 0].State_Code;
+custState = input.Customer.State_Code;
+isIntra = if(custState == null || custState == companyState, true, false);
+
+taxableSum = 0.0;
+cgstSum = 0.0;
+sgstSum = 0.0;
+igstSum = 0.0;
+
+for each line in input.Line_Items
+{
+	gross = line.Qty * line.Rate;
+	disc = gross * (line.Discount_Pct / 100);
+	taxable = gross - disc;
+	gstRate = line.GST_Rate;
+	if(isIntra)
+	{
+		line.CGST = (taxable * gstRate / 200).round(2);
+		line.SGST = (taxable * gstRate / 200).round(2);
+		line.IGST = 0.0;
+	}
+	else
+	{
+		line.CGST = 0.0;
+		line.SGST = 0.0;
+		line.IGST = (taxable * gstRate / 100).round(2);
+	}
+	line.Taxable = taxable.round(2);
+	line.Line_Total = (taxable + line.CGST + line.SGST + line.IGST).round(2);
+	taxableSum = taxableSum + line.Taxable;
+	cgstSum = cgstSum + line.CGST;
+	sgstSum = sgstSum + line.SGST;
+	igstSum = igstSum + line.IGST;
+}
+
+beforeRound = (taxableSum + cgstSum + sgstSum + igstSum).round(2);
+rounded = beforeRound.round(0);
+input.Taxable_Amount = taxableSum;
+input.CGST_Total = cgstSum;
+input.SGST_Total = sgstSum;
+input.IGST_Total = igstSum;
+input.Round_Off = (rounded - beforeRound).round(2);
+input.Grand_Total = rounded;
+
+// ——— On Success — stock update + Books sync + notifications ———
+if(input.Status != "Draft")
+{
+	for each line in input.Line_Items
+	{
+		prod = Products[ID == line.Product];
+		if(prod.count() > 0 && prod.Warehouse != "Virtual")
+		{
+			prod.Stock = prod.Stock - line.Qty;
+			if(prod.Stock <= prod.Reorder_Level)
+			{
+				insert into Notifications
+				[
+					Title="Low stock: " + prod.Product_Name
+					Message="Only " + prod.Stock + " units left"
+					Type="alert"
+					Is_Read=false
+					Added_User=zoho.loginuserid
+				];
+			}
+		}
+	}
+
+	// Push to Zoho Books
+	thisapp.Functions.Sync_Invoice_To_Books(input.ID);
+
+	// Email via Zoho Mail
+	thisapp.Functions.Send_Invoice_Email(input.ID);
+
+	// Audit
+	thisapp.Audit_Log.Write("Invoice " + input.Invoice_Number + " saved (" + input.Status + ")", zoho.loginuserid);
+}

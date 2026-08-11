@@ -1,0 +1,63 @@
+// Custom function: Sync_Invoice_To_Books
+// Arguments: invoiceId (int)
+// Connection: zorbill_books
+
+invoiceId = invoiceId;
+inv = Invoices[ID == invoiceId];
+if(inv.count() == 0) { return "NOT_FOUND"; }
+
+orgId = thisapp.OAuth_Config.Books_Org_ID;
+customerBooksId = inv.Customer.Zoho_Books_Contact_ID;
+
+lineItems = List();
+for each line in inv.Line_Items
+{
+	row = Map();
+	row.put("name", line.Product.Product_Name);
+	row.put("rate", line.Rate);
+	row.put("quantity", line.Qty);
+	row.put("discount", line.Discount_Pct);
+	row.put("hsn_or_sac", line.Product.HSN);
+	taxId = thisapp.Functions.Get_Books_Tax_ID(line.GST_Rate);
+	row.put("tax_id", taxId);
+	lineItems.add(row);
+}
+
+payload = Map();
+payload.put("customer_id", customerBooksId);
+payload.put("date", inv.Invoice_Date.toString("yyyy-MM-dd"));
+payload.put("due_date", inv.Due_Date.toString("yyyy-MM-dd"));
+payload.put("reference_number", inv.Invoice_Number);
+payload.put("line_items", lineItems);
+payload.put("notes", inv.Notes);
+payload.put("is_inclusive_tax", false);
+
+url = "https://www.zohoapis.com/books/v3/invoices?organization_id=" + orgId;
+
+if(inv.Zoho_Books_Invoice_ID == null || inv.Zoho_Books_Invoice_ID == "")
+{
+	resp = invokeurl
+	[
+		url :url
+		type :POST
+		parameters:payload.toString()
+		connection:"zorbill_books"
+	];
+	if(resp.get("code") == 0)
+	{
+		inv.Zoho_Books_Invoice_ID = resp.get("invoice").get("invoice_id");
+		return "CREATED:" + inv.Zoho_Books_Invoice_ID;
+	}
+	return "ERROR:" + resp.toString();
+}
+else
+{
+	resp = invokeurl
+	[
+		url :url + "/" + inv.Zoho_Books_Invoice_ID
+		type :PUT
+		parameters:payload.toString()
+		connection:"zorbill_books"
+	];
+	return "UPDATED";
+}

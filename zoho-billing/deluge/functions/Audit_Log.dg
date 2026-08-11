@@ -1,0 +1,15 @@
+// Custom function: Audit_Log.Write
+// Arguments: action (string), user (string)
+
+insert into Activity_Logs
+[
+	Action=action
+	User_Name=user
+	Event_Time=zoho.currenttime
+	IP_Address=zoho.ipaddress
+];
+
+// Retain 180 days
+old = Activity_Logs[Event_Time < zoho.currentdate.subDay(180)];
+delete from Activity_Logs[ID in old.ID.getall()];
+return "OK";

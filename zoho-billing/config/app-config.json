@@ -1,0 +1,40 @@
+{
+  "app_name": "ZorBill",
+  "version": "1.0.0",
+  "platform": "Zoho Creator",
+  "region": "in",
+  "oauth": {
+    "accounts_url": "https://accounts.zoho.in",
+    "client_id": "YOUR_CLIENT_ID",
+    "client_secret": "YOUR_CLIENT_SECRET",
+    "redirect_uri": "https://creatorapp.zoho.in/YOUR_ACCOUNT/zorbill/page-perma/oauth/callback",
+    "scopes": [
+      "ZohoBooks.fullaccess.all",
+      "ZohoInventory.FullAccess.all",
+      "ZohoCRM.modules.ALL",
+      "ZohoMail.messages.CREATE",
+      "ZohoAnalytics.fullaccess.all",
+      "ZohoSign.documents.ALL"
+    ],
+    "connections": {
+      "zorbill_books": { "service": "Zoho Books", "org_id_field": "Books_Org_ID" },
+      "zorbill_inventory": { "service": "Zoho Inventory", "org_id_field": "Inventory_Org_ID" },
+      "zorbill_crm": { "service": "Zoho CRM" },
+      "zorbill_mail": { "service": "Zoho Mail" },
+      "zorbill_analytics": { "service": "Zoho Analytics" },
+      "zorbill_sign": { "service": "Zoho Sign" }
+    }
+  },
+  "session_timeout_minutes": 45,
+  "invoice_prefix": "INV",
+  "quote_prefix": "QT",
+  "po_prefix": "PO",
+  "currency": "INR",
+  "features": {
+    "gst": true,
+    "multi_warehouse": true,
+    "whatsapp_share": true,
+    "barcode_qr": true,
+    "dark_mode": true
+  }
+}
