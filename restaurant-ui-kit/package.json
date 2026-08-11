@@ -1,0 +1,21 @@
+{
+  "name": "restaurant-ui-kit",
+  "version": "1.0.0",
+  "description": "Ultra Premium Restaurant Website HTML UI Kit — ThemeForest ready with 10 demos, 100+ pages, 200+ components",
+  "private": true,
+  "scripts": {
+    "build": "python3 scripts/build.py",
+    "build:css": "sass assets/scss/main.scss:assets/css/main.css --style=expanded && sass assets/scss/main.scss:assets/css/main.min.css --style=compressed",
+    "watch:css": "sass --watch assets/scss/main.scss:assets/css/main.css",
+    "serve": "npx --yes serve -l 5500 .",
+    "start": "npm run serve"
+  },
+  "devDependencies": {
+    "sass": "^1.102.0"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

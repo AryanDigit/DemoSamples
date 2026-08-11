@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" data-demo="demo-07-seafood" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Meals | Azure Harbor</title>
+  <meta name="description" content="Azure Harbor — Ocean to Table, Daily. Premium restaurant template by Restaurant UI Kit.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://restaurant-uikit.example/demo-07-seafood/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Compare Meals | Azure Harbor">
+  <meta property="og:description" content="Azure Harbor — Ocean to Table, Daily. Premium restaurant template by Restaurant UI Kit.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1600&q=80">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Compare Meals | Azure Harbor">
+  <meta name="theme-color" content="var(--rui-primary)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/lenis@1.1.9/dist/lenis.css" rel="stylesheet">
+  <link href="../../assets/css/main.css" rel="stylesheet">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Restaurant", "name": "Azure Harbor", "description": "Ocean to Table, Daily", "servesCuisine": "Seafood Restaurant", "url": "https://restaurant-uikit.example/demo-07-seafood/", "image": "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1600&q=80", "priceRange": "$$", "address": {"@type": "PostalAddress", "streetAddress": "128 Culinary Avenue", "addressLocality": "New York", "addressRegion": "NY", "postalCode": "10001", "addressCountry": "US"}, "telephone": "+1-212-555-0148", "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], "opens": "11:00", "closes": "23:00"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="preloader" aria-hidden="true"><div class="loader-brand">Azure Harbor</div></div>
+
+<header class="site-header">
+  <div class="container-rui navbar-rui">
+    <a class="brand" href="index.html">Azure Harbor</a>
+    <ul class="nav-links"><li><a href="index.html" class="active">Home</a></li>
+<li><a href="menu.html">Menu</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="reservation.html">Reservation</a></li>
+<li><a href="gallery.html">Gallery</a></li>
+<li><a href="blog-grid.html">Blog</a></li>
+<li><a href="contact.html">Contact</a></li></ul>
+    <div class="header-actions">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme"><i class="bi bi-moon-stars"></i></button>
+      <a class="btn-rui" href="reservation.html">Reserve</a>
+      <button class="icon-btn nav-toggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" aria-label="Mobile">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <strong class="brand">Azure Harbor</strong>
+    <button class="icon-btn mobile-nav-close" aria-label="Close menu"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <ul class="mobile-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="reservation.html">Reservation</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="../../pages/components-showcase.html">UI Components</a></li>
+  </ul>
+</nav>
+
+<main id='main'>
+<section class="page-hero">
+  <div class="container-rui">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Compare Meals</li>
+      </ol>
+    </nav>
+    <h1>Compare Meals</h1>
+    <p>Premium restaurant page template.</p>
+  </div>
+</section>
+<section class='section'><div class='container-rui'><div class='row g-4' data-menu-grid>
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+          <article class="card-rui food-card hover-lift" data-menu-item data-category="mains nonveg" data-name="grilled lobster" data-price="68" data-rating="5.0">
+            <div class="card-media">
+              <span class="badge-rui badge-spicy">Spicy</span>
+              <div class="quick-actions">
+                <button class="action-btn" data-quick-view data-title="Grilled Lobster" data-price="$68" data-desc="Signature Seafood Restaurant dish." data-img="https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?w=800&q=80" aria-label="Quick view"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" aria-label="Favorite"><i class="bi bi-heart"></i></button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?w=800&q=80" alt="Grilled Lobster" loading="lazy" width="600" height="450">
+            </div>
+            <div class="card-body">
+              <h3 style="font-size:1.25rem;margin-bottom:0.35rem">Grilled Lobster</h3>
+              <div class="card-meta">
+                <span><i class="bi bi-star-fill" style="color:var(--rui-primary)"></i> 5.0</span>
+                <span class="price">$68</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="50">
+          <article class="card-rui food-card hover-lift" data-menu-item data-category="raw nonveg" data-name="oysters raw bar" data-price="24" data-rating="4.9">
+            <div class="card-media">
+              <span class="badge-rui badge-outline">Chef</span>
+              <div class="quick-actions">
+                <button class="action-btn" data-quick-view data-title="Oysters Raw Bar" data-price="$24" data-desc="Signature Seafood Restaurant dish." data-img="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800&q=80" aria-label="Quick view"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" aria-label="Favorite"><i class="bi bi-heart"></i></button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800&q=80" alt="Oysters Raw Bar" loading="lazy" width="600" height="450">
+            </div>
+            <div class="card-body">
+              <h3 style="font-size:1.25rem;margin-bottom:0.35rem">Oysters Raw Bar</h3>
+              <div class="card-meta">
+                <span><i class="bi bi-star-fill" style="color:var(--rui-primary)"></i> 4.9</span>
+                <span class="price">$24</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+          <article class="card-rui food-card hover-lift" data-menu-item data-category="mains nonveg" data-name="cioppino stew" data-price="32" data-rating="4.8">
+            <div class="card-media">
+              <span class="badge-rui badge-outline">Chef</span>
+              <div class="quick-actions">
+                <button class="action-btn" data-quick-view data-title="Cioppino Stew" data-price="$32" data-desc="Signature Seafood Restaurant dish." data-img="https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&q=80" aria-label="Quick view"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" aria-label="Favorite"><i class="bi bi-heart"></i></button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&q=80" alt="Cioppino Stew" loading="lazy" width="600" height="450">
+            </div>
+            <div class="card-body">
+              <h3 style="font-size:1.25rem;margin-bottom:0.35rem">Cioppino Stew</h3>
+              <div class="card-meta">
+                <span><i class="bi bi-star-fill" style="color:var(--rui-primary)"></i> 4.8</span>
+                <span class="price">$32</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
+          <article class="card-rui food-card hover-lift" data-menu-item data-category="classics nonveg" data-name="fish & chips" data-price="18" data-rating="4.7">
+            <div class="card-media">
+              <span class="badge-rui badge-spicy">Spicy</span>
+              <div class="quick-actions">
+                <button class="action-btn" data-quick-view data-title="Fish & Chips" data-price="$18" data-desc="Signature Seafood Restaurant dish." data-img="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80" aria-label="Quick view"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" aria-label="Favorite"><i class="bi bi-heart"></i></button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80" alt="Fish & Chips" loading="lazy" width="600" height="450">
+            </div>
+            <div class="card-body">
+              <h3 style="font-size:1.25rem;margin-bottom:0.35rem">Fish & Chips</h3>
+              <div class="card-meta">
+                <span><i class="bi bi-star-fill" style="color:var(--rui-primary)"></i> 4.7</span>
+                <span class="price">$18</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+          <article class="card-rui food-card hover-lift" data-menu-item data-category="starters nonveg" data-name="tuna tartare" data-price="22" data-rating="4.9">
+            <div class="card-media">
+              <span class="badge-rui badge-new">New</span>
+              <div class="quick-actions">
+                <button class="action-btn" data-quick-view data-title="Tuna Tartare" data-price="$22" data-desc="Signature Seafood Restaurant dish." data-img="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" aria-label="Quick view"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" aria-label="Favorite"><i class="bi bi-heart"></i></button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" alt="Tuna Tartare" loading="lazy" width="600" height="450">
+            </div>
+            <div class="card-body">
+              <h3 style="font-size:1.25rem;margin-bottom:0.35rem">Tuna Tartare</h3>
+              <div class="card-meta">
+                <span><i class="bi bi-star-fill" style="color:var(--rui-primary)"></i> 4.9</span>
+                <span class="price">$22</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="250">
+          <article class="card-rui food-card hover-lift" data-menu-item data-category="soups nonveg" data-name="clam chowder" data-price="14" data-rating="4.6">
+            <div class="card-media">
+              <span class="badge-rui badge-outline">Chef</span>
+              <div class="quick-actions">
+                <button class="action-btn" data-quick-view data-title="Clam Chowder" data-price="$14" data-desc="Signature Seafood Restaurant dish." data-img="https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80" aria-label="Quick view"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" aria-label="Favorite"><i class="bi bi-heart"></i></button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80" alt="Clam Chowder" loading="lazy" width="600" height="450">
+            </div>
+            <div class="card-body">
+              <h3 style="font-size:1.25rem;margin-bottom:0.35rem">Clam Chowder</h3>
+              <div class="card-meta">
+                <span><i class="bi bi-star-fill" style="color:var(--rui-primary)"></i> 4.6</span>
+                <span class="price">$14</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+          <article class="card-rui food-card hover-lift" data-menu-item data-category="desserts veg" data-name="key lime pie" data-price="11" data-rating="4.8">
+            <div class="card-media">
+              <span class="badge-rui badge-veg">Veg</span>
+              <div class="quick-actions">
+                <button class="action-btn" data-quick-view data-title="Key Lime Pie" data-price="$11" data-desc="Signature Seafood Restaurant dish." data-img="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&q=80" aria-label="Quick view"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" aria-label="Favorite"><i class="bi bi-heart"></i></button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&q=80" alt="Key Lime Pie" loading="lazy" width="600" height="450">
+            </div>
+            <div class="card-body">
+              <h3 style="font-size:1.25rem;margin-bottom:0.35rem">Key Lime Pie</h3>
+              <div class="card-meta">
+                <span><i class="bi bi-star-fill" style="color:var(--rui-primary)"></i> 4.8</span>
+                <span class="price">$11</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="350">
+          <article class="card-rui food-card hover-lift" data-menu-item data-category="drinks veg" data-name="coastal spritz" data-price="14" data-rating="4.7">
+            <div class="card-media">
+              <span class="badge-rui badge-veg">Veg</span>
+              <div class="quick-actions">
+                <button class="action-btn" data-quick-view data-title="Coastal Spritz" data-price="$14" data-desc="Signature Seafood Restaurant dish." data-img="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&q=80" aria-label="Quick view"><i class="bi bi-eye"></i></button>
+                <button class="action-btn" aria-label="Favorite"><i class="bi bi-heart"></i></button>
+              </div>
+              <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&q=80" alt="Coastal Spritz" loading="lazy" width="600" height="450">
+            </div>
+            <div class="card-body">
+              <h3 style="font-size:1.25rem;margin-bottom:0.35rem">Coastal Spritz</h3>
+              <div class="card-meta">
+                <span><i class="bi bi-star-fill" style="color:var(--rui-primary)"></i> 4.7</span>
+                <span class="price">$14</span>
+              </div>
+            </div>
+          </article>
+        </div></div></div></section></main>
+<div class="modal fade modal-food" id="foodQuickView" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title qv-title">Dish</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+      <div class="modal-body row g-3">
+        <div class="col-md-6"><img class="qv-img w-100 rounded" src="" alt=""></div>
+        <div class="col-md-6"><div class="price qv-price mb-2"></div><p class="qv-desc"></p>
+          <ul class="list-unstyled small text-muted"><li>Calories: 420 kcal</li><li>Prep: 25 min</li><li>Chef special</li></ul>
+          <a href="reservation.html" class="btn-rui mt-2">Reserve to Enjoy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container-rui footer-grid">
+    <div>
+      <div class="brand">Azure Harbor</div>
+      <p>Ocean to Table, Daily</p>
+      <div class="socials" style="margin-top:1rem">
+        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+    <div>
+      <h6>Explore</h6>
+      <ul>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="events.html">Events</a></li>
+      </ul>
+    </div>
+    <div>
+      <h6>Visit</h6>
+      <ul>
+        <li><a href="location.html">Location</a></li>
+        <li><a href="reservation.html">Reservations</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="career.html">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <h6>Hours</h6>
+      <ul class="hours-list">
+        <li><span>Mon–Thu</span><strong>11–22</strong></li>
+        <li><span>Fri–Sat</span><strong>11–23</strong></li>
+        <li><span>Sun</span><strong>10–21</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container-rui footer-bottom">
+    <span>© 2026 Azure Harbor. All rights reserved.</span>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+  </div>
+</footer>
+<a class="whatsapp-float" href="https://wa.me/12125550148" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/dist/isotope.pkgd.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/countup.js@2.8.0/dist/countUp.umd.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.9/dist/lenis.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
+<script src="../../assets/js/main.js" defer></script>
+
+</body>
+</html>
