@@ -1,0 +1,83 @@
+// =============================================================================
+// Mixins
+// =============================================================================
+
+@mixin respond-to($bp) {
+  @if map-has-key($breakpoints, $bp) {
+    @media (min-width: map-get($breakpoints, $bp)) {
+      @content;
+    }
+  } @else {
+    @media (min-width: $bp) {
+      @content;
+    }
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin absolute-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin glass($blur: 16px) {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur($blur) saturate(1.2);
+  -webkit-backdrop-filter: blur($blur) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@mixin text-gradient($from, $to) {
+  background: linear-gradient(135deg, $from, $to);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@mixin section-pad($y: var(--rui-space-7)) {
+  padding-block: $y;
+}
+
+@mixin hover-lift {
+  transition: transform $transition, box-shadow $transition;
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--rui-shadow);
+  }
+}
+
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--rui-primary);
+    outline-offset: 3px;
+  }
+}
+
+@mixin sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@mixin image-reveal {
+  overflow: hidden;
+  img {
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  &:hover img {
+    transform: scale(1.08);
+  }
+}

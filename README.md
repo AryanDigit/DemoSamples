@@ -41,3 +41,8 @@ cd portfolio-cms && npm install && npm run seed && npm start
 
 See [`portfolio-cms/README.md`](portfolio-cms/README.md).
 
+## ZorBill — Zoho Billing & Invoicing
+
+Cloud billing/invoicing ERP UI + Deluge backends for the Zoho ecosystem (Creator, Books, Inventory, CRM).
+
+Open [`zoho-billing/index.html`](zoho-billing/index.html) or run a static server from `zoho-billing/`. See [`zoho-billing/README.md`](zoho-billing/README.md).

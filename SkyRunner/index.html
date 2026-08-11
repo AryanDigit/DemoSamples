@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Sky Runner — an infinite scrolling HTML5 Canvas runner game" />
+  <meta name="theme-color" content="#0b1a2b" />
+  <title>Sky Runner</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas" aria-label="Sky Runner game canvas"></canvas>
+
+    <!-- HUD overlay -->
+    <div id="hud" class="overlay hidden" aria-live="polite">
+      <div class="hud-top">
+        <div class="hud-stat" id="hud-score">
+          <span class="hud-label">Score</span>
+          <span class="hud-value" data-hud="score">0</span>
+        </div>
+        <div class="hud-stat" id="hud-coins">
+          <span class="hud-label">Coins</span>
+          <span class="hud-value" data-hud="coins">0</span>
+        </div>
+        <div class="hud-stat" id="hud-distance">
+          <span class="hud-label">Distance</span>
+          <span class="hud-value" data-hud="distance">0m</span>
+        </div>
+        <div class="hud-stat" id="hud-lives">
+          <span class="hud-label">Lives</span>
+          <span class="hud-value" data-hud="lives">3</span>
+        </div>
+        <div class="hud-stat" id="hud-combo">
+          <span class="hud-label">Combo</span>
+          <span class="hud-value" data-hud="combo">x1</span>
+        </div>
+        <div class="hud-stat" id="hud-biome">
+          <span class="hud-label">Biome</span>
+          <span class="hud-value" data-hud="biome">MEADOW</span>
+        </div>
+      </div>
+      <div class="hud-mission" id="hud-mission">
+        <span class="mission-label">Mission</span>
+        <span class="mission-text" data-hud="mission">—</span>
+        <div class="mission-bar"><div class="mission-fill" id="mission-fill"></div></div>
+      </div>
+      <div class="hud-powerups" id="hud-powerups"></div>
+      <button type="button" id="btn-pause" class="icon-btn" aria-label="Pause game" title="Pause">❚❚</button>
+    </div>
+
+    <!-- Start menu -->
+    <div id="menu-start" class="overlay menu-panel">
+      <div class="menu-card menu-card-wide">
+        <h1 class="game-title">SKY RUNNER</h1>
+        <p class="menu-tagline">Dash across endless skies. Jump, slide, collect.</p>
+        <div class="menu-stats">
+          <div class="stat-chip">
+            <span class="stat-label">High Score</span>
+            <span class="stat-value" data-ui="highScore">0</span>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-label">Best Distance</span>
+            <span class="stat-value" data-ui="bestDistance">0m</span>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-label">Bank</span>
+            <span class="stat-value" data-ui="bankCoins">0</span>
+          </div>
+        </div>
+        <p class="mission-preview" id="mission-preview">Mission: —</p>
+        <div class="menu-actions menu-grid">
+          <button type="button" id="btn-play" class="btn btn-primary">Play</button>
+          <button type="button" id="btn-shop" class="btn btn-secondary">Shop</button>
+          <button type="button" id="btn-achievements" class="btn btn-secondary">Achievements</button>
+          <button type="button" id="btn-settings" class="btn btn-secondary">Settings</button>
+        </div>
+        <div class="controls-hint">
+          <p><kbd>Space</kbd> Jump · Double Jump · <kbd>↓</kbd> Slide</p>
+          <p>Near-miss obstacles for bonus score · Visit biomes as you run</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tutorial -->
+    <div id="menu-tutorial" class="overlay menu-panel hidden">
+      <div class="menu-card">
+        <h2 class="menu-heading">How to Play</h2>
+        <ul class="tutorial-list">
+          <li>You run automatically — time your jumps and slides.</li>
+          <li><strong>Space</strong> jump, double-tap for double jump.</li>
+          <li><strong>↓</strong> slide under overhead barriers.</li>
+          <li>Grab coins, gems, shields, magnets, boosts &amp; slow-mo.</li>
+          <li>Skim past obstacles for near-miss bonus points.</li>
+          <li>Biomes shift as you travel — desert, snow, volcano.</li>
+          <li>Bank coins to unlock skins in the Shop.</li>
+        </ul>
+        <div class="menu-actions">
+          <button type="button" id="btn-tutorial-ok" class="btn btn-primary">Got it — Play</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shop -->
+    <div id="menu-shop" class="overlay menu-panel hidden">
+      <div class="menu-card menu-card-wide">
+        <h2 class="menu-heading">Skin Shop</h2>
+        <p class="menu-tagline">Bank: <span data-ui="bankCoins">0</span> coins</p>
+        <div id="shop-list" class="shop-list"></div>
+        <div class="menu-actions">
+          <button type="button" id="btn-shop-back" class="btn btn-primary">Back</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    <div id="menu-achievements" class="overlay menu-panel hidden">
+      <div class="menu-card menu-card-wide">
+        <h2 class="menu-heading">Achievements</h2>
+        <div id="achievements-list" class="achievements-list"></div>
+        <div class="menu-actions">
+          <button type="button" id="btn-achievements-back" class="btn btn-primary">Back</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pause menu -->
+    <div id="menu-pause" class="overlay menu-panel hidden">
+      <div class="menu-card">
+        <h2 class="menu-heading">Paused</h2>
+        <div class="menu-actions">
+          <button type="button" id="btn-resume" class="btn btn-primary">Resume</button>
+          <button type="button" id="btn-pause-settings" class="btn btn-secondary">Settings</button>
+          <button type="button" id="btn-pause-restart" class="btn btn-ghost">Restart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings menu -->
+    <div id="menu-settings" class="overlay menu-panel hidden">
+      <div class="menu-card">
+        <h2 class="menu-heading">Settings</h2>
+        <div class="settings-list">
+          <label class="setting-row">
+            <span>Sound Effects</span>
+            <button type="button" id="btn-sfx-toggle" class="btn btn-toggle" data-on="true">ON</button>
+          </label>
+          <label class="setting-row">
+            <span>Music</span>
+            <button type="button" id="btn-music-toggle" class="btn btn-toggle" data-on="true">ON</button>
+          </label>
+          <label class="setting-row">
+            <span>Particles</span>
+            <button type="button" id="btn-particles-toggle" class="btn btn-toggle" data-on="true">ON</button>
+          </label>
+        </div>
+        <div class="menu-actions">
+          <button type="button" id="btn-settings-back" class="btn btn-primary">Back</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game over -->
+    <div id="menu-gameover" class="overlay menu-panel hidden">
+      <div class="menu-card">
+        <h2 class="menu-heading">Game Over</h2>
+        <div class="gameover-stats">
+          <div class="stat-chip">
+            <span class="stat-label">Score</span>
+            <span class="stat-value" data-ui="finalScore">0</span>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-label">Coins</span>
+            <span class="stat-value" data-ui="finalCoins">0</span>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-label">Distance</span>
+            <span class="stat-value" data-ui="finalDistance">0m</span>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-label">Gems</span>
+            <span class="stat-value" data-ui="finalGems">0</span>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-label">Near Miss</span>
+            <span class="stat-value" data-ui="finalNear">0</span>
+          </div>
+          <div class="stat-chip highlight">
+            <span class="stat-label">High Score</span>
+            <span class="stat-value" data-ui="highScore">0</span>
+          </div>
+        </div>
+        <p id="mission-result" class="mission-result hidden"></p>
+        <p id="new-high-score" class="new-record hidden">New High Score!</p>
+        <div class="menu-actions">
+          <button type="button" id="btn-restart" class="btn btn-primary">Restart</button>
+          <button type="button" id="btn-menu" class="btn btn-secondary">Menu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile touch controls -->
+    <div id="touch-controls" class="touch-controls hidden" aria-hidden="true">
+      <button type="button" id="touch-jump" class="touch-btn" aria-label="Jump">JUMP</button>
+      <button type="button" id="touch-slide" class="touch-btn" aria-label="Slide">SLIDE</button>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/floating.js"></script>
+  <script src="js/achievements.js"></script>
+  <script src="js/missions.js"></script>
+  <script src="js/background.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/enemy.js"></script>
+  <script src="js/coin.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

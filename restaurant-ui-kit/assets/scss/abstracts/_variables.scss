@@ -1,0 +1,87 @@
+// =============================================================================
+// Restaurant UI Kit — Design Tokens
+// =============================================================================
+
+:root {
+  // Brand (overridden per demo)
+  --rui-primary: #c9a227;
+  --rui-primary-rgb: 201, 162, 39;
+  --rui-secondary: #8b7355;
+  --rui-accent: #e8d5a3;
+  --rui-success: #2d6a4f;
+  --rui-warning: #e9c46a;
+  --rui-danger: #9b2226;
+  --rui-info: #457b9d;
+
+  // Surfaces
+  --rui-bg: #0a0a0a;
+  --rui-surface: #141414;
+  --rui-surface-2: #1c1c1c;
+  --rui-card: rgba(255, 255, 255, 0.06);
+  --rui-border: rgba(201, 162, 39, 0.25);
+  --rui-footer: #050505;
+
+  // Text
+  --rui-text: #f5f0e8;
+  --rui-muted: #a89f91;
+  --rui-heading: #ffffff;
+
+  // Typography
+  --rui-font-display: "Cormorant Garamond", Georgia, serif;
+  --rui-font-body: "Montserrat", system-ui, sans-serif;
+  --rui-font-accent: "Great Vibes", cursive;
+
+  // Layout
+  --rui-radius: 0;
+  --rui-radius-sm: 0.25rem;
+  --rui-radius-lg: 1rem;
+  --rui-container: 1200px;
+  --rui-header-h: 80px;
+  --rui-transition: 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  --rui-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  --rui-glass: blur(16px) saturate(1.2);
+
+  // Spacing scale
+  --rui-space-1: 0.25rem;
+  --rui-space-2: 0.5rem;
+  --rui-space-3: 1rem;
+  --rui-space-4: 1.5rem;
+  --rui-space-5: 2.5rem;
+  --rui-space-6: 4rem;
+  --rui-space-7: 6rem;
+  --rui-space-8: 8rem;
+}
+
+[data-theme="light"] {
+  --rui-bg: #faf8f5;
+  --rui-surface: #ffffff;
+  --rui-surface-2: #f3efe8;
+  --rui-card: #ffffff;
+  --rui-border: rgba(0, 0, 0, 0.08);
+  --rui-text: #1a1612;
+  --rui-muted: #6b635a;
+  --rui-heading: #0f0d0b;
+  --rui-footer: #1a1612;
+  --rui-shadow: 0 16px 40px rgba(26, 22, 18, 0.08);
+}
+
+// SCSS mirrors for compile-time use
+$primary: var(--rui-primary);
+$secondary: var(--rui-secondary);
+$accent: var(--rui-accent);
+$bg: var(--rui-bg);
+$surface: var(--rui-surface);
+$text: var(--rui-text);
+$muted: var(--rui-muted);
+$radius: var(--rui-radius);
+$transition: var(--rui-transition);
+$container: var(--rui-container);
+
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);

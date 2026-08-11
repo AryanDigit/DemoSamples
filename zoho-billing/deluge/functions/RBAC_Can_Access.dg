@@ -1,0 +1,19 @@
+// Custom function: RBAC_Can_Access
+// Arguments: moduleName (string)
+// Returns true/false based on Creator user role profile
+
+userEmail = zoho.loginuserid;
+roleRec = Users[Email == userEmail];
+if(roleRec.count() == 0) { return false; }
+role = roleRec.Role;
+
+if(role == "Super_Admin") { return true; }
+
+adminMods = {"dashboard","customers","products","suppliers","purchases","inventory","expenses","quotations","billing","payments","gst","reports","notifications","settings"};
+staffMods = {"dashboard","customers","products","suppliers","purchases","inventory","quotations","billing","notifications"};
+acctMods = {"dashboard","customers","expenses","billing","payments","gst","reports","notifications"};
+
+if(role == "Admin" && moduleName in adminMods) { return true; }
+if(role == "Staff" && moduleName in staffMods) { return true; }
+if(role == "Accountant" && moduleName in acctMods) { return true; }
+return false;

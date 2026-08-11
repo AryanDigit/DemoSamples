@@ -1,0 +1,4 @@
+Name,SKU,HSN,Category,Unit,PurchasePrice,SalePrice,GSTRate,Stock,ReorderLevel,Warehouse,Barcode
+Wireless Keyboard,EL-KB-001,84716060,Electronics,Pcs,900,1499,18,60,15,WH-Mumbai,8901001002001
+Bubble Mailer Pack,PK-BM-50,39239090,Packaging,Pack,220,349,18,120,40,WH-Delhi,8901001002002
+Consulting Hour,SV-CON-HR,998311,Services,Hr,0,2500,18,999,0,Virtual,8901001002003

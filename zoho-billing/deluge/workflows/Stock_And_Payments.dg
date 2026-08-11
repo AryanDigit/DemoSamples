@@ -1,0 +1,40 @@
+// Products form — On Success sync to Zoho Inventory
+try
+{
+	if(input.Barcode == null || input.Barcode == "")
+	{
+		input.Barcode = "890" + zoho.currenttime.toLong().toString().right(10);
+	}
+	thisapp.Functions.Sync_Stock_To_Inventory(input.ID);
+	thisapp.Audit_Log.Write("Product saved: " + input.Product_Name, zoho.loginuserid);
+}
+catch (e)
+{
+	info e;
+}
+
+// Purchases form — On Success receive stock
+if(input.Status == "Received" || input.Status == "Billed")
+{
+	for each line in input.Line_Items
+	{
+		prod = Products[ID == line.Product];
+		prod.Stock = prod.Stock + line.Qty;
+	}
+	thisapp.Audit_Log.Write("PO received: " + input.PO_Number, zoho.loginuserid);
+}
+
+// Payments form — On Success update invoice status
+pay = input;
+inv = pay.Invoice;
+paid = Payments[Invoice == inv && Status == "Cleared"].sum(Amount);
+if(paid >= inv.Grand_Total)
+{
+	inv.Status = "Paid";
+}
+else if(paid > 0)
+{
+	inv.Status = "Partial";
+}
+// Sync customer payment to Zoho Books
+thisapp.Functions.Sync_Payment_To_Books(input.ID);

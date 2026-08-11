@@ -1,0 +1,17 @@
+@function rem($px, $base: 16) {
+  @return ($px / $base) * 1rem;
+}
+
+@function z($layer) {
+  $layers: (
+    base: 1,
+    dropdown: 100,
+    sticky: 200,
+    header: 300,
+    overlay: 400,
+    modal: 500,
+    toast: 600,
+    cursor: 9999,
+  );
+  @return map-get($layers, $layer);
+}
