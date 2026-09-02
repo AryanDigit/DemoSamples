@@ -1446,7 +1446,7 @@ def build_demo_pages(demo: dict) -> None:
 
     # Home
     builder = HOME_BUILDERS[demo["layout"]]
-    html = head(demo["brand"], demo, depth=2) + header(demo, active="home") + builder(demo) + footer(demo) + close_body(2)
+    html = head("Home", demo, depth=2) + header(demo, active="home") + builder(demo) + footer(demo) + close_body(2)
     write(out / "index.html", html)
 
     # All catalog pages
