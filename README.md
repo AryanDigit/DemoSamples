@@ -2,6 +2,12 @@
 
 Collection of static website demos.
 
+## Grow Your Wealth — financial consultancy landing
+
+Next.js 14 App Router + Tailwind + Framer Motion landing page for Seeta Rochani’s practice.
+
+Open [`grow-your-wealth/`](grow-your-wealth/) and run `npm run dev`. See [`grow-your-wealth/README.md`](grow-your-wealth/README.md).
+
 ## Queentana Fresh — Wholesale fruit & vegetables (UK & EU)
 
 Faithful static clone of [queentana.co.uk](https://www.queentana.co.uk/).

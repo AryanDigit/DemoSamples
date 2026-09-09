@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #002147;
+  --navy-deep: #00152d;
+  --navy-soft: #0a3258;
+  --gold: #e8b931;
+  --gold-bright: #f5c84a;
+  --gold-deep: #c4921a;
+  --ivory: #f7f3ea;
+  --paper: #fffdf8;
+  --ink: #122033;
+  --muted: #5c6b7a;
+  --line: #e4d9c3;
+  --background: var(--paper);
+  --foreground: var(--ink);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-shimmer,
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none !important;
+  }
+}
