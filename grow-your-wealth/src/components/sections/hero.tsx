@@ -29,7 +29,7 @@ export function Hero() {
 
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-0 lg:pt-6">
         <motion.div
-          initial={reduce ? false : { opacity: 0, x: -28 }}
+          initial={false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
           className="relative z-10"
@@ -82,9 +82,9 @@ export function Hero() {
         </motion.div>
 
         <motion.div
-          initial={reduce ? false : { opacity: 0, x: 40, scale: 0.96 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.12, ease: [0.21, 0.47, 0.32, 0.98] }}
+          initial={reduce ? false : { opacity: 0.001, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7, delay: 0.08, ease: [0.21, 0.47, 0.32, 0.98] }}
           className="relative mx-auto w-full max-w-md lg:max-w-none"
         >
           <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] border-[6px] border-gold bg-navy shadow-lift sm:aspect-[5/6] lg:aspect-auto lg:h-[34rem] lg:rounded-t-[14rem] lg:rounded-b-none lg:border-b-0">

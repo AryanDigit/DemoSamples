@@ -45,7 +45,8 @@ body {
 
   .animate-shimmer,
   .animate-marquee,
-  .animate-marquee-reverse {
+  .animate-marquee-reverse,
+  .animate-page-in {
     animation: none !important;
   }
 }

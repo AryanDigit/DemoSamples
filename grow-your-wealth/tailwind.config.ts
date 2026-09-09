@@ -50,11 +50,16 @@ const config: Config = {
           from: { transform: "translateX(-100%)" },
           to: { transform: "translateX(0)" },
         },
+        "page-in": {
+          from: { opacity: "0.001" },
+          to: { opacity: "1" },
+        },
       },
       animation: {
         shimmer: "shimmer 1.6s ease-in-out infinite",
         marquee: "marquee 28s linear infinite",
         "marquee-reverse": "marquee-reverse 28s linear infinite",
+        "page-in": "page-in 0.45s cubic-bezier(0.21, 0.47, 0.32, 0.98) both",
       },
     },
   },
