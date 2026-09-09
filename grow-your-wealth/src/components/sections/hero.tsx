@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Heart } from "lucide-react";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { site } from "@/lib/site";
@@ -11,8 +11,6 @@ import { site } from "@/lib/site";
  * “Hero with image, text and two buttons” by Tommy Jepsen.
  */
 export function Hero() {
-  const reduce = useReducedMotion();
-
   return (
     <section
       id="top"
@@ -82,9 +80,8 @@ export function Hero() {
         </motion.div>
 
         <motion.div
-          initial={reduce ? false : { opacity: 0.001, x: 24 }}
+          initial={false}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.08, ease: [0.21, 0.47, 0.32, 0.98] }}
           className="relative mx-auto w-full max-w-md lg:max-w-none"
         >
           <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] border-[6px] border-gold bg-navy shadow-lift sm:aspect-[5/6] lg:aspect-auto lg:h-[34rem] lg:rounded-t-[14rem] lg:rounded-b-none lg:border-b-0">
