@@ -14,7 +14,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-gradient-to-br from-ivory via-paper to-[#efe6d4]"
+      className="relative overflow-hidden bg-gradient-to-br from-ivory via-paper to-[#efe6d4] scroll-mt-28"
     >
       <div
         aria-hidden

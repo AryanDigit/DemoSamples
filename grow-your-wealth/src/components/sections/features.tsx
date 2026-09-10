@@ -28,7 +28,7 @@ const features = [
  */
 export function Features() {
   return (
-    <section id="features" className="bg-paper py-16 sm:py-24">
+    <section id="features" className="scroll-mt-28 bg-paper py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <BlurFade>
           <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-gold-deep">

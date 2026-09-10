@@ -34,7 +34,7 @@ export function Faq() {
   const reduce = useReducedMotion();
 
   return (
-    <section id="faq" className="bg-paper py-16 sm:py-24">
+    <section id="faq" className="scroll-mt-28 bg-paper py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <BlurFade>
           <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-gold-deep">

@@ -24,7 +24,7 @@ const specialties = [
 
 export function SocialProof() {
   return (
-    <section id="proof" className="relative overflow-hidden bg-navy py-16 sm:py-24">
+    <section id="proof" className="relative scroll-mt-28 overflow-hidden bg-navy py-16 sm:py-24">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-30"

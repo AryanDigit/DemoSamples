@@ -18,13 +18,15 @@
   --foreground: var(--ink);
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   color: var(--foreground);
   background: var(--background);
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 ::selection {

@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
 
 export function ConnectCta() {
   return (
-    <section id="connect" className="bg-ivory pb-16 sm:pb-24">
+    <section id="connect" className="scroll-mt-28 bg-ivory pb-16 sm:pb-24">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <BlurFade>
           <div className="relative overflow-hidden rounded-[2rem] bg-gold px-6 py-10 text-center shadow-gold sm:px-12 sm:py-14">

@@ -96,7 +96,15 @@ export function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    document.body.style.overflow = "";
+                    setOpen(false);
+                    const target = document.querySelector(link.href);
+                    window.setTimeout(() => {
+                      target?.scrollIntoView({ behavior: "smooth" });
+                    }, 80);
+                  }}
                   className="rounded-xl px-3 py-3 text-base font-medium text-navy hover:bg-ivory"
                 >
                   {link.label}
@@ -105,7 +113,15 @@ export function Navbar() {
               <ShimmerButton
                 href="#connect"
                 className="mt-2 w-full"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  document.body.style.overflow = "";
+                  setOpen(false);
+                  window.setTimeout(() => {
+                    document.querySelector("#connect")?.scrollIntoView({
+                      behavior: "smooth",
+                    });
+                  }, 80);
+                }}
               >
                 Book 15 minutes
               </ShimmerButton>
